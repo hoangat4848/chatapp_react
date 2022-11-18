@@ -1,13 +1,12 @@
 import React from "react";
-import logo from "./logo.svg";
 import { Routes, Route, Outlet } from "react-router-dom";
-import "./App.css";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<div>Helo world</div>}></Route>
+        <Route path="/" element={<RegisterPage />}></Route>
 
         <Route
           path="/conversations"
