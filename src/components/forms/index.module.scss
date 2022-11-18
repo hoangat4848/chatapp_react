@@ -11,8 +11,24 @@ form {
   gap: 8px;
 }
 
+.loginFormPassword {
+  margin: 8px 0;
+}
+
 .button {
   margin: 8px 0;
 
   text-transform: capitalize;
+}
+
+.footerText {
+  margin-top: 8px;
+  text-align: center;
+  span {
+    color: #fff;
+  }
+  a {
+    text-decoration: underline;
+    color: #291bfc;
+  }
 }

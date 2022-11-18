@@ -38,11 +38,12 @@ export const InputLabel = styled.label`
 `;
 
 export const Button = styled.button`
+  box-sizing: border-box;
   width: 100%;
   padding: 20px;
 
   outline: none;
-  border: none;
+  border: solid 1px #2b09ff;
   border-radius: 10px;
 
   color: #fff;
@@ -51,7 +52,18 @@ export const Button = styled.button`
   font-size: 25px;
   font-family: "Inter";
 
+  transition: 500ms border-color background-color ease;
+
   cursor: pointer;
+
+  &:hover {
+    background-color: #4226f7;
+  }
+
+  &:focus {
+    border: solid 1px #fff;
+    background-color: #4226f7;
+  }
 `;
 
 export const Page = styled.div`
