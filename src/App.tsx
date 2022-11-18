@@ -1,5 +1,8 @@
 import React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
+import ConversationPanel from "./components/conversations/ConversationPanel";
+import ConversationChannelPage from "./pages/ConversationChannelPage";
+import ConversationPage from "./pages/ConversationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -10,16 +13,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
 
-        <Route
-          path="/conversations"
-          element={
-            <div>
-              Conversation Page
-              <Outlet />
-            </div>
-          }
-        >
-          <Route path=":id" element={<div>Conversation Id Page</div>}></Route>
+        <Route path="/conversations" element={<ConversationPage />}>
+          <Route index element={<ConversationPanel />}></Route>
+          <Route path=":id" element={<ConversationChannelPage />}></Route>
           <Route
             path=":id/edit"
             element={<div>Conversation Edit Page</div>}

@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { PageProps } from "./styleTypes";
 
 export const DARK = "131313";
+export const SIDEBAR_WIDTH = "350px";
 
 export const InputContainer = styled.div`
   width: 100%;
@@ -66,12 +68,45 @@ export const Button = styled.button`
   }
 `;
 
-export const Page = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const Page = styled.div<PageProps>`
+  display: ${(props) => props.display};
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
 
   height: 100vh;
 
   background-color: #1a1a1a;
+`;
+
+export const StyledConversationSidebar = styled.aside`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: ${SIDEBAR_WIDTH};
+  height: 100vh;
+
+  border-right: 1px solid #c1b9b93a;
+  background-color: #1f1f1f;
+
+  & header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 100px;
+    padding: 0 18px;
+
+    background-color: #151515;
+
+    & h1 {
+      font-weight: 500;
+      font-size: 20px;
+    }
+  }
+`;
+
+export const StyledConversationChannelPage = styled.div`
+  height: 100vh;
+  margin-left: ${SIDEBAR_WIDTH};
 `;
