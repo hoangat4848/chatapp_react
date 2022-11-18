@@ -90,6 +90,7 @@ export const StyledConversationSidebar = styled.aside`
 
   width: ${SIDEBAR_WIDTH};
   height: 100vh;
+  padding-top: 100px;
 
   border-right: 1px solid #c1b9b93a;
   background-color: #1f1f1f;
@@ -122,7 +123,7 @@ export const ConversationSiderbarHeader = styled.header`
 `;
 
 export const ConversationSidebarContainer = styled.div`
-  margin-top: 100px;
+  /* margin-top: 100px; */
 `;
 
 export const ConversationSidebarItem = styled.div`

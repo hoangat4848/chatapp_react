@@ -8,6 +8,7 @@ import {
 import { BsPencilSquare } from "react-icons/bs";
 import { ConversationType } from "../../utils/types";
 import styles from "./index.module.scss";
+import { useNavigate } from "react-router-dom";
 
 type ConversationSidebarProps = {
   conversations: ConversationType[];
@@ -16,6 +17,8 @@ type ConversationSidebarProps = {
 const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
   conversations,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <StyledConversationSidebar>
       <ConversationSiderbarHeader>
@@ -25,7 +28,10 @@ const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
 
       <ConversationSidebarContainer>
         {conversations.map((conversation) => (
-          <ConversationSidebarItem key={conversation.id}>
+          <ConversationSidebarItem
+            key={conversation.id}
+            onClick={() => navigate(`/conversations/${conversation.id}`)}
+          >
             <div className={styles.conversationAvatar}></div>
             <div>
               <span className={styles.conversationName}>
