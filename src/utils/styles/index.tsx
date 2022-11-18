@@ -78,6 +78,11 @@ export const Page = styled.div<PageProps>`
   background-color: #1a1a1a;
 `;
 
+export const StyledConversationChannelPage = styled.div`
+  height: 100vh;
+  margin-left: ${SIDEBAR_WIDTH};
+`;
+
 export const StyledConversationSidebar = styled.aside`
   position: absolute;
   top: 0;
@@ -89,24 +94,44 @@ export const StyledConversationSidebar = styled.aside`
   border-right: 1px solid #c1b9b93a;
   background-color: #1f1f1f;
 
-  & header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    height: 100px;
-    padding: 0 18px;
-
-    background-color: #151515;
-
-    & h1 {
-      font-weight: 500;
-      font-size: 20px;
-    }
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
-export const StyledConversationChannelPage = styled.div`
-  height: 100vh;
-  margin-left: ${SIDEBAR_WIDTH};
+export const ConversationSiderbarHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: ${SIDEBAR_WIDTH};
+  height: 100px;
+  padding: 0 18px;
+
+  background-color: #151515;
+
+  & h1 {
+    font-weight: 500;
+    font-size: 20px;
+  }
+`;
+
+export const ConversationSidebarContainer = styled.div`
+  margin-top: 100px;
+`;
+
+export const ConversationSidebarItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 8px 14px;
+
+  background-color: #131313;
+  border-bottom: 1px solid #c1b9b93a;
 `;
