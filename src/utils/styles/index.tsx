@@ -135,4 +135,9 @@ export const ConversationSidebarItem = styled.div`
 
   background-color: #131313;
   border-bottom: 1px solid #c1b9b93a;
+
+  cursor: pointer;
+  &:hover {
+    background-color: #555555;
+  }
 `;

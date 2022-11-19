@@ -1,6 +1,7 @@
 import React from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ConversationPanel from "./components/conversations/ConversationPanel";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import ConversationChannelPage from "./pages/ConversationChannelPage";
 import ConversationPage from "./pages/ConversationPage";
 import LoginPage from "./pages/LoginPage";
@@ -13,7 +14,14 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
 
-        <Route path="/conversations" element={<ConversationPage />}>
+        <Route
+          path="/conversations"
+          element={
+            <ProtectedRoutes>
+              <ConversationPage />
+            </ProtectedRoutes>
+          }
+        >
           <Route index element={<ConversationPanel />}></Route>
           <Route path=":id" element={<ConversationChannelPage />}></Route>
           <Route
