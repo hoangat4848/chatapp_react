@@ -1,9 +1,7 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { StyledConversationChannelPage } from "../../utils/styles/index";
 
-const ConversationChannelPage = () => {
-  console.log(useParams());
+const ConversationPanel = () => {
   return (
     <StyledConversationChannelPage>
       Hello welcome back
@@ -11,4 +9,4 @@ const ConversationChannelPage = () => {
   );
 };
 
-export default ConversationChannelPage;
+export default ConversationPanel;

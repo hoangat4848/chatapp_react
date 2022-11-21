@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ConversationSidebarContainer,
   ConversationSidebarItem,
@@ -6,21 +6,27 @@ import {
   StyledConversationSidebar,
 } from "../../utils/styles";
 import { BsPencilSquare } from "react-icons/bs";
-import { ConversationType } from "../../utils/types";
+import { Conversation } from "../../utils/types";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import CreateConversationModal from "../modals/CreateConversationModal";
+import { AuthContext } from "../../utils/context/AuthContext";
 
-type ConversationSidebarProps = {
-  conversations: ConversationType[];
+type Props = {
+  conversations: Conversation[];
 };
 
-const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
-  conversations,
-}) => {
+const ConversationSidebar = ({ conversations }: Props) => {
   const navigate = useNavigate();
-
+  const { user } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
+
+  const getDisplayUser = (conversation: Conversation) => {
+    const userId = user?.id;
+    return conversation.creator.id === userId
+      ? conversation.recipient
+      : conversation.creator;
+  };
 
   return (
     <>
@@ -41,10 +47,13 @@ const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
               <div className={styles.conversationAvatar}></div>
               <div>
                 <span className={styles.conversationName}>
-                  {conversation.name}
+                  {`${getDisplayUser(conversation).firstName} ${
+                    getDisplayUser(conversation).lastName
+                  }`}
                 </span>
                 <span className={styles.conversationLastMessage}>
-                  {conversation.lastMessage}
+                  {/* {conversation.lastMessage} */}
+                  REPLACE ME LATER
                 </span>
               </div>
             </ConversationSidebarItem>

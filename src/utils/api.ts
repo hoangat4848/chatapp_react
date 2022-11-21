@@ -1,5 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { CreateUserParams, User, UserCredentialsParams } from "./types";
+import {
+  Conversation,
+  CreateUserParams,
+  User,
+  UserCredentialsParams,
+} from "./types";
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -15,3 +20,6 @@ export const postLoginUser = (data: UserCredentialsParams) =>
 
 export const getAuthUser = () =>
   axios.get<User>(`${REACT_APP_API_URL}/auth/status`, config);
+
+export const getConversations = () =>
+  axios.get<Conversation[]>(`${REACT_APP_API_URL}/conversations`, config);
