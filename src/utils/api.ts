@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import {
   Conversation,
   CreateUserParams,
+  Message,
   User,
   UserCredentialsParams,
 } from "./types";
@@ -23,3 +24,9 @@ export const getAuthUser = () =>
 
 export const getConversations = () =>
   axios.get<Conversation[]>(`${REACT_APP_API_URL}/conversations`, config);
+
+export const getConversationMessages = (conversationId: number) =>
+  axios.get<Message[]>(
+    `${REACT_APP_API_URL}/messages/${conversationId}`,
+    config
+  );

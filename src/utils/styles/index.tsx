@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { InputContainerProps, PageProps } from "./styleTypes";
+import {
+  InputContainerProps,
+  MessageItemContentProps,
+  PageProps,
+} from "./styleTypes";
 
 export const DARK = "131313";
 export const SIDEBAR_WIDTH = "350px";
@@ -79,7 +83,7 @@ export const Page = styled.div<PageProps>`
 `;
 
 export const StyledConversationChannelPage = styled.div`
-  height: 100vh;
+  height: 100%;
   margin-left: ${SIDEBAR_WIDTH};
 `;
 
@@ -200,4 +204,113 @@ export const TextField = styled.textarea`
 
   font-size: 18px;
   font-family: "Inter";
+`;
+
+export const StyledMessagePanel = styled.div`
+  height: 100%;
+  padding-top: 100px;
+
+  background: inherit;
+`;
+
+export const MessagePanelBody = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  padding: 20px;
+
+  height: 100%;
+
+  background: inherit;
+`;
+
+export const StyledMessageContainer = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+
+  height: 100%;
+  padding: 10px 0;
+
+  background: inherit;
+
+  overflow-y: scroll;
+`;
+
+export const MessageInputContainer = styled.div`
+  width: 100%;
+  padding: 15px 16px;
+  margin-top: 10px;
+
+  border-radius: 10px;
+
+  background-color: #101010;
+
+  overflow: hidden;
+`;
+
+export const MessageInput = styled.input`
+  box-sizing: border-box;
+  width: 100%;
+
+  outline: none;
+  border: none;
+
+  background: inherit;
+  color: #454545;
+
+  font-family: "Inter";
+  font-size: 18px;
+
+  resize: none;
+`;
+
+export const MessageItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
+export const MessageItemAvatar = styled.div`
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  background-color: #fff;
+`;
+
+export const MessageItemDetails = styled.div``;
+
+export const MessageItemHeader = styled.div`
+  .time {
+    color: #6d6d6d;
+    font-size: 14px;
+  }
+
+  .authorName {
+    font-weight: 600;
+    font-size: 16px;
+  }
+`;
+
+export const MessageItemContent = styled.div<MessageItemContentProps>`
+  padding: ${({ padding }) => padding || "0"};
+`;
+
+export const StyledMessagePanelHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: ${SIDEBAR_WIDTH};
+  right: 0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100px;
+  padding: 0 18px;
+
+  background-color: #151515;
+  border-bottom: solid 1px #fff;
 `;

@@ -14,8 +14,6 @@ const ConversationPage = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(conversations);
-
   return (
     <Page>
       <ConversationSidebar conversations={conversations} />
