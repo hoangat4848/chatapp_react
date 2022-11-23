@@ -1,10 +1,22 @@
-import React from "react";
+import React, { Dispatch } from "react";
 import { MessageInput, MessageInputContainer } from "../../utils/styles";
+import { SetStateAction } from "react";
 
-const MessageInputField = () => {
+type Props = {
+  content: string;
+  setContent: Dispatch<SetStateAction<string>>;
+  sendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
+};
+
+const MessageInputField = ({ content, setContent, sendMessage }: Props) => {
   return (
     <MessageInputContainer>
-      <MessageInput></MessageInput>
+      <form onSubmit={sendMessage}>
+        <MessageInput
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        ></MessageInput>
+      </form>
     </MessageInputContainer>
   );
 };

@@ -38,3 +38,8 @@ export type MessageEventPayload = {
   content: string;
   createdAt: string;
 };
+
+export type CreateMessageParams = {
+  content: string;
+  conversationId: number;
+};
