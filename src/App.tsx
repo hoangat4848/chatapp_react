@@ -7,6 +7,7 @@ import ConversationPage from "./pages/ConversationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { AuthContext } from "./utils/context/AuthContext";
+import { socket, SocketContext } from "./utils/context/SocketContext";
 import { User } from "./utils/types";
 
 function App() {
@@ -16,26 +17,27 @@ function App() {
 
   return (
     <AuthContext.Provider value={value}>
-      <Routes>
-        <Route path="/register" element={<RegisterPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-
-        <Route
-          path="/conversations"
-          element={
-            <ProtectedRoutes>
-              <ConversationPage />
-            </ProtectedRoutes>
-          }
-        >
-          <Route index element={<ConversationPanel />}></Route>
-          <Route path=":id" element={<ConversationChannelPage />}></Route>
+      <SocketContext.Provider value={socket}>
+        <Routes>
+          <Route path="/register" element={<RegisterPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
           <Route
-            path=":id/edit"
-            element={<div>Conversation Edit Page</div>}
-          ></Route>
-        </Route>
-      </Routes>
+            path="/conversations"
+            element={
+              <ProtectedRoutes>
+                <ConversationPage />
+              </ProtectedRoutes>
+            }
+          >
+            <Route index element={<ConversationPanel />}></Route>
+            <Route path=":id" element={<ConversationChannelPage />}></Route>
+            <Route
+              path=":id/edit"
+              element={<div>Conversation Edit Page</div>}
+            ></Route>
+          </Route>
+        </Routes>
+      </SocketContext.Provider>
     </AuthContext.Provider>
   );
 }

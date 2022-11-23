@@ -65,31 +65,7 @@ const MessageContainer = ({ messages }: Props) => {
     });
   };
 
-  return (
-    <StyledMessageContainer>
-      {/* {messages.map((message) => (
-        // <MessageItemContainer>
-        //   <MessageItemAvatar />
-        //   <MessageItemDetails>
-        //     <MessageItemHeader>
-        //       <span
-        //         className="authorName"
-        //         style={{
-        //           color: user?.id === message.author.id ? "#5e88ff" : "#757575",
-        //         }}
-        //       >{`${message.author.firstName} ${message.author.lastName} `}</span>
-        //       <span className="time">
-        //         {formatRelative(new Date(message.createdAt), new Date())}
-        //       </span>
-        //     </MessageItemHeader>
-        //     <MessageItemContent>{message.content}</MessageItemContent>
-        //   </MessageItemDetails>
-        // </MessageItemContainer>
-      ))} */}
-
-      {formatMessages()}
-    </StyledMessageContainer>
-  );
+  return <StyledMessageContainer>{formatMessages()}</StyledMessageContainer>;
 };
 
 export default MessageContainer;

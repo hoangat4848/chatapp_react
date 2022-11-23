@@ -283,6 +283,10 @@ export const MessageItemAvatar = styled.div`
 export const MessageItemDetails = styled.div``;
 
 export const MessageItemHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
   .time {
     color: #6d6d6d;
     font-size: 14px;
