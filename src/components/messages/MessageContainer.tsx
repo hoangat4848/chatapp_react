@@ -35,7 +35,9 @@ export const FormattedMessage = ({ user, message }: FormattedMessageProps) => {
             {formatRelative(new Date(message.createdAt), new Date())}
           </span>
         </MessageItemHeader>
-        <MessageItemContent>{message.content}</MessageItemContent>
+        <MessageItemContent padding="8px 0 0 0">
+          {message.content}
+        </MessageItemContent>
       </MessageItemDetails>
     </MessageItemContainer>
   );
@@ -47,21 +49,19 @@ const MessageContainer = ({ messages }: Props) => {
   const formatMessages = () => {
     return messages.map((m, index, arr) => {
       if (index === arr.length - 1) {
-        return <FormattedMessage user={user} message={m} />;
+        return <FormattedMessage key={m.id} user={user} message={m} />;
       }
       const currentMessage = arr[index];
       const nextMessage = arr[index + 1];
       if (currentMessage.author.id === nextMessage.author.id)
         return (
-          <MessageItemContainer>
-            <MessageItemDetails>
-              <MessageItemContent padding="0 0 0 65px">
-                {m.content}
-              </MessageItemContent>
-            </MessageItemDetails>
+          <MessageItemContainer key={m.id}>
+            <MessageItemContent padding="0 0 0 65px">
+              {m.content}
+            </MessageItemContent>
           </MessageItemContainer>
         );
-      else return <FormattedMessage user={user} message={m} />;
+      else return <FormattedMessage key={m.id} user={user} message={m} />;
     });
   };
 
