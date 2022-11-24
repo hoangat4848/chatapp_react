@@ -1,47 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../components/messages/MessagePanel";
 import { AppDispatch } from "../store";
-import { fetchMessagesThunk } from "../store/slices/messageSlice";
-import { getConversationMessages } from "../utils/api";
+import { addMessage, fetchMessagesThunk } from "../store/slices/messageSlice";
 import { SocketContext } from "../utils/context/SocketContext";
 // import { getConversationMessages } from "../utils/api";
 import { StyledConversationChannelPage } from "../utils/styles";
-import { Message, MessageEventPayload } from "../utils/types";
+import { MessageEventPayload } from "../utils/types";
 // import { Message } from "../utils/types";
 
 const ConversationChannelPage = () => {
   const { id } = useParams();
-  const [messages, setMessages] = useState<Message[]>([]);
   const socket = useContext(SocketContext);
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchMessagesThunk(parseInt(id!)));
-
-    return () => {};
-  }, [id]);
+    const conversationId = parseInt(id!);
+    dispatch(fetchMessagesThunk(conversationId));
+  }, [id, dispatch]);
 
   useEffect(() => {
     socket.on("connect", () => alert("Connected"));
     socket.on("onMessage", (payload: MessageEventPayload) => {
       console.log("Message received");
-      const { conversation, ...message } = payload;
-      setMessages((prev) => [message, ...prev]);
-      console.log(payload);
+      dispatch(addMessage(payload));
     });
 
     return () => {
       socket.off("connect");
       socket.off("onMessage");
     };
-  }, []);
+  }, [socket]);
 
   return (
     <StyledConversationChannelPage>
-      <MessagePanel messages={messages} />
+      <MessagePanel />
     </StyledConversationChannelPage>
   );
 };
