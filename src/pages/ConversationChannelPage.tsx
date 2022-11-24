@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../components/messages/MessagePanel";
+import { AppDispatch } from "../store";
+import { fetchMessagesThunk } from "../store/slices/conversationSlice";
 import { getConversationMessages } from "../utils/api";
 import { SocketContext } from "../utils/context/SocketContext";
 // import { getConversationMessages } from "../utils/api";
@@ -13,10 +16,18 @@ const ConversationChannelPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const socket = useContext(SocketContext);
 
+  const dispatch = useDispatch<AppDispatch>();
+
+  // useEffect(() => {
+  //   getConversationMessages(parseInt(id!)).then(({ data }) =>
+  //     setMessages(data)
+  //   );
+  // }, [id]);
+
   useEffect(() => {
-    getConversationMessages(parseInt(id!)).then(({ data }) =>
-      setMessages(data)
-    );
+    dispatch(fetchMessagesThunk(parseInt(id!)));
+
+    return () => {};
   }, [id]);
 
   useEffect(() => {

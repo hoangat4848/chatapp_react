@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Conversation } from "../../utils/types";
-import { getConversations } from "../../utils/api";
+import { Conversation, FetchMessagePayload } from "../../utils/types";
+import { getConversationMessages, getConversations } from "../../utils/api";
 
 interface ConversationState {
-  // conversations: Conversation[];
-  conversations: Map<string, Conversation>;
+  conversations: Conversation[];
+  messages: FetchMessagePayload[];
+  loading: boolean;
 }
 
 // Define the initial state using that type
 const initialState: ConversationState = {
-  conversations: new Map(),
+  conversations: [],
+  messages: [],
+  loading: false,
 };
 
 export const fetchConversationsThunk = createAsyncThunk(
@@ -20,24 +23,43 @@ export const fetchConversationsThunk = createAsyncThunk(
   }
 );
 
+export const fetchMessagesThunk = createAsyncThunk(
+  "messages/fetch",
+  async (id: number) => {
+    return getConversationMessages(id);
+  }
+);
+
 export const conversationSlice = createSlice({
   name: "conversation",
   initialState,
   reducers: {
     addConversation: (state, action: PayloadAction<Conversation>) => {
-      const { id } = action.payload;
       console.log("addConversation");
-      // state.conversations.set(id, action.payload);
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchConversationsThunk.fulfilled, (state, action) => {
-      action.payload.data.forEach((conversation) => {
-        console.log(conversation);
-        state.conversations.set(conversation.id.toString(), conversation);
+    builder
+      .addCase(fetchConversationsThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchConversationsThunk.fulfilled, (state, action) => {
+        state.conversations = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(fetchMessagesThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
+        const { id } = action.payload.data;
+        const index = state.messages.findIndex((cm) => cm.id === id);
+        if (index > -1) {
+          console.log("exists");
+          state.messages[index] = action.payload.data;
+        } else {
+          state.messages.push(action.payload.data);
+        }
       });
-      console.log(state.conversations);
-    });
   },
 });
 

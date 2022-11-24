@@ -300,6 +300,7 @@ export const MessageItemHeader = styled.div`
 
 export const MessageItemContent = styled.div<MessageItemContentProps>`
   padding: ${({ padding }) => padding || "0"};
+  word-break: break-all;
 `;
 
 export const StyledMessagePanelHeader = styled.header`

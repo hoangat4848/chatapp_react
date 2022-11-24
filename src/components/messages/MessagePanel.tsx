@@ -34,7 +34,7 @@ const MessagePanel = ({ messages }: Props) => {
     <StyledMessagePanel>
       <MessagePanelHeader />
       <MessagePanelBody>
-        <MessageContainer messages={messages} />
+        <MessageContainer />
         <MessageInputField
           content={content}
           setContent={setContent}

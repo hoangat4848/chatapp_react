@@ -36,6 +36,11 @@ export type Message = {
   author: User;
 };
 
+export type FetchMessagePayload = {
+  id: number;
+  messages: Message[];
+};
+
 export type MessageEventPayload = {
   id: number;
   conversation: Conversation;

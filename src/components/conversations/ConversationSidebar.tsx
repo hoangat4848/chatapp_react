@@ -41,7 +41,7 @@ const ConversationSidebar = () => {
           </div>
         </ConversationSiderbarHeader>
         <ConversationSidebarContainer>
-          {Array.from(conversations).map(([_, conversation]) => (
+          {conversations.map((conversation) => (
             <ConversationSidebarItem
               key={conversation.id}
               onClick={() => navigate(`/conversations/${conversation.id}`)}
