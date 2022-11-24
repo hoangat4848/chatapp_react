@@ -1,6 +1,7 @@
 import React, { Dispatch } from "react";
 import { MessageInput, MessageInputContainer } from "../../utils/styles";
 import { SetStateAction } from "react";
+import styles from "./index.module.scss";
 
 type Props = {
   content: string;
@@ -11,7 +12,7 @@ type Props = {
 const MessageInputField = ({ content, setContent, sendMessage }: Props) => {
   return (
     <MessageInputContainer>
-      <form onSubmit={sendMessage}>
+      <form onSubmit={sendMessage} className={styles.form}>
         <MessageInput
           value={content}
           onChange={(e) => setContent(e.target.value)}
