@@ -3,7 +3,7 @@ import {
   Conversation,
   CreateMessageParams,
   CreateUserParams,
-  FetchMessagePayload,
+  ConversationMessage,
   Message,
   User,
   UserCredentialsParams,
@@ -28,7 +28,7 @@ export const getConversations = () =>
   axios.get<Conversation[]>(`${REACT_APP_API_URL}/conversations`, config);
 
 export const getConversationMessages = (conversationId: number) =>
-  axios.get<FetchMessagePayload>(
+  axios.get<ConversationMessage>(
     `${REACT_APP_API_URL}/messages/${conversationId}`,
     config
   );

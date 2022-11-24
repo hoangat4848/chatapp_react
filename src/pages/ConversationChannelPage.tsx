@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../components/messages/MessagePanel";
 import { AppDispatch } from "../store";
-import { fetchMessagesThunk } from "../store/slices/conversationSlice";
+import { fetchMessagesThunk } from "../store/slices/messageSlice";
 import { getConversationMessages } from "../utils/api";
 import { SocketContext } from "../utils/context/SocketContext";
 // import { getConversationMessages } from "../utils/api";
@@ -18,12 +18,6 @@ const ConversationChannelPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  // useEffect(() => {
-  //   getConversationMessages(parseInt(id!)).then(({ data }) =>
-  //     setMessages(data)
-  //   );
-  // }, [id]);
-
   useEffect(() => {
     dispatch(fetchMessagesThunk(parseInt(id!)));
 
@@ -36,6 +30,7 @@ const ConversationChannelPage = () => {
       console.log("Message received");
       const { conversation, ...message } = payload;
       setMessages((prev) => [message, ...prev]);
+      console.log(payload);
     });
 
     return () => {

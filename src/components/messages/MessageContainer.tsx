@@ -48,9 +48,8 @@ const MessageContainer = () => {
   const messages =
     useSelector(
       (state: RootState) =>
-        state.conversation.messages.find(
-          (m) => m.id === parseInt(conversationId!)
-        )?.messages
+        state.message.messages.find((m) => m.id === parseInt(conversationId!))
+          ?.messages
     ) ?? [];
 
   const formatMessages = () => {
