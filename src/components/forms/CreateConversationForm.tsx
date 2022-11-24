@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addConversation } from "../../store/slices/conversationSlice";
 import {
   Button,
   InputContainer,
@@ -9,6 +11,8 @@ import {
 import styles from "./index.module.scss";
 
 const CreateConversationForm = () => {
+  const dispatch = useDispatch();
+
   return (
     <form className={styles.createConversationForm}>
       <InputContainer backgroundColor="#161616">
@@ -22,7 +26,13 @@ const CreateConversationForm = () => {
         </InputContainer>
       </section>
 
-      <Button>Create Conversation</Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+        }}
+      >
+        Create Conversation
+      </Button>
     </form>
   );
 };
