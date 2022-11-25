@@ -7,6 +7,7 @@ import {
   Message,
   User,
   UserCredentialsParams,
+  CreateConversationParams,
 } from "./types";
 
 const { REACT_APP_API_URL } = process.env;
@@ -35,3 +36,6 @@ export const getConversationMessages = (conversationId: number) =>
 
 export const postNewMessage = (data: CreateMessageParams) =>
   axios.post(`${REACT_APP_API_URL}/messages`, data, config);
+
+export const postNewConversation = (data: CreateConversationParams) =>
+  axios.post<Conversation>(`${REACT_APP_API_URL}/conversations`, data, config);

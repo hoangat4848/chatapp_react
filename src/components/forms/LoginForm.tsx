@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { postLoginUser } from "../../utils/api";
@@ -19,7 +19,6 @@ const LoginForm = () => {
   } = useForm<UserCredentialsParams>();
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data: UserCredentialsParams) => {
     try {

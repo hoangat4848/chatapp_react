@@ -6,10 +6,8 @@ import { AppDispatch } from "../store";
 import { updateConversation } from "../store/slices/conversationSlice";
 import { addMessage, fetchMessagesThunk } from "../store/slices/messageSlice";
 import { SocketContext } from "../utils/context/SocketContext";
-// import { getConversationMessages } from "../utils/api";
 import { StyledConversationChannelPage } from "../utils/styles";
 import { MessageEventPayload } from "../utils/types";
-// import { Message } from "../utils/types";
 
 const ConversationChannelPage = () => {
   const { id } = useParams();
@@ -23,23 +21,25 @@ const ConversationChannelPage = () => {
   }, [id, dispatch]);
 
   useEffect(() => {
-    socket.on("connect", () => alert("Connected"));
+    socket.emit("onClientConnect", { conversationId: parseInt(id!) });
     socket.on("onMessage", (payload: MessageEventPayload) => {
-      console.dir(payload);
-
       dispatch(addMessage(payload));
       dispatch(updateConversation(payload.conversation));
     });
 
     return () => {
-      socket.off("connect");
+      socket.off("connected");
       socket.off("onMessage");
     };
-  }, [socket]);
+  }, [socket, dispatch]);
+
+  const sendTypingStatus = () => {
+    socket.emit("onUserTyping", { conversationId: id });
+  };
 
   return (
     <StyledConversationChannelPage>
-      <MessagePanel />
+      <MessagePanel sendTypingStatus={sendTypingStatus} />
     </StyledConversationChannelPage>
   );
 };

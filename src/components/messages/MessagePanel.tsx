@@ -6,7 +6,11 @@ import MessageContainer from "./MessageContainer";
 import MessageInputField from "./MessageInputField";
 import MessagePanelHeader from "./MessagePanelHeader";
 
-const MessagePanel = () => {
+type Props = {
+  sendTypingStatus: () => void;
+};
+
+const MessagePanel = ({ sendTypingStatus }: Props) => {
   const [content, setContent] = useState("");
   const { id } = useParams();
 
@@ -35,6 +39,7 @@ const MessagePanel = () => {
           content={content}
           setContent={setContent}
           sendMessage={sendMessage}
+          sendTypingStatus={sendTypingStatus}
         />
       </MessagePanelBody>
     </StyledMessagePanel>
