@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../components/messages/MessagePanel";
 import { AppDispatch } from "../store";
+import { updateConversation } from "../store/slices/conversationSlice";
 import { addMessage, fetchMessagesThunk } from "../store/slices/messageSlice";
 import { SocketContext } from "../utils/context/SocketContext";
 // import { getConversationMessages } from "../utils/api";
@@ -24,8 +25,10 @@ const ConversationChannelPage = () => {
   useEffect(() => {
     socket.on("connect", () => alert("Connected"));
     socket.on("onMessage", (payload: MessageEventPayload) => {
-      console.log("Message received");
+      console.dir(payload);
+
       dispatch(addMessage(payload));
+      dispatch(updateConversation(payload.conversation));
     });
 
     return () => {

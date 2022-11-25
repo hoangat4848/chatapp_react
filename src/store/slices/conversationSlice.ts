@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Conversation, ConversationMessage } from "../../utils/types";
 import { getConversations } from "../../utils/api";
+import { startOfYesterday } from "date-fns";
 
 interface ConversationState {
   conversations: Conversation[];
@@ -9,7 +10,6 @@ interface ConversationState {
   loading: boolean;
 }
 
-// Define the initial state using that type
 const initialState: ConversationState = {
   conversations: [],
   messages: [],
@@ -30,6 +30,14 @@ export const conversationSlice = createSlice({
     addConversation: (state, action: PayloadAction<Conversation>) => {
       console.log("addConversation");
     },
+    updateConversation: (state, action: PayloadAction<Conversation>) => {
+      const updatedConversation = action.payload;
+      const index = state.conversations.findIndex(
+        (c) => c.id === updatedConversation.id
+      );
+      state.conversations.splice(index, 1);
+      state.conversations.unshift(updatedConversation);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -43,6 +51,7 @@ export const conversationSlice = createSlice({
   },
 });
 
-export const { addConversation } = conversationSlice.actions;
+export const { addConversation, updateConversation } =
+  conversationSlice.actions;
 
 export default conversationSlice.reducer;

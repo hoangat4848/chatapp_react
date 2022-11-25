@@ -26,7 +26,10 @@ export const messageSlice = createSlice({
     addMessage: (state, action: PayloadAction<MessageEventPayload>) => {
       console.log(state);
       console.log(action);
-      const { conversation, ...newMessage } = action.payload;
+      const {
+        conversation,
+        message: { conversation: messageConversation, ...newMessage },
+      } = action.payload;
       const conversationMessage = state.messages.find(
         (cm) => cm.id === conversation.id
       );
@@ -42,7 +45,6 @@ export const messageSlice = createSlice({
         const { id } = action.payload.data;
         const index = state.messages.findIndex((cm) => cm.id === id);
         if (index > -1) {
-          console.log("exists");
           state.messages[index] = action.payload.data;
         } else {
           state.messages.push(action.payload.data);
