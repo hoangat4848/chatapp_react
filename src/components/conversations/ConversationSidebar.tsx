@@ -54,7 +54,7 @@ const ConversationSidebar = () => {
                   }`}
                 </span>
                 <span className={styles.conversationLastMessage}>
-                  {conversation.lastMessageSent.content}
+                  {conversation.lastMessageSent?.content}
                 </span>
               </div>
             </ConversationSidebarItem>

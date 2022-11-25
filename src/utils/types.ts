@@ -22,7 +22,8 @@ export type Conversation = {
   creator: User;
   recipient: User;
   createdAt: string;
-  lastMessageSent: Message;
+  lastMessageSent?: Message;
+  lastMessageSentAt: string;
 };
 
 export type CreateConversationParams = {

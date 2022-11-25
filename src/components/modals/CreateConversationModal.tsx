@@ -7,6 +7,7 @@ import { MdClose } from "react-icons/md";
 type Props = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 const CreateConversationModal = ({ setShowModal }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
 
