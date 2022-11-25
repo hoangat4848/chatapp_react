@@ -1,7 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Conversation, CreateConversationParams } from "../../utils/types";
 import { getConversations, postNewConversation } from "../../utils/api";
+import { RootState } from "..";
 
 interface ConversationState {
   conversations: Conversation[];
@@ -57,6 +62,18 @@ export const conversationSlice = createSlice({
       });
   },
 });
+
+const selectConversations = (state: RootState) =>
+  state.conversation.conversations;
+
+const selectConversationId = (state: RootState, id: number) => id;
+
+export const selectConversationById = createSelector(
+  [selectConversations, selectConversationId],
+  (conversations, conversationId) => {
+    return conversations.find((c) => c.id === conversationId);
+  }
+);
 
 export const { addConversation, updateConversation } =
   conversationSlice.actions;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import {
   addConversation,
@@ -28,13 +29,14 @@ const CreateConversationForm = ({ setShowModal }: Props) => {
   } = useForm<CreateConversationParams>();
 
   const dispatch = useDispatch<AppDispatch>();
-
-  console.log(setShowModal);
+  const navigate = useNavigate();
 
   const onSubmit = (data: CreateConversationParams) => {
     dispatch(createConversationThunk(data))
-      .then(() => {
+      .unwrap()
+      .then(({ data }) => {
         setShowModal(false);
+        navigate(`/conversations/${data.id}`);
       })
       .catch((err) => console.log(err));
   };
