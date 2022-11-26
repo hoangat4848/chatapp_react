@@ -37,14 +37,14 @@ export const conversationSlice = createSlice({
   initialState,
   reducers: {
     addConversation: (state, action: PayloadAction<Conversation>) => {
-      console.log("addConversation");
+      state.conversations.unshift(action.payload);
     },
     updateConversation: (state, action: PayloadAction<Conversation>) => {
       const updatedConversation = action.payload;
       const index = state.conversations.findIndex(
         (c) => c.id === updatedConversation.id
       );
-      state.conversations.splice(index, 1);
+      if (index > -1) state.conversations.splice(index, 1);
       state.conversations.unshift(updatedConversation);
     },
   },
