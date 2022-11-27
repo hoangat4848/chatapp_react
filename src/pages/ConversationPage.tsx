@@ -8,10 +8,14 @@ import {
   fetchConversationsThunk,
   updateConversation,
 } from "../store/slices/conversationSlice";
-import { addMessage } from "../store/slices/messageSlice";
+import { addMessage, deleteMessage } from "../store/slices/messageSlice";
 import { SocketContext } from "../utils/context/SocketContext";
 import { Page } from "../utils/styles";
-import { Conversation, MessageEventPayload } from "../utils/types";
+import {
+  Conversation,
+  DeleteMessageResponse,
+  MessageEventPayload,
+} from "../utils/types";
 
 const ConversationPage = () => {
   const { id } = useParams();
@@ -25,14 +29,17 @@ const ConversationPage = () => {
       dispatch(updateConversation(payload.conversation));
     });
     socket.on("onConversation", (payload: Conversation) => {
-      console.log(payload);
       dispatch(addConversation(payload));
+    });
+    socket.on("onMessageDelete", (payload: DeleteMessageResponse) => {
+      dispatch(deleteMessage(payload));
     });
 
     return () => {
       socket.off("connected");
       socket.off("onMessage");
       socket.off("onConversation");
+      socket.off("onMessageDelete");
     };
   }, [socket, dispatch]);
 

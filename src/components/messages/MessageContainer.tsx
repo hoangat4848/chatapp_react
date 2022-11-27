@@ -73,7 +73,6 @@ const MessageContainer = () => {
     message: Message
   ) => {
     e.preventDefault();
-    console.log(message);
     setPoint({ x: e.pageX, y: e.pageY });
     setShowContextMenu(true);
     setSelectedMessage(message);
