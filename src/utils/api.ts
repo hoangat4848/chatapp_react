@@ -8,29 +8,30 @@ import {
   User,
   UserCredentialsParams,
   CreateConversationParams,
+  DeleteMessageParams,
 } from "./types";
 
-const { REACT_APP_API_URL } = process.env;
+const { REACT_APP_API_URL: API_URL } = process.env;
 
 const config: AxiosRequestConfig = {
   withCredentials: true,
 };
 
 export const postRegisterUser = (data: CreateUserParams) =>
-  axios.post(`${REACT_APP_API_URL}/auth/register`, data, config);
+  axios.post(`${API_URL}/auth/register`, data, config);
 
 export const postLoginUser = (data: UserCredentialsParams) =>
-  axios.post(`${REACT_APP_API_URL}/auth/login`, data, config);
+  axios.post(`${API_URL}/auth/login`, data, config);
 
 export const getAuthUser = () =>
-  axios.get<User>(`${REACT_APP_API_URL}/auth/status`, config);
+  axios.get<User>(`${API_URL}/auth/status`, config);
 
 export const getConversations = () =>
-  axios.get<Conversation[]>(`${REACT_APP_API_URL}/conversations`, config);
+  axios.get<Conversation[]>(`${API_URL}/conversations`, config);
 
 export const getConversationMessages = (conversationId: number) =>
   axios.get<ConversationMessage>(
-    `${REACT_APP_API_URL}/conversations/${conversationId}/messages`,
+    `${API_URL}/conversations/${conversationId}/messages`,
     config
   );
 
@@ -39,10 +40,19 @@ export const postNewMessage = (
   data: CreateMessageParams
 ) =>
   axios.post(
-    `${REACT_APP_API_URL}/conversations/${conversationId}/messages`,
+    `${API_URL}/conversations/${conversationId}/messages`,
     data,
     config
   );
 
 export const postNewConversation = (data: CreateConversationParams) =>
-  axios.post<Conversation>(`${REACT_APP_API_URL}/conversations`, data, config);
+  axios.post<Conversation>(`${API_URL}/conversations`, data, config);
+
+export const deleteMessage = ({
+  conversationId,
+  messageId,
+}: DeleteMessageParams) =>
+  axios.delete(
+    `${API_URL}/conversations/${conversationId}/messages/${messageId}`,
+    config
+  );

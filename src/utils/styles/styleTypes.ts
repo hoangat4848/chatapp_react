@@ -11,3 +11,8 @@ export type InputContainerProps = Partial<{
 export type MessageItemContentProps = Partial<{
   padding: string;
 }>;
+
+export type ContextMenuProps = Partial<{
+  top: number;
+  left: number;
+}>;

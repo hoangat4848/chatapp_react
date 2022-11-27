@@ -52,3 +52,8 @@ export type MessageEventPayload = {
 export type CreateMessageParams = {
   content: string;
 };
+
+export type DeleteMessageParams = {
+  conversationId: number;
+  messageId: number;
+};

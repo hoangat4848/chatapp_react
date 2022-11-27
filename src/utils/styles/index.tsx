@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
+  ContextMenuProps,
   InputContainerProps,
   MessageItemContentProps,
   PageProps,
@@ -317,4 +318,36 @@ export const StyledMessagePanelHeader = styled.header`
 
   background-color: #151515;
   border-bottom: solid 1px #fff;
+`;
+
+export const ContextMenu = styled.div<ContextMenuProps>`
+  position: fixed;
+  ${(props) => css`
+    top: ${props.top}px;
+    left: ${props.left}px;
+  `}
+
+  box-sizing: border-box;
+  width: 200px;
+
+  border-radius: 8px;
+
+  background-color: #252525;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+  }
+
+  ul li {
+    padding: 14px 16px;
+
+    border-radius: 8px;
+  }
+
+  ul li:hover {
+    cursor: pointer;
+    background-color: #1f1f1f;
+  }
 `;
