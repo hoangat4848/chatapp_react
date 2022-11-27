@@ -20,8 +20,7 @@ const MessagePanel = ({ sendTypingStatus }: Props) => {
     const conversationId = parseInt(id);
 
     try {
-      await postNewMessage({
-        conversationId,
+      await postNewMessage(conversationId, {
         content,
       });
       setContent("");
