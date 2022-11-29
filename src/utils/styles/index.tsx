@@ -218,7 +218,7 @@ export const MessagePanelBody = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 20px;
+  padding: 20px 20px 6px;
 
   height: 100%;
 
@@ -350,4 +350,15 @@ export const ContextMenu = styled.div<ContextMenuProps>`
     cursor: pointer;
     background-color: #1f1f1f;
   }
+`;
+
+export const MessageTypingStatus = styled.div`
+  width: 100%;
+  min-height: 20px;
+  padding: 2.5px 0;
+
+  color: #6a6a6a;
+
+  font-size: 12px;
+  font-weight: bold;
 `;

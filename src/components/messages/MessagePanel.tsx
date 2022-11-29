@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { RootState } from "../../store";
+import { selectConversationById } from "../../store/slices/conversationSlice";
 import { postNewMessage } from "../../utils/api";
-import { MessagePanelBody, StyledMessagePanel } from "../../utils/styles";
+import { AuthContext } from "../../utils/context/AuthContext";
+import { getRecipientFromConversation } from "../../utils/helpers";
+import {
+  MessagePanelBody,
+  MessageTypingStatus,
+  StyledMessagePanel,
+} from "../../utils/styles";
 import MessageContainer from "./MessageContainer";
 import MessageInputField from "./MessageInputField";
 import MessagePanelHeader from "./MessagePanelHeader";
 
 type Props = {
-  sendTypingStatus: () => void;
+  sendTypingStatus: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  isRecipientTyping: boolean;
 };
 
-const MessagePanel = ({ sendTypingStatus }: Props) => {
+const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
   const [content, setContent] = useState("");
   const { id } = useParams();
+
+  const { user } = useContext(AuthContext);
+
+  const conversation = useSelector((state: RootState) =>
+    selectConversationById(state, parseInt(id!))
+  );
+
+  const recipient = getRecipientFromConversation(user, conversation);
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,6 +58,9 @@ const MessagePanel = ({ sendTypingStatus }: Props) => {
           sendMessage={sendMessage}
           sendTypingStatus={sendTypingStatus}
         />
+        <MessageTypingStatus>
+          {isRecipientTyping && `${recipient?.firstName} is typing...`}
+        </MessageTypingStatus>
       </MessagePanelBody>
     </StyledMessagePanel>
   );

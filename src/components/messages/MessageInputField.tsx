@@ -7,7 +7,7 @@ type Props = {
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   sendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
-  sendTypingStatus: () => void;
+  sendTypingStatus: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const MessageInputField = ({
@@ -27,7 +27,6 @@ const MessageInputField = ({
           />
         </form>
       </MessageInputContainer>
-      <div>Is Typing</div>
     </>
   );
 };
