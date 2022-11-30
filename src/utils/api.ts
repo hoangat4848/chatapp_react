@@ -4,12 +4,12 @@ import {
   CreateMessageParams,
   CreateUserParams,
   ConversationMessage,
-  Message,
   User,
   UserCredentialsParams,
   CreateConversationParams,
   DeleteMessageParams,
   DeleteMessageResponse,
+  EditMessagePayload,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -55,5 +55,18 @@ export const deleteMessage = ({
 }: DeleteMessageParams) =>
   axios.delete<DeleteMessageResponse>(
     `${API_URL}/conversations/${conversationId}/messages/${messageId}`,
+    config
+  );
+
+export const editMessage = ({
+  conversationId,
+  messageId,
+  content,
+}: EditMessagePayload) =>
+  axios.patch(
+    `${API_URL}/conversations/${conversationId}/messages/${messageId}`,
+    {
+      content,
+    },
     config
   );

@@ -62,3 +62,9 @@ export type DeleteMessageResponse = {
   conversationId: number;
   messageId: number;
 };
+
+export type EditMessagePayload = {
+  conversationId: number;
+  messageId: number;
+  content: string;
+};

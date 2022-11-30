@@ -270,6 +270,8 @@ export const MessageItemContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
+
+  width: 100%;
 `;
 
 export const MessageItemAvatar = styled.div`
@@ -281,7 +283,9 @@ export const MessageItemAvatar = styled.div`
   background-color: #fff;
 `;
 
-export const MessageItemDetails = styled.div``;
+export const MessageItemDetails = styled.div`
+  width: 100%;
+`;
 
 export const MessageItemHeader = styled.div`
   display: flex;
@@ -301,6 +305,7 @@ export const MessageItemHeader = styled.div`
 
 export const MessageItemContent = styled.div<MessageItemContentProps>`
   padding: ${({ padding }) => padding || "0"};
+  width: 100%;
 `;
 
 export const StyledMessagePanelHeader = styled.header`
@@ -361,4 +366,30 @@ export const MessageTypingStatus = styled.div`
 
   font-size: 12px;
   font-weight: bold;
+`;
+
+export const EditMessageInputField = styled.input`
+  display: block;
+
+  width: 100%;
+  padding: 15px 22px;
+  margin: 4px 0;
+
+  outline: none;
+  border: none;
+  border-radius: 5px;
+
+  background-color: #222222;
+  color: #fff;
+
+  font-size: 16px;
+  font-family: "Inter";
+`;
+
+export const EditMessageActionsContainer = styled.div`
+  font-size: 12px;
+
+  & span {
+    color: #1d77ff;
+  }
 `;
