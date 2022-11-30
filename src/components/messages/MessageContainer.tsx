@@ -88,6 +88,7 @@ const MessageContainer = () => {
             message={m}
             onContextMenu={(e) => onContextMenu(e, m)}
             isEditing={isEditing}
+            setIsEditing={setIsEditing}
             selectedEditMessage={selectedEditMessage}
             setSelectedEditMessage={setSelectedEditMessage}
             onEditMessageInputChange={onEditMessageInputChange}
@@ -104,6 +105,7 @@ const MessageContainer = () => {
                 <EditMessageContainer
                   selectedEditMessage={selectedEditMessage}
                   onEditMessageChange={onEditMessageInputChange}
+                  setIsEditing={setIsEditing}
                 />
               ) : (
                 m.content

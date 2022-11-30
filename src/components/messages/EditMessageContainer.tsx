@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch } from "../../store";
@@ -12,11 +12,14 @@ import styles from "./index.module.scss";
 
 type Props = {
   selectedEditMessage: Message;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
   onEditMessageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
 const EditMessageContainer = ({
   selectedEditMessage,
   onEditMessageChange,
+  setIsEditing,
 }: Props) => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +31,14 @@ const EditMessageContainer = ({
       messageId: selectedEditMessage.id,
       content: selectedEditMessage.content,
     };
-    dispatch(editMessageThunk(params));
+    dispatch(editMessageThunk(params))
+      .then(() => {
+        setIsEditing(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsEditing(false);
+      });
   };
 
   return (

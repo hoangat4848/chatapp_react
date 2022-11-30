@@ -9,7 +9,6 @@ import {
   DeleteMessageParams,
   DeleteMessageResponse,
   EditMessagePayload,
-  Message,
   MessageEventPayload,
 } from "../../utils/types";
 
@@ -103,6 +102,19 @@ export const messageSlice = createSlice({
         if (messageIndex !== -1) {
           conversationMessages.messages.splice(messageIndex, 1);
         }
+      })
+      .addCase(editMessageThunk.fulfilled, (state, action) => {
+        const { data: editedMessage } = action.payload;
+        const conversation = editedMessage.conversation;
+        if (!conversation) return;
+        const conversationMessage = state.messages.find(
+          (cm) => cm.id === conversation.id
+        );
+        if (!conversationMessage) return;
+        const messageIndex = conversationMessage.messages.findIndex(
+          (m) => m.id === editedMessage.id
+        );
+        conversationMessage.messages[messageIndex] = editedMessage;
       });
   },
 });

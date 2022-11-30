@@ -10,6 +10,7 @@ import {
   DeleteMessageParams,
   DeleteMessageResponse,
   EditMessagePayload,
+  Message,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -63,7 +64,7 @@ export const editMessage = ({
   messageId,
   content,
 }: EditMessagePayload) =>
-  axios.patch(
+  axios.patch<Message>(
     `${API_URL}/conversations/${conversationId}/messages/${messageId}`,
     {
       content,

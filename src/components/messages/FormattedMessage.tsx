@@ -10,24 +10,26 @@ import {
 import { Message, User } from "../../utils/types";
 import EditMessageContainer from "./EditMessageContainer";
 
-type FormattedMessageProps = {
+type Props = {
   user?: User;
   message: Message;
   onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  isEditing: boolean;
   selectedEditMessage: Message | undefined;
   setSelectedEditMessage: Dispatch<SetStateAction<Message | undefined>>;
   onEditMessageInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isEditing: boolean;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 export const FormattedMessage = ({
   user,
   message,
   onContextMenu,
-  isEditing,
   selectedEditMessage,
   setSelectedEditMessage,
   onEditMessageInputChange,
-}: FormattedMessageProps) => {
+  isEditing,
+  setIsEditing,
+}: Props) => {
   return (
     <MessageItemContainer onContextMenu={onContextMenu}>
       <MessageItemAvatar />
@@ -48,6 +50,7 @@ export const FormattedMessage = ({
             <EditMessageContainer
               selectedEditMessage={selectedEditMessage}
               onEditMessageChange={onEditMessageInputChange}
+              setIsEditing={setIsEditing}
             />
           ) : (
             message.content
