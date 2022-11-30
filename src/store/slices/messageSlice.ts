@@ -9,6 +9,7 @@ import {
   DeleteMessageParams,
   DeleteMessageResponse,
   EditMessagePayload,
+  Message,
   MessageEventPayload,
 } from "../../utils/types";
 
@@ -73,6 +74,19 @@ export const messageSlice = createSlice({
         conversationMessages.messages.splice(messageIndex, 1);
       }
     },
+    editMessage: (state, action: PayloadAction<Message>) => {
+      const editedMessage = action.payload;
+      const conversation = editedMessage.conversation;
+      if (!conversation) return;
+      const conversationMessage = state.messages.find(
+        (cm) => cm.id === conversation.id
+      );
+      if (!conversationMessage) return;
+      const messageIndex = conversationMessage.messages.findIndex(
+        (m) => m.id === editedMessage.id
+      );
+      conversationMessage.messages[messageIndex] = editedMessage;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -119,6 +133,6 @@ export const messageSlice = createSlice({
   },
 });
 
-export const { addMessage, deleteMessage } = messageSlice.actions;
+export const { addMessage, deleteMessage, editMessage } = messageSlice.actions;
 
 export default messageSlice.reducer;

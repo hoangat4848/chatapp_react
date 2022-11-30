@@ -18,12 +18,10 @@ import {
 } from "../utils/types";
 
 const ConversationPage = () => {
-  const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    socket.emit("onClientConnect", { conversationId: parseInt(id!) });
     socket.on("onMessage", (payload: MessageEventPayload) => {
       dispatch(addMessage(payload));
       dispatch(updateConversation(payload.conversation));
@@ -45,7 +43,7 @@ const ConversationPage = () => {
 
   useEffect(() => {
     dispatch(fetchConversationsThunk());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Page>

@@ -31,6 +31,7 @@ const EditMessageContainer = ({
       messageId: selectedEditMessage.id,
       content: selectedEditMessage.content,
     };
+
     dispatch(editMessageThunk(params))
       .then(() => {
         setIsEditing(false);
