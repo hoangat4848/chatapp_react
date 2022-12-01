@@ -23,8 +23,6 @@ const MessageContainer = () => {
   const [selectedMessage, setSelectedMessage] = useState<Message>();
   const [selectedEditMessage, setSelectedEditMessage] = useState<Message>();
   const [isEditing, setIsEditing] = useState(false);
-  const [originalEditMessage, setOriginalEditMessage] =
-    useState(selectedMessage);
   const { user } = useContext(AuthContext);
   const { id: conversationId } = useParams();
   const messages =
@@ -39,6 +37,7 @@ const MessageContainer = () => {
     message: Message
   ) => {
     e.preventDefault();
+    if (message.author.id !== user?.id) return;
     setContextMenuPosition({ x: e.pageX, y: e.pageY });
     setShowContextMenu(true);
     setSelectedMessage(message);
@@ -113,6 +112,7 @@ const MessageContainer = () => {
             </MessageItemContent>
           </MessageItemContainer>
         );
+      else return null;
     });
   };
 

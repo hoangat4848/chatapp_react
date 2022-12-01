@@ -40,8 +40,6 @@ const SelectedMessageContextMenu = ({ point, setIsEditing }: Props) => {
         {message?.author.id === user?.id && (
           <li onClick={handleEditClick}>Edit</li>
         )}
-
-        <li>Placeholder</li>
       </ul>
     </ContextMenu>
   );
