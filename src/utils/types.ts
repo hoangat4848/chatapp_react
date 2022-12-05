@@ -68,3 +68,24 @@ export type EditMessagePayload = {
   messageId: number;
   content: string;
 };
+
+export type ConversationSelectedProps = {
+  selected: boolean;
+};
+
+export type ConversationType = "private" | "group";
+
+export type ConversationTypeData = {
+  type: ConversationType;
+  label: string;
+};
+
+export type Group = {
+  id: number;
+  title?: string;
+  users: User[];
+  creator: User;
+  messages: Message[];
+  lastMessageSent: Message;
+  lastMessageSentAt: Date;
+};

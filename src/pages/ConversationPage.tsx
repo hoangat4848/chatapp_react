@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import ConversationSidebar from "../components/conversations/ConversationSidebar";
 import { AppDispatch } from "../store";
 import {
@@ -9,6 +9,7 @@ import {
   updateConversation,
 } from "../store/slices/conversationSlice";
 import { addMessage, deleteMessage } from "../store/slices/messageSlice";
+import { updateType } from "../store/slices/selectedSlice";
 import { SocketContext } from "../utils/context/SocketContext";
 import { Page } from "../utils/styles";
 import {
@@ -20,6 +21,11 @@ import {
 const ConversationPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    dispatch(updateType("private"));
+    dispatch(fetchConversationsThunk());
+  }, [dispatch]);
 
   useEffect(() => {
     socket.on("onMessage", (payload: MessageEventPayload) => {
@@ -40,10 +46,6 @@ const ConversationPage = () => {
       socket.off("onMessageDelete");
     };
   }, [socket, dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchConversationsThunk());
-  }, [dispatch]);
 
   return (
     <Page>

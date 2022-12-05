@@ -11,6 +11,7 @@ import {
   DeleteMessageResponse,
   EditMessagePayload,
   Message,
+  Group,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -71,3 +72,6 @@ export const editMessage = ({
     },
     config
   );
+
+export const fetchGroups = () =>
+  axios.get<Group[]>(`${API_URL}/groups`, config);
