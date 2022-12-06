@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
+import { selectConversationMessage } from "../../store/slices/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { MessageMenuContext } from "../../utils/context/MessageMenuContext";
 import {
@@ -24,13 +25,11 @@ const MessageContainer = () => {
   const [selectedEditMessage, setSelectedEditMessage] = useState<Message>();
   const [isEditing, setIsEditing] = useState(false);
   const { user } = useContext(AuthContext);
-  const { id: conversationId } = useParams();
-  const messages =
-    useSelector(
-      (state: RootState) =>
-        state.message.messages.find((m) => m.id === parseInt(conversationId!))
-          ?.messages
-    ) ?? [];
+
+  const { id } = useParams();
+  const conversationMessages = useSelector((state: RootState) =>
+    selectConversationMessage(state, parseInt(id!))
+  );
 
   const onContextMenu = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -70,10 +69,12 @@ const MessageContainer = () => {
       setSelectedMessage(undefined);
       setIsEditing(false);
     };
-  }, [conversationId]);
+  }, [id]);
 
   const formatMessages = () => {
-    return messages.map((m, index, arr) => {
+    if (!conversationMessages) return [];
+    console.log(conversationMessages);
+    return conversationMessages.messages.map((m, index, arr) => {
       const currentMessage = arr[index];
       const nextMessage = arr[index + 1];
       if (

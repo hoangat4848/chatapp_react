@@ -1,3 +1,4 @@
+import { Message } from "react-hook-form";
 import { Conversation, User } from "./types";
 
 export const getRecipientFromConversation = (
