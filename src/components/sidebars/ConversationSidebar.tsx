@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  ConversationSearchbar,
   ConversationSidebarContainer,
   ConversationSiderbarHeader,
   StyledConversationSidebar,
@@ -8,8 +9,8 @@ import { BsPencilSquare } from "react-icons/bs";
 import CreateConversationModal from "../modals/CreateConversationModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import ConversationSelected from "./ConversationSelected";
-import ConversationSidebarItem from "./ConversationSidebarItem";
+import ConversationTab from "../conversations/ConversationSelected";
+import ConversationSidebarItem from "../conversations/ConversationSidebarItem";
 import GroupSidebarItem from "../groups/GroupSidebarItem";
 
 const ConversationSidebar = () => {
@@ -30,13 +31,10 @@ const ConversationSidebar = () => {
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
       <StyledConversationSidebar>
         <ConversationSiderbarHeader>
-          <h1>Conversations</h1>
-          <div onClick={() => setShowModal(true)}>
-            <BsPencilSquare size={30} />
-          </div>
+          <ConversationSearchbar placeholder="Search for conversation..." />
+          <ConversationTab />
         </ConversationSiderbarHeader>
         <ConversationSidebarContainer>
-          <ConversationSelected />
           <section>
             {selectedConversationType === "private"
               ? conversations.map((conversation) => (

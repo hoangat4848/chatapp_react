@@ -17,6 +17,6 @@ export type ContextMenuProps = Partial<{
   left: number;
 }>;
 
-export type ConversationSelectedProps = {
+export type ConversationTabItemProps = {
   selected: boolean;
 };

@@ -3,8 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { Socket } from "socket.io-client";
 import ConversationPanel from "./components/conversations/ConversationPanel";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
-import ConversationChannelPage from "./pages/ConversationChannelPage";
-import ConversationPage from "./pages/ConversationPage";
+import ConversationChannelPage from "./pages/conversation/ConversationChannelPage";
+import ConversationPage from "./pages/conversation/ConversationPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { AuthContext } from "./utils/context/AuthContext";
@@ -15,6 +15,7 @@ import { store } from "./store";
 import { enableMapSet } from "immer";
 import GroupPage from "./pages/group/GroupPage";
 import GroupChannelPage from "./pages/group/GroupChannelPage";
+import { AppPage } from "./pages/AppPage";
 
 enableMapSet();
 
@@ -54,26 +55,21 @@ function App() {
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route
-          path="/conversations"
           element={
             <ProtectedRoutes>
-              <ConversationPage />
+              <AppPage />
             </ProtectedRoutes>
           }
         >
-          <Route index element={<ConversationPanel />}></Route>
-          <Route path=":id" element={<ConversationChannelPage />}></Route>
-        </Route>
-        <Route
-          path="/groups"
-          element={
-            <ProtectedRoutes>
-              <GroupPage />
-            </ProtectedRoutes>
-          }
-        >
-          <Route index element={<ConversationPanel />}></Route>
-          <Route path=":id" element={<GroupChannelPage />}></Route>
+          <Route path="conversations" element={<ConversationPage />}>
+            <Route index element={<ConversationPanel />}></Route>
+            <Route path=":id" element={<ConversationChannelPage />}></Route>
+          </Route>
+
+          <Route path="groups" element={<GroupPage />}>
+            <Route index element={<ConversationPanel />}></Route>
+            <Route path=":id" element={<GroupChannelPage />}></Route>
+          </Route>
         </Route>
       </Routes>
     </AppWithProvider>
