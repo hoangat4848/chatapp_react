@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
-import ConversationSidebar from "../components/conversations/ConversationSidebar";
-import { AppDispatch } from "../store";
+import ConversationSidebar from "../../components/conversations/ConversationSidebar";
+import { AppDispatch } from "../../store";
 import {
   addConversation,
   fetchConversationsThunk,
   updateConversation,
-} from "../store/slices/conversationSlice";
-import { addMessage, deleteMessage } from "../store/slices/messageSlice";
-import { updateType } from "../store/slices/selectedSlice";
-import { SocketContext } from "../utils/context/SocketContext";
-import { Page } from "../utils/styles";
+} from "../../store/slices/conversationSlice";
+import { addMessage, deleteMessage } from "../../store/slices/messageSlice";
+import { updateType } from "../../store/slices/selectedSlice";
+import { SocketContext } from "../../utils/context/SocketContext";
+import { Page } from "../../utils/styles";
 import {
   Conversation,
   DeleteMessageResponse,
   MessageEventPayload,
-} from "../utils/types";
+} from "../../utils/types";
 
 const ConversationPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,7 +40,6 @@ const ConversationPage = () => {
     });
 
     return () => {
-      socket.off("connected");
       socket.off("onMessage");
       socket.off("onConversation");
       socket.off("onMessageDelete");
