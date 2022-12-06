@@ -310,7 +310,7 @@ export const MessageItemContent = styled.div<MessageItemContentProps>`
 export const StyledMessagePanelHeader = styled.header`
   position: fixed;
   top: 0;
-  left: ${SIDEBAR_WIDTH}px;
+  left: ${SIDEBAR_WIDTH + USER_SIDEBAR_WIDTH}px;
   right: 0;
 
   display: flex;

@@ -89,3 +89,26 @@ export type Group = {
   lastMessageSent: Message;
   lastMessageSentAt: Date;
 };
+
+export type GroupMessageType = {
+  id: number;
+  content: string;
+  createdAt: string;
+  author: User;
+  group?: Group;
+};
+
+export type GroupMessage = {
+  id: number;
+  messages: GroupMessageType[];
+};
+
+export type FetchGroupMessagePayload = {
+  id: number;
+  messages: GroupMessageType[];
+};
+
+export type GroupMessageEventPayload = {
+  message: GroupMessageType;
+  group: Group;
+};

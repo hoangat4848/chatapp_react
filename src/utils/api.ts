@@ -12,6 +12,8 @@ import {
   EditMessagePayload,
   Message,
   Group,
+  GroupMessage,
+  FetchGroupMessagePayload,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -75,3 +77,9 @@ export const editMessage = ({
 
 export const fetchGroups = () =>
   axios.get<Group[]>(`${API_URL}/groups`, config);
+
+export const fetchGroupMessages = (groupId: number) =>
+  axios.get<FetchGroupMessagePayload>(
+    `${API_URL}/groups/${groupId}/messages`,
+    config
+  );

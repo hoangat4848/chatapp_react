@@ -2,6 +2,7 @@ import {
   createAsyncThunk,
   createSelector,
   createSlice,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import { fetchGroups } from "../../utils/api";
@@ -22,7 +23,14 @@ export const fetchGroupsThunk = createAsyncThunk("groups/fetch", () => {
 export const groupsSlice = createSlice({
   name: "groups",
   initialState,
-  reducers: {},
+  reducers: {
+    updateGroup: (state, action: PayloadAction<Group>) => {
+      const updatedGroup = action.payload;
+      const index = state.groups.findIndex((c) => c.id === updatedGroup.id);
+      if (index > -1) state.groups.splice(index, 1);
+      state.groups.unshift(updatedGroup);
+    },
+  },
 
   extraReducers(builder) {
     builder.addCase(fetchGroupsThunk.fulfilled, (state, action) => {
@@ -39,6 +47,6 @@ export const selectGroupById = createSelector(
   (groups, groupId) => groups.find((g) => g.id === groupId)
 );
 
-export const {} = groupsSlice.actions;
+export const { updateGroup } = groupsSlice.actions;
 
 export default groupsSlice.reducer;
