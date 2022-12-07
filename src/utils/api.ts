@@ -12,7 +12,6 @@ import {
   EditMessagePayload,
   Message,
   Group,
-  GroupMessage,
   FetchGroupMessagePayload,
 } from "./types";
 

@@ -1,7 +1,11 @@
 import React, { Dispatch, SetStateAction, useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
+import {
+  setIsEditingMessage,
+  setMessageBeingEdited,
+} from "../../store/slices/messageContainerSlice";
 import { deleteMessageThunk } from "../../store/slices/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { MessageMenuContext } from "../../utils/context/MessageMenuContext";
@@ -9,35 +13,37 @@ import { ContextMenu } from "../../utils/styles";
 
 type Props = {
   point: { x: number; y: number };
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
-const SelectedMessageContextMenu = ({ point, setIsEditing }: Props) => {
+const SelectedMessageContextMenu = ({ point }: Props) => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
-  const { message, editMessage, setEditMessage } =
-    useContext(MessageMenuContext);
+  const { isEditingMessage, selectedMessage, messageBeingEdited } = useSelector(
+    (state: RootState) => state.messageContainer
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
   const deleteMessage = () => {
     const conversationId = parseInt(id!);
-    if (!message) return;
-    dispatch(deleteMessageThunk({ conversationId, messageId: message.id }));
+    if (!selectedMessage) return;
+    dispatch(
+      deleteMessageThunk({ conversationId, messageId: selectedMessage.id })
+    );
   };
 
   const handleEditClick = () => {
-    console.log("ahoi");
-    setIsEditing(true);
-    setEditMessage(message);
+    if (!selectedMessage) return;
+    dispatch(setIsEditingMessage(true));
+    dispatch(setMessageBeingEdited(selectedMessage));
   };
 
   return (
     <ContextMenu top={point.y} left={point.x}>
       <ul>
-        {message?.author.id === user?.id && (
+        {selectedMessage?.author.id === user?.id && (
           <li onClick={deleteMessage}>Delete</li>
         )}
-        {message?.author.id === user?.id && (
+        {selectedMessage?.author.id === user?.id && (
           <li onClick={handleEditClick}>Edit</li>
         )}
       </ul>

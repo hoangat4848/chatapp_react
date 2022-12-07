@@ -1,5 +1,6 @@
 import { formatRelative } from "date-fns";
-import { Dispatch, SetStateAction } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import {
   MessageItemAvatar,
   MessageItemContainer,
@@ -7,29 +8,27 @@ import {
   MessageItemDetails,
   MessageItemHeader,
 } from "../../utils/styles";
-import { Message, User } from "../../utils/types";
+import { GroupMessageType, Message, User } from "../../utils/types";
 import EditMessageContainer from "./EditMessageContainer";
 
 type Props = {
   user?: User;
-  message: Message;
+  message: Message | GroupMessageType;
   onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  selectedEditMessage: Message | undefined;
-  setSelectedEditMessage: Dispatch<SetStateAction<Message | undefined>>;
   onEditMessageInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isEditing: boolean;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 export const FormattedMessage = ({
   user,
   message,
   onContextMenu,
-  selectedEditMessage,
-  setSelectedEditMessage,
   onEditMessageInputChange,
-  isEditing,
-  setIsEditing,
 }: Props) => {
+  const { isEditingMessage, messageBeingEdited } = useSelector(
+    (state: RootState) => state.messageContainer
+  );
+
+  console.log(message.id, messageBeingEdited?.id);
+
   return (
     <MessageItemContainer onContextMenu={onContextMenu}>
       <MessageItemAvatar />
@@ -46,11 +45,9 @@ export const FormattedMessage = ({
           </span>
         </MessageItemHeader>
         <MessageItemContent padding="8px 0 0 0">
-          {isEditing && message.id === selectedEditMessage?.id ? (
+          {isEditingMessage && message.id === messageBeingEdited?.id ? (
             <EditMessageContainer
-              selectedEditMessage={selectedEditMessage}
               onEditMessageChange={onEditMessageInputChange}
-              setIsEditing={setIsEditing}
             />
           ) : (
             message.content

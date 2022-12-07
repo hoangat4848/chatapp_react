@@ -1,52 +1,52 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
+import {
+  editMessageBeingEditedContent,
+  setIsEditingMessage,
+} from "../../store/slices/messageContainerSlice";
 import { editMessageThunk } from "../../store/slices/messageSlice";
 import {
   EditMessageActionsContainer,
   EditMessageInputField,
 } from "../../utils/styles";
-import { EditMessagePayload, Message } from "../../utils/types";
+import { EditMessagePayload } from "../../utils/types";
 import styles from "./index.module.scss";
 
 type Props = {
-  selectedEditMessage: Message;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
   onEditMessageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const EditMessageContainer = ({
-  selectedEditMessage,
-  onEditMessageChange,
-  setIsEditing,
-}: Props) => {
+const EditMessageContainer = ({ onEditMessageChange }: Props) => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
+
+  const { messageBeingEdited } = useSelector(
+    (state: RootState) => state.messageContainer
+  );
+  if (!messageBeingEdited) {
+    console.log("messageBeingEdited is undefined!!!");
+    return null;
+  }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const params: EditMessagePayload = {
       conversationId: parseInt(id!),
-      messageId: selectedEditMessage.id,
-      content: selectedEditMessage.content,
+      messageId: messageBeingEdited.id,
+      content: messageBeingEdited.content,
     };
 
-    dispatch(editMessageThunk(params))
-      .then(() => {
-        setIsEditing(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsEditing(false);
-      });
+    dispatch(editMessageThunk(params)).finally(() => {
+      dispatch(setIsEditingMessage(false));
+    });
   };
 
   return (
     <div>
       <form onSubmit={onSubmit} className={styles.form}>
         <EditMessageInputField
-          value={selectedEditMessage.content}
+          value={messageBeingEdited.content}
           onChange={onEditMessageChange}
         />
       </form>
