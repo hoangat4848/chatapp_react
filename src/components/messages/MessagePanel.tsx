@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
 import { selectConversationById } from "../../store/slices/conversationSlice";
-import { postNewMessage } from "../../utils/api";
+import { selectType } from "../../store/slices/selectedSlice";
+import { postGroupMessage, postNewMessage } from "../../utils/api";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getRecipientFromConversation } from "../../utils/helpers";
 import {
@@ -22,29 +23,38 @@ type Props = {
 
 const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
   const [content, setContent] = useState("");
-  const { id } = useParams();
+  const { id: routeId } = useParams();
 
   const { user } = useContext(AuthContext);
 
   const conversation = useSelector((state: RootState) =>
-    selectConversationById(state, parseInt(id!))
+    selectConversationById(state, parseInt(routeId!))
   );
 
-  const recipient = getRecipientFromConversation(user, conversation);
+  const selectedType = useSelector(selectType);
 
+  const recipient = getRecipientFromConversation(user, conversation);
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!id || !content) return;
-    const conversationId = parseInt(id);
-
+    if (!routeId || !content) return;
+    const id = parseInt(routeId);
     try {
-      await postNewMessage(conversationId, {
-        content,
-      });
-      setContent("");
+      if (selectedType === "private") {
+        await postNewMessage({
+          id,
+          content,
+        });
+      } else {
+        await postGroupMessage({
+          id,
+          content,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
+
+    setContent("");
   };
 
   return (
@@ -65,5 +75,4 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
     </StyledMessagePanel>
   );
 };
-
 export default MessagePanel;

@@ -5,11 +5,10 @@ import {
   ConversationSiderbarHeader,
   StyledConversationSidebar,
 } from "../../utils/styles";
-import { BsPencilSquare } from "react-icons/bs";
 import CreateConversationModal from "../modals/CreateConversationModal";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import ConversationTab from "../conversations/ConversationSelected";
+import ConversationTab from "../conversations/ConversationSidebarTab";
 import ConversationSidebarItem from "../conversations/ConversationSidebarItem";
 import GroupSidebarItem from "../groups/GroupSidebarItem";
 
