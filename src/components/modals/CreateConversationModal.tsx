@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ModalContainer, ModalContentBody, ModalHeader } from ".";
 import { StyledOverlay } from "../../utils/styles";
 import CreateConversationForm from "../forms/CreateConversationForm";
 import { MdClose } from "react-icons/md";
 import ConversationRadioTypeForm from "../forms/ConversationRadioTypeForm";
+import { ConversationType } from "../../utils/types";
 
 type Props = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +12,7 @@ type Props = {
 
 const CreateConversationModal = ({ setShowModal }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
+  const [type, setType] = useState<ConversationType>("private");
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) =>
@@ -37,8 +39,8 @@ const CreateConversationModal = ({ setShowModal }: Props) => {
           <MdClose size={32} onClick={() => setShowModal(false)} />
         </ModalHeader>
         <ModalContentBody>
-          <ConversationRadioTypeForm />
-          <CreateConversationForm setShowModal={setShowModal} />
+          <ConversationRadioTypeForm type={type} setType={setType} />
+          <CreateConversationForm setShowModal={setShowModal} type={type} />
         </ModalContentBody>
       </ModalContainer>
     </StyledOverlay>

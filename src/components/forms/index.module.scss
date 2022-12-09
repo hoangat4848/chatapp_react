@@ -50,14 +50,13 @@ form {
   }
 
   &:checked + .radioLabel::before {
+    content: "\2714";
     display: flex;
     justify-content: center;
     align-items: center;
 
-    content: "\2714";
-
     color: #fff;
-    background-color: #000;
+    background-color: #2b09ff;
   }
 }
 

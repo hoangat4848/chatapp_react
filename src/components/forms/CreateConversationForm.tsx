@@ -14,14 +14,15 @@ import {
   InputLabel,
   TextField,
 } from "../../utils/styles";
-import { CreateConversationParams } from "../../utils/types";
+import { ConversationType, CreateConversationParams } from "../../utils/types";
 import styles from "./index.module.scss";
 
 type Props = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  type: ConversationType;
 };
 
-const CreateConversationForm = ({ setShowModal }: Props) => {
+const CreateConversationForm = ({ setShowModal, type }: Props) => {
   const {
     register,
     handleSubmit,
@@ -41,6 +42,12 @@ const CreateConversationForm = ({ setShowModal }: Props) => {
       .catch((err) => console.log(err));
   };
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (type === "group") {
+      console.log(e.target.value);
+    }
+  };
+
   return (
     <form
       className={styles.createConversationForm}
@@ -50,7 +57,8 @@ const CreateConversationForm = ({ setShowModal }: Props) => {
         <InputLabel htmlFor="email">Recipient</InputLabel>
         <InputField
           id="email"
-          {...register("email", { required: "Email is required" })}
+          // {...register("email", { required: "Email is required" })}
+          onChange={onChange}
         />
       </InputContainer>
       <section className={styles.message}>
