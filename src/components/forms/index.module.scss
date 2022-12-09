@@ -36,3 +36,45 @@ form {
 .message {
   margin: 8px 0;
 }
+
+.conversationTypeForm {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.radio {
+  display: none;
+  &:hover + .radioLabel::before {
+    background-color: #000;
+  }
+
+  &:checked + .radioLabel::before {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    content: "\2714";
+
+    color: #fff;
+    background-color: #000;
+  }
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  &::before {
+    content: "";
+
+    margin-right: 4px;
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid #2b09ff;
+    border-radius: 3px;
+  }
+}
