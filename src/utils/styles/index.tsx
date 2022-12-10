@@ -12,6 +12,8 @@ export const SIDEBAR_WIDTH = 350;
 export const USER_SIDEBAR_WIDTH = 90;
 
 export const InputContainer = styled.div<InputContainerProps>`
+  position: relative;
+
   width: 100%;
   padding: 14px 16px;
 
@@ -489,4 +491,22 @@ export const ConversationSearchbar = styled.input`
   border-radius: 5px;
   width: 100%;
   height: 29px;
+`;
+
+export const RecipientResultContainer = styled.div`
+  position: absolute;
+
+  width: 100%;
+  height: 190px;
+  max-height: 190px;
+  margin-top: 4px;
+
+  background-color: #161616;
+
+  z-index: 2;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

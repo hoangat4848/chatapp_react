@@ -88,3 +88,6 @@ export const postGroupMessage = ({
   content,
 }: CreateMessageParams) =>
   axiosClient.post(`/groups/${groupId}/messages`, { content }, config);
+
+export const searchUsers = (query: string) =>
+  axiosClient.get<User[]>(`/users/search?query=${query}`, config);

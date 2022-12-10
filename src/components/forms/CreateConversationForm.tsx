@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDebounce } from "../../hooks/useDebounce";
 import { AppDispatch } from "../../store";
 import {
   addConversation,
   createConversationThunk,
 } from "../../store/slices/conversationSlice";
+import { searchUsers } from "../../utils/api";
 import {
   Button,
   InputContainer,
   InputField,
   InputLabel,
+  RecipientResultContainer,
   TextField,
 } from "../../utils/styles";
-import { ConversationType, CreateConversationParams } from "../../utils/types";
+import {
+  ConversationType,
+  CreateConversationParams,
+  User,
+} from "../../utils/types";
 import styles from "./index.module.scss";
 
 type Props = {
@@ -29,6 +36,10 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
     formState: { errors },
   } = useForm<CreateConversationParams>();
 
+  const [query, setQuery] = useState("");
+  const [userResults, setUserResults] = useState<User[]>([]);
+  const [message, setMessage] = useState("");
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -42,25 +53,33 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
       .catch((err) => console.log(err));
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (type === "group") {
-      console.log(e.target.value);
+  const debouncedQuery = useDebounce(query, 1000);
+  useEffect(() => {
+    if (!debouncedQuery) {
+      setUserResults([]);
     }
-  };
+    searchUsers(debouncedQuery)
+      .then(({ data }) => setUserResults(data))
+      .catch((err) => console.log(err));
+  }, [debouncedQuery]);
 
   return (
     <form
       className={styles.createConversationForm}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <InputContainer backgroundColor="#161616">
-        <InputLabel htmlFor="email">Recipient</InputLabel>
-        <InputField
-          id="email"
-          // {...register("email", { required: "Email is required" })}
-          onChange={onChange}
-        />
-      </InputContainer>
+      <section>
+        <InputContainer backgroundColor="#161616">
+          <InputLabel htmlFor="email">Recipient</InputLabel>
+          <InputField
+            id="email"
+            // {...register("email", { required: "Email is required" })}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </InputContainer>
+      </section>
+      <RecipientResultContainer></RecipientResultContainer>
       <section className={styles.message}>
         <InputContainer backgroundColor="#161616">
           <InputLabel htmlFor="message">Message (optional)</InputLabel>

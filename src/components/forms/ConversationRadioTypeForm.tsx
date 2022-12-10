@@ -11,7 +11,7 @@ const ConversationRadioTypeForm = ({ type, setType }: Props) => {
   return (
     <form className={styles.conversationTypeForm}>
       {chatTypes.map(({ label, type: chatType }) => (
-        <div>
+        <div key={chatType}>
           <input
             className={styles.radio}
             type="radio"
