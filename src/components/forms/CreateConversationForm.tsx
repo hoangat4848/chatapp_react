@@ -15,6 +15,7 @@ import {
   InputField,
   InputLabel,
   RecipientResultContainer,
+  RecipientResultItem,
   TextField,
 } from "../../utils/styles";
 import {
@@ -38,7 +39,7 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
 
   const [query, setQuery] = useState("");
   const [userResults, setUserResults] = useState<User[]>([]);
-  const [message, setMessage] = useState("");
+  const [searching, setSearching] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -57,10 +58,13 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
   useEffect(() => {
     if (!debouncedQuery) {
       setUserResults([]);
+      setSearching(false);
     }
+    setSearching(true);
     searchUsers(debouncedQuery)
       .then(({ data }) => setUserResults(data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setSearching(false));
   }, [debouncedQuery]);
 
   return (
@@ -79,7 +83,15 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
           />
         </InputContainer>
       </section>
-      <RecipientResultContainer></RecipientResultContainer>
+      {!searching && userResults.length > 0 && (
+        <RecipientResultContainer>
+          {userResults.map((result) => (
+            <RecipientResultItem>
+              <span>{result.email}</span>
+            </RecipientResultItem>
+          ))}
+        </RecipientResultContainer>
+      )}
       <section className={styles.message}>
         <InputContainer backgroundColor="#161616">
           <InputLabel htmlFor="message">Message (optional)</InputLabel>

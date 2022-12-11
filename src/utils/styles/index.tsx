@@ -510,3 +510,13 @@ export const RecipientResultContainer = styled.div`
     display: none;
   }
 `;
+
+export const RecipientResultItem = styled.div`
+  padding: 14px 16px;
+
+  transition: background-color ease 100ms;
+  &:hover {
+    background-color: #0c0c0c;
+    cursor: pointer;
+  }
+`;
