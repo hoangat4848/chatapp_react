@@ -520,3 +520,32 @@ export const RecipientResultItem = styled.div`
     cursor: pointer;
   }
 `;
+
+export const StyledSelectedRecipientPill = styled.div`
+  width: fit-content;
+  padding: 6px 10px;
+  margin-top: 10px;
+
+  border-radius: 50px;
+
+  background-color: #111111;
+
+  & .container {
+    display: flex;
+    align-items: center;
+    user-select: none;
+  }
+
+  & .icon {
+    margin-left: 10px;
+
+    color: #656565;
+
+    transition: 100ms color ease;
+    cursor: pointer;
+
+    :hover {
+      color: #c62d2d;
+    }
+  }
+`;

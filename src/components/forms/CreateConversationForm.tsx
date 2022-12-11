@@ -1,13 +1,9 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/useDebounce";
 import { AppDispatch } from "../../store";
-import {
-  addConversation,
-  createConversationThunk,
-} from "../../store/slices/conversationSlice";
+import { createConversationThunk } from "../../store/slices/conversationSlice";
 import { searchUsers } from "../../utils/api";
 import {
   Button,
@@ -23,6 +19,7 @@ import {
   CreateConversationParams,
   User,
 } from "../../utils/types";
+import SelectedRecipientChip from "../recipients/SelectedRecipientChip";
 import styles from "./index.module.scss";
 
 type Props = {
@@ -31,20 +28,23 @@ type Props = {
 };
 
 const CreateConversationForm = ({ setShowModal, type }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateConversationParams>();
-
   const [query, setQuery] = useState("");
+  const [message, setMessage] = useState("");
   const [userResults, setUserResults] = useState<User[]>([]);
-  const [searching, setSearching] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | undefined>();
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const onSubmit = (data: CreateConversationParams) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!selectedUser || !message) return;
+
+    const data: CreateConversationParams = {
+      email: selectedUser.email,
+      message,
+    };
     dispatch(createConversationThunk(data))
       .unwrap()
       .then(({ data }) => {
@@ -58,36 +58,47 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
   useEffect(() => {
     if (!debouncedQuery) {
       setUserResults([]);
-      setSearching(false);
     }
-    setSearching(true);
     searchUsers(debouncedQuery)
       .then(({ data }) => setUserResults(data))
-      .catch((err) => console.log(err))
-      .finally(() => setSearching(false));
+      .catch((err) => console.log(err));
   }, [debouncedQuery]);
 
+  const selectUser = (user: User) => {
+    setSelectedUser(user);
+    setQuery("");
+    setUserResults([]);
+  };
+
+  const handleUserSelect = (user: User) => {
+    selectUser(user);
+  };
+
   return (
-    <form
-      className={styles.createConversationForm}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className={styles.createConversationForm} onSubmit={onSubmit}>
       <section>
         <InputContainer backgroundColor="#161616">
           <InputLabel htmlFor="email">Recipient</InputLabel>
-          <InputField
-            id="email"
-            // {...register("email", { required: "Email is required" })}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          {selectedUser ? (
+            <SelectedRecipientChip
+              user={selectedUser}
+              setSelectedUser={setSelectedUser}
+            />
+          ) : (
+            <InputField
+              id="email"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              autoFocus
+            />
+          )}
         </InputContainer>
       </section>
-      {!searching && userResults.length > 0 && (
+      {!selectedUser && userResults.length > 0 && (
         <RecipientResultContainer>
-          {userResults.map((result) => (
-            <RecipientResultItem>
-              <span>{result.email}</span>
+          {userResults.map((user) => (
+            <RecipientResultItem onClick={() => handleUserSelect(user)}>
+              <span>{user.email}</span>
             </RecipientResultItem>
           ))}
         </RecipientResultContainer>
@@ -97,7 +108,7 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
           <InputLabel htmlFor="message">Message (optional)</InputLabel>
           <TextField
             id="message"
-            {...register("message", { required: "Message is required" })}
+            onChange={(e) => setMessage(e.target.value)}
           />
         </InputContainer>
       </section>
