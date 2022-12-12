@@ -22,6 +22,12 @@ export const InputContainer = styled.div<InputContainerProps>`
   background-color: ${(props) => props.backgroundColor || "#131313"};
 `;
 
+export const RecipientChipContainer = styled.div<InputContainerProps>`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
+`;
+
 export const InputField = styled.input`
   display: block;
 
@@ -165,8 +171,6 @@ export const StyledModalContainer = styled.div`
   border-radius: 10px;
 
   background-color: #131313;
-
-  overflow: hidden;
 `;
 
 export const StyledModalHeader = styled.div`
@@ -493,22 +497,34 @@ export const ConversationSearchbar = styled.input`
   height: 29px;
 `;
 
-export const RecipientResultContainer = styled.div`
+export const StyledRecipientResultContainer = styled.div`
   position: absolute;
 
   width: 100%;
-  height: 190px;
-  max-height: 190px;
   margin-top: 4px;
 
   background-color: #161616;
 
   z-index: 2;
-  overflow-y: scroll;
+`;
 
+export const RecipientScrollableItemContainer = styled.div`
+  height: 150px;
+
+  overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+export const RecipientResultBottomFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding: 10px 0;
+
+  border-top: 1px solid #fff;
 `;
 
 export const RecipientResultItem = styled.div`

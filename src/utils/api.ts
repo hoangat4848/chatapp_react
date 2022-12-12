@@ -75,6 +75,9 @@ export const editMessage = ({
     config
   );
 
+export const createGroup = (emails: User["email"][]) =>
+  axiosClient.post("/groups", { users: emails }, config);
+
 export const fetchGroups = () => axiosClient.get<Group[]>(`/groups`, config);
 
 export const fetchGroupMessages = (groupId: number) =>

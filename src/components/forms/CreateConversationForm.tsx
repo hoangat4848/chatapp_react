@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/useDebounce";
 import { AppDispatch } from "../../store";
 import { createConversationThunk } from "../../store/slices/conversationSlice";
-import { searchUsers } from "../../utils/api";
+import { createGroupThunk } from "../../store/slices/groupSlice";
+import { createGroup, searchUsers } from "../../utils/api";
 import {
   Button,
   InputContainer,
   InputField,
   InputLabel,
-  RecipientResultContainer,
-  RecipientResultItem,
   TextField,
 } from "../../utils/styles";
 import {
@@ -19,6 +18,8 @@ import {
   CreateConversationParams,
   User,
 } from "../../utils/types";
+import RecipientField from "../recipients/RecipientField";
+import RecipientResultContainer from "../recipients/RecipientResultContainer";
 import SelectedRecipientChip from "../recipients/SelectedRecipientChip";
 import styles from "./index.module.scss";
 
@@ -32,6 +33,7 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
   const [message, setMessage] = useState("");
   const [userResults, setUserResults] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -39,19 +41,33 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!selectedUser || !message) return;
+    if (type === "private") {
+      if (!selectedUser || !message) return;
+      const data: CreateConversationParams = {
+        email: selectedUser.email,
+        message,
+      };
+      dispatch(createConversationThunk(data))
+        .unwrap()
+        .then(({ data }) => {
+          setShowModal(false);
+          navigate(`/conversations/${data.id}`);
+        })
+        .catch((err) => console.log(err));
+    }
 
-    const data: CreateConversationParams = {
-      email: selectedUser.email,
-      message,
-    };
-    dispatch(createConversationThunk(data))
-      .unwrap()
-      .then(({ data }) => {
-        setShowModal(false);
-        navigate(`/conversations/${data.id}`);
-      })
-      .catch((err) => console.log(err));
+    if (type === "group") {
+      if (selectedUsers.length === 0) return;
+      const userEmails = selectedUsers.map((user) => user.email);
+
+      return dispatch(createGroupThunk(userEmails))
+        .unwrap()
+        .then(({ data }) => {
+          setShowModal(false);
+          navigate(`/groups/${data.id}`);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const debouncedQuery = useDebounce(query, 1000);
@@ -64,44 +80,49 @@ const CreateConversationForm = ({ setShowModal, type }: Props) => {
       .catch((err) => console.log(err));
   }, [debouncedQuery]);
 
-  const selectUser = (user: User) => {
+  const handleUserSelect = (user: User) => {
     setSelectedUser(user);
     setQuery("");
     setUserResults([]);
   };
 
-  const handleUserSelect = (user: User) => {
-    selectUser(user);
+  const handleMultipleUserSelect = (user: User) => {
+    const exists = selectedUsers.find((u) => u.id === user.id);
+    if (!exists) setSelectedUsers((prev) => [...prev, user]);
+  };
+
+  const removeAllSelectedUsers = () => {
+    setQuery("");
+    setUserResults([]);
+    setSelectedUsers([]);
+  };
+
+  const saveResults = () => {
+    setQuery("");
+    setUserResults([]);
   };
 
   return (
     <form className={styles.createConversationForm} onSubmit={onSubmit}>
-      <section>
-        <InputContainer backgroundColor="#161616">
-          <InputLabel htmlFor="email">Recipient</InputLabel>
-          {selectedUser ? (
-            <SelectedRecipientChip
-              user={selectedUser}
-              setSelectedUser={setSelectedUser}
-            />
-          ) : (
-            <InputField
-              id="email"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              autoFocus
-            />
-          )}
-        </InputContainer>
-      </section>
+      <RecipientField
+        query={query}
+        setQuery={setQuery}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+        selectedUsers={selectedUsers}
+        setSelectedUsers={setSelectedUsers}
+        type={type}
+      />
+
       {!selectedUser && userResults.length > 0 && (
-        <RecipientResultContainer>
-          {userResults.map((user) => (
-            <RecipientResultItem onClick={() => handleUserSelect(user)}>
-              <span>{user.email}</span>
-            </RecipientResultItem>
-          ))}
-        </RecipientResultContainer>
+        <RecipientResultContainer
+          userResults={userResults}
+          type={type}
+          handleUserSelect={handleUserSelect}
+          handleMultipleUserSelect={handleMultipleUserSelect}
+          removeAllSelectedUsers={removeAllSelectedUsers}
+          saveResults={saveResults}
+        />
       )}
       <section className={styles.message}>
         <InputContainer backgroundColor="#161616">
