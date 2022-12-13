@@ -27,8 +27,6 @@ export const FormattedMessage = ({
     (state: RootState) => state.messageContainer
   );
 
-  console.log(message.id, messageBeingEdited?.id);
-
   return (
     <MessageItemContainer onContextMenu={onContextMenu}>
       <MessageItemAvatar />

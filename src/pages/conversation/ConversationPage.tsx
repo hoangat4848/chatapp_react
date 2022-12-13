@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
+import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
 import { AppDispatch } from "../../store";
 import {
   addConversation,
@@ -46,9 +47,10 @@ const ConversationPage = () => {
   }, [socket, dispatch]);
 
   return (
-    <Page>
+    <>
+      <ConversationSidebar />
       <Outlet />
-    </Page>
+    </>
   );
 };
 

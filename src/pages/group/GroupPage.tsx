@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
+import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
 import { AppDispatch } from "../../store";
 import { addGroupMessage } from "../../store/slices/groupMessageSlice";
 import { fetchGroupsThunk, updateGroup } from "../../store/slices/groupSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
-import { Page } from "../../utils/styles";
 import { GroupMessageEventPayload } from "../../utils/types";
 
 const GroupPage = () => {
@@ -32,9 +32,10 @@ const GroupPage = () => {
     };
   }, [dispatch, socket]);
   return (
-    <Page>
+    <>
+      <ConversationSidebar />
       <Outlet />
-    </Page>
+    </>
   );
 };
 

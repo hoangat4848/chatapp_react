@@ -5,6 +5,7 @@ import {
   InputContainerProps,
   MessageItemContentProps,
   PageProps,
+  SidebarItemProps,
 } from "./styleTypes";
 
 export const DARK = "131313";
@@ -94,27 +95,8 @@ export const Page = styled.div<PageProps>`
 `;
 
 export const StyledConversationChannelPage = styled.div`
-  height: 100%;
-  margin-left: ${SIDEBAR_WIDTH + USER_SIDEBAR_WIDTH}px;
-`;
-
-export const StyledConversationSidebar = styled.aside`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: ${SIDEBAR_WIDTH}px;
   height: 100vh;
-  padding-top: 150px;
-  margin-left: ${USER_SIDEBAR_WIDTH}px;
-
-  border-right: 1px solid #5454543d;
-  background-color: #111111;
-
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  width: 100%;
 `;
 
 export const ConversationSiderbarHeader = styled.header`
@@ -211,12 +193,26 @@ export const TextField = styled.textarea`
 `;
 
 export const StyledMessagePanel = styled.div`
-  height: 100%;
-  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
 
   border-left: 1px solid #5454543d;
 
   background: #151515;
+`;
+
+export const StyledMessagePanelHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 100px;
+  padding: 0 18px;
+
+  background-color: #151515;
+  border-bottom: solid 1px #fff;
 `;
 
 export const MessagePanelBody = styled.div`
@@ -225,7 +221,7 @@ export const MessagePanelBody = styled.div`
 
   padding: 20px 20px 6px;
 
-  height: 100%;
+  height: calc(100% - 100px);
 
   background: inherit;
 `;
@@ -235,12 +231,12 @@ export const StyledMessageContainer = styled.div`
   flex-direction: column-reverse;
   gap: 10px;
 
-  height: 100%;
+  flex: 1;
   padding: 10px 0;
 
   background: inherit;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const MessageInputContainer = styled.div`
@@ -311,23 +307,6 @@ export const MessageItemHeader = styled.div`
 export const MessageItemContent = styled.div<MessageItemContentProps>`
   padding: ${({ padding }) => padding || "0"};
   width: 100%;
-`;
-
-export const StyledMessagePanelHeader = styled.header`
-  position: fixed;
-  top: 0;
-  left: ${SIDEBAR_WIDTH + USER_SIDEBAR_WIDTH}px;
-  right: 0;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  height: 100px;
-  padding: 0 18px;
-
-  background-color: #151515;
-  border-bottom: solid 1px #fff;
 `;
 
 export const ContextMenu = styled.div<ContextMenuProps>`
@@ -404,19 +383,19 @@ export const StyledConversationTab = styled.div`
   justify-content: space-evenly;
 
   width: 100%;
-  margin-top: 20px;
-  padding-top: 20px;
+  margin: 10px 0;
 
-  border-top: 2px solid #2727275f;
   background-color: #141414;
 `;
 
 export const ConversationTabItem = styled.div<ConversationTabItemProps>`
-  padding: 14px 32px;
+  padding: 12px 32px;
 
   border-radius: 5px;
 
   font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
 
   background-color: #212121;
 
@@ -433,28 +412,11 @@ export const ConversationTabItem = styled.div<ConversationTabItemProps>`
 export const UserAvatar = styled.img`
   width: 55px;
   height: 55px;
+  margin: 10px 0;
 
   border-radius: 50%;
 
   background-color: #fff;
-`;
-
-export const StyledUserSidebar = styled.aside`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  box-sizing: border-box;
-  height: 100%;
-  width: ${USER_SIDEBAR_WIDTH}px;
-  padding-bottom: 32px;
-
-  background-color: #121212;
 `;
 
 export const UserSidebarTop = styled.div`
@@ -564,4 +526,83 @@ export const StyledSelectedRecipientPill = styled.div`
       color: #c62d2d;
     }
   }
+`;
+
+export const LayoutPage = styled.div`
+  display: flex;
+
+  height: 100vh;
+`;
+
+export const StyledUserSidebar = styled.div`
+  display: flex;
+  flex: 0 0 80px;
+  align-items: center;
+  flex-direction: column;
+
+  height: 100vh;
+
+  background-color: #121212;
+
+  z-index: 1;
+`;
+
+export const UserSidebarItem = styled.div<SidebarItemProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  padding: 18px;
+
+  background-color: ${({ active }) => active && "#1e1e1e"};
+
+  cursor: pointer;
+`;
+
+export const StyledConversationSidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  width: 400px;
+
+  background-color: #111111;
+`;
+
+export const ConversationSidebarHeader = styled.header`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100px;
+  padding: 10px 30px;
+
+  flex-shrink: 0;
+
+  border-bottom: 1px solid #48484857;
+`;
+
+export const ConversationScrollableContainer = styled.div`
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const ConversationSidebarSearchbar = styled.input`
+  width: 100%;
+  padding: 10px 20px;
+
+  border: none;
+  border-radius: 5px;
+  outline: none;
+
+  font-family: "Inter";
+
+  background-color: #1a1a1a;
+  color: #e1e1e1;
 `;

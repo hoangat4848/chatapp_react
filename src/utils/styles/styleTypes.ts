@@ -20,3 +20,7 @@ export type ContextMenuProps = Partial<{
 export type ConversationTabItemProps = {
   selected: boolean;
 };
+
+export type SidebarItemProps = {
+  active?: boolean;
+};
