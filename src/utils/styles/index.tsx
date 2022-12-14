@@ -27,6 +27,12 @@ export const RecipientChipContainer = styled.div<InputContainerProps>`
   display: flex;
   flex-wrap: wrap;
   gap: 0 10px;
+
+  margin-bottom: 10px;
+
+  border-radius: 10px;
+
+  background-color: #161616;
 `;
 
 export const InputField = styled.input`
@@ -471,7 +477,7 @@ export const StyledRecipientResultContainer = styled.div`
 `;
 
 export const RecipientScrollableItemContainer = styled.div`
-  height: 150px;
+  max-height: 200px;
 
   overflow-y: scroll;
   &::-webkit-scrollbar {
@@ -505,8 +511,7 @@ export const StyledSelectedRecipientPill = styled.div`
   margin-top: 10px;
 
   border-radius: 50px;
-
-  background-color: #111111;
+  border: 1px solid #323232b0;
 
   & .container {
     display: flex;
@@ -574,6 +579,7 @@ export const ConversationSidebarHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 
   height: 100px;
   padding: 10px 30px;
@@ -605,4 +611,17 @@ export const ConversationSidebarSearchbar = styled.input`
 
   background-color: #1a1a1a;
   color: #e1e1e1;
+`;
+
+export const ConversationCreateButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  padding: 10px;
+
+  background-color: #1a1a1a;
+
+  cursor: pointer;
 `;

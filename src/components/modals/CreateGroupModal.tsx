@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { ModalContainer, ModalContentBody, ModalHeader } from ".";
 import { StyledOverlay } from "../../utils/styles";
-import CreateConversationForm from "../forms/CreateConversationForm";
 import { MdClose } from "react-icons/md";
+import CreateGroupForm from "../forms/CreateGroupForm";
 
 type Props = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const CreateConversationModal = ({ setShowModal }: Props) => {
+const CreateGroupModal = ({ setShowModal }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -32,15 +32,15 @@ const CreateConversationModal = ({ setShowModal }: Props) => {
     <StyledOverlay ref={ref} onClick={handleOverlayClick}>
       <ModalContainer>
         <ModalHeader>
-          <h2>Create a conversation</h2>
+          <h2>Create a group</h2>
           <MdClose size={32} onClick={() => setShowModal(false)} />
         </ModalHeader>
         <ModalContentBody>
-          <CreateConversationForm setShowModal={setShowModal} />
+          <CreateGroupForm setShowModal={setShowModal} />
         </ModalContentBody>
       </ModalContainer>
     </StyledOverlay>
   );
 };
 
-export default CreateConversationModal;
+export default CreateGroupModal;
