@@ -127,7 +127,6 @@ const MessageContainer = () => {
       return conversationMessages.messages.map(mapMessages);
     }
     if (selectedType === "group") {
-      console.log(groupMessages);
       if (!groupMessages) return [];
       return groupMessages.messages.map(mapMessages);
     }

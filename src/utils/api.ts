@@ -13,6 +13,7 @@ import {
   Message,
   Group,
   FetchGroupMessagePayload,
+  CreateGroupPayload,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -75,8 +76,8 @@ export const editMessage = ({
     config
   );
 
-export const createGroup = (emails: User["email"][]) =>
-  axiosClient.post("/groups", { users: emails }, config);
+export const createGroup = (payload: CreateGroupPayload) =>
+  axiosClient.post("/groups", payload, config);
 
 export const fetchGroups = () => axiosClient.get<Group[]>(`/groups`, config);
 

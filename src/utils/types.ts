@@ -113,3 +113,8 @@ export type GroupMessageEventPayload = {
   message: GroupMessageType;
   group: Group;
 };
+
+export type CreateGroupPayload = {
+  users: string[];
+  title: string;
+};

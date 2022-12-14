@@ -8,6 +8,7 @@ import { searchUsers } from "../../utils/api";
 import {
   Button,
   InputContainer,
+  InputField,
   InputLabel,
   RecipientChipContainer,
   TextField,
@@ -25,6 +26,7 @@ type Props = {
 const CreateGroupForm = ({ setShowModal }: Props) => {
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
+  const [title, setTitle] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [userResults, setUserResults] = useState<User[]>([]);
   const dispatch = useDispatch<AppDispatch>();
@@ -42,10 +44,14 @@ const CreateGroupForm = ({ setShowModal }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (selectedUsers.length === 0 || !message) return;
+    if (selectedUsers.length === 0 || !message || !title) return;
 
-    const userEmails = selectedUsers.map((user) => user.email);
-    return dispatch(createGroupThunk(userEmails))
+    const users = selectedUsers.map((user) => user.email);
+    const payload = {
+      users,
+      title,
+    };
+    return dispatch(createGroupThunk(payload))
       .unwrap()
       .then(({ data }) => {
         navigate(`/groups/${data.id}`);
@@ -90,6 +96,17 @@ const CreateGroupForm = ({ setShowModal }: Props) => {
           handleUserSelect={handleUserSelect}
         />
       )}
+
+      <section className={styles.message}>
+        <InputContainer backgroundColor="#161616">
+          <InputLabel htmlFor="title">Title</InputLabel>
+          <InputField
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </InputContainer>
+      </section>
 
       <section className={styles.message}>
         <InputContainer backgroundColor="#161616">

@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import { createGroup as createGroupAPI, fetchGroups } from "../../utils/api";
-import { Group, User } from "../../utils/types";
+import { CreateGroupPayload, Group, User } from "../../utils/types";
 
 export interface GroupState {
   groups: Group[];
@@ -22,13 +22,18 @@ export const fetchGroupsThunk = createAsyncThunk("groups/fetch", () => {
 
 export const createGroupThunk = createAsyncThunk(
   "groups/create",
-  (emails: User["email"][]) => createGroupAPI(emails)
+  (payload: CreateGroupPayload) => createGroupAPI(payload)
 );
 
 export const groupsSlice = createSlice({
   name: "groups",
   initialState,
   reducers: {
+    addGroup: (state, action: PayloadAction<Group>) => {
+      console.log(`addGroup reducer: Adding ${action.payload.id} group`);
+
+      state.groups.unshift(action.payload);
+    },
     updateGroup: (state, action: PayloadAction<Group>) => {
       const updatedGroup = action.payload;
       const index = state.groups.findIndex((c) => c.id === updatedGroup.id);
@@ -52,6 +57,6 @@ export const selectGroupById = createSelector(
   (groups, groupId) => groups.find((g) => g.id === groupId)
 );
 
-export const { updateGroup } = groupsSlice.actions;
+export const { addGroup, updateGroup } = groupsSlice.actions;
 
 export default groupsSlice.reducer;
