@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
+import { deleteGroupMessageThunk } from "../../store/slices/groupMessageSlice";
 import {
   setIsEditingMessage,
   setMessageBeingEdited,
@@ -15,20 +16,37 @@ type Props = {
   point: { x: number; y: number };
 };
 const SelectedMessageContextMenu = ({ point }: Props) => {
-  const { id } = useParams();
+  const { id: routeId } = useParams();
   const { user } = useContext(AuthContext);
   const { isEditingMessage, selectedMessage, messageBeingEdited } = useSelector(
     (state: RootState) => state.messageContainer
   );
+  const conversationType = useSelector(
+    (state: RootState) => state.selectedConversationType.type
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const deleteMessage = () => {
-    const conversationId = parseInt(id!);
+  const handleDeleteClick = () => {
+    const id = parseInt(routeId!);
     if (!selectedMessage) return;
-    dispatch(
-      deleteMessageThunk({ conversationId, messageId: selectedMessage.id })
-    );
+
+    const messageId = selectedMessage.id;
+
+    if (conversationType === "private")
+      dispatch(
+        deleteMessageThunk({
+          conversationId: id,
+          messageId,
+        })
+      );
+    else if (conversationType === "group")
+      dispatch(
+        deleteGroupMessageThunk({
+          groupId: id,
+          messageId,
+        })
+      );
   };
 
   const handleEditClick = () => {
@@ -41,7 +59,7 @@ const SelectedMessageContextMenu = ({ point }: Props) => {
     <ContextMenu top={point.y} left={point.x}>
       <ul>
         {selectedMessage?.author.id === user?.id && (
-          <li onClick={deleteMessage}>Delete</li>
+          <li onClick={handleDeleteClick}>Delete</li>
         )}
         {selectedMessage?.author.id === user?.id && (
           <li onClick={handleEditClick}>Edit</li>

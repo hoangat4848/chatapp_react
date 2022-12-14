@@ -14,6 +14,8 @@ import {
   Group,
   FetchGroupMessagePayload,
   CreateGroupPayload,
+  DeleteGroupMessageParams,
+  DeleteGroupMessageReponse,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -92,6 +94,15 @@ export const postGroupMessage = ({
   content,
 }: CreateMessageParams) =>
   axiosClient.post(`/groups/${groupId}/messages`, { content }, config);
+
+export const deleteGroupMessage = ({
+  groupId,
+  messageId,
+}: DeleteGroupMessageParams) =>
+  axiosClient.delete<DeleteGroupMessageReponse>(
+    `/groups/${groupId}/messages/${messageId}`,
+    config
+  );
 
 export const searchUsers = (query: string) =>
   axiosClient.get<User[]>(`/users/search?query=${query}`, config);

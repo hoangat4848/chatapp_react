@@ -63,6 +63,10 @@ export type DeleteMessageResponse = {
   conversationId: number;
   messageId: number;
 };
+export type DeleteGroupMessageReponse = {
+  groupId: number;
+  messageId: number;
+};
 
 export type EditMessagePayload = {
   conversationId: number;
@@ -117,4 +121,9 @@ export type GroupMessageEventPayload = {
 export type CreateGroupPayload = {
   users: string[];
   title: string;
+};
+
+export type DeleteGroupMessageParams = {
+  groupId: number;
+  messageId: number;
 };
