@@ -1,0 +1,47 @@
+import React, { useEffect, useRef } from "react";
+import { ModalContainer, ModalContentBody, ModalHeader } from ".";
+import { StyledOverlay } from "../../utils/styles";
+import CreateConversationForm from "../forms/CreateConversationForm";
+import { MdClose } from "react-icons/md";
+import AddGroupRecipientForm from "../forms/AddGroupRecipientForm";
+
+type Props = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const AddGroupRecipientModal = ({ setShowModal }: Props) => {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) =>
+      e.key === "Escape" && setShowModal(false);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keyup", handleKeyDown);
+  }, [setShowModal]);
+
+  const handleOverlayClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const { current } = ref;
+    if (current === e.target) {
+      setShowModal(false);
+    }
+  };
+
+  return (
+    <StyledOverlay ref={ref} onClick={handleOverlayClick}>
+      <ModalContainer>
+        <ModalHeader>
+          <h2>Add recipient</h2>
+          <MdClose size={32} onClick={() => setShowModal(false)} />
+        </ModalHeader>
+        <ModalContentBody>
+          <AddGroupRecipientForm />
+        </ModalContentBody>
+      </ModalContainer>
+    </StyledOverlay>
+  );
+};
+
+export default AddGroupRecipientModal;

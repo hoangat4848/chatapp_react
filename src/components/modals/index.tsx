@@ -13,6 +13,17 @@ export const ModalContentBody = ({ children }: PropsWithChildren) => {
   return <StyledModalContentBody>{children}</StyledModalContentBody>;
 };
 
-export const ModalContainer = ({ children }: PropsWithChildren) => {
-  return <StyledModalContainer>{children}</StyledModalContainer>;
+type ModalContainerProps = {
+  showModal?: boolean;
+};
+
+export const ModalContainer = ({
+  children,
+  showModal,
+}: PropsWithChildren<ModalContainerProps>) => {
+  return (
+    <StyledModalContainer showModal={showModal}>
+      {children}
+    </StyledModalContainer>
+  );
 };

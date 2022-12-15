@@ -24,3 +24,7 @@ export type ConversationTabItemProps = {
 export type SidebarItemProps = {
   active?: boolean;
 };
+
+export type ModalContainerProps = Partial<{
+  showModal: boolean;
+}>;

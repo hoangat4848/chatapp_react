@@ -1,5 +1,5 @@
 import { PersonAdd } from "akar-icons";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
@@ -8,11 +8,12 @@ import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { StyledMessagePanelHeader } from "../../utils/styles";
+import AddGroupRecipientModal from "../modals/AddGroupRecipientModal";
 
 const MessagePanelHeader = () => {
+  const [showModal, setShowModal] = useState(false);
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-
   const type = useSelector(selectType);
 
   const conversation = useSelector((state: RootState) =>
@@ -33,10 +34,19 @@ const MessagePanelHeader = () => {
 
   // TODO: Add avatar
   return (
-    <StyledMessagePanelHeader>
-      <p>{headerTitle}</p>
-      {type === "group" && <PersonAdd size={24} />}
-    </StyledMessagePanelHeader>
+    <>
+      {showModal && <AddGroupRecipientModal setShowModal={setShowModal} />}
+      <StyledMessagePanelHeader>
+        <p>{headerTitle}</p>
+        {type === "group" && (
+          <PersonAdd
+            size={24}
+            cursor="pointer"
+            onClick={() => setShowModal(true)}
+          />
+        )}
+      </StyledMessagePanelHeader>
+    </>
   );
 };
 

@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components";
+import { fadeInUpwards } from "./keyframes";
 import {
   ContextMenuProps,
   ConversationTabItemProps,
   InputContainerProps,
   MessageItemContentProps,
+  ModalContainerProps,
   PageProps,
   SidebarItemProps,
 } from "./styleTypes";
@@ -144,6 +146,8 @@ export const StyledConversationSidebarItem = styled.div`
 
 export const StyledOverlay = styled.div`
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 10;
 
   display: flex;
@@ -153,14 +157,15 @@ export const StyledOverlay = styled.div`
   width: 100%;
   height: 100%;
 
-  background-color: #0404047f;
+  background-color: #000000e3;
 `;
 
-export const StyledModalContainer = styled.div`
-  box-sizing: border-box;
+export const StyledModalContainer = styled.div<ModalContainerProps>`
   border-radius: 10px;
 
   background-color: #131313;
+
+  animation: ${fadeInUpwards} 500ms ease;
 `;
 
 export const StyledModalHeader = styled.div`
