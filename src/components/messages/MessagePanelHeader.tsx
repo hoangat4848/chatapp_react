@@ -1,3 +1,4 @@
+import { PersonAdd } from "akar-icons";
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -31,7 +32,12 @@ const MessagePanelHeader = () => {
   const headerTitle = type === "group" ? groupTitle : displayName;
 
   // TODO: Add avatar
-  return <StyledMessagePanelHeader>{headerTitle}</StyledMessagePanelHeader>;
+  return (
+    <StyledMessagePanelHeader>
+      <p>{headerTitle}</p>
+      {type === "group" && <PersonAdd size={24} />}
+    </StyledMessagePanelHeader>
+  );
 };
 
 export default MessagePanelHeader;
