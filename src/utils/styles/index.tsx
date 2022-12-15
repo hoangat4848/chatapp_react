@@ -219,7 +219,7 @@ export const StyledMessagePanelHeader = styled.header`
   flex-shrink: 0;
 
   height: 100px;
-  padding: 0 18px;
+  padding: 0 24px;
 
   border-bottom: 1px solid #22222256;
   box-shadow: 5px 0 5px 1px #000;

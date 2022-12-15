@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
 import { selectConversationById } from "../../store/slices/conversationSlice";
+import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
 import { postGroupMessage, postNewMessage } from "../../utils/api";
 import { AuthContext } from "../../utils/context/AuthContext";
@@ -29,6 +30,10 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
 
   const conversation = useSelector((state: RootState) =>
     selectConversationById(state, parseInt(routeId!))
+  );
+
+  const group = useSelector((state: RootState) =>
+    selectGroupById(state, parseInt(routeId!))
   );
 
   const selectedType = useSelector(selectType);
@@ -67,6 +72,11 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
           setContent={setContent}
           sendMessage={sendMessage}
           sendTypingStatus={sendTypingStatus}
+          placeholderName={
+            selectedType === "group"
+              ? group?.title || "Group"
+              : recipient?.firstName || "User"
+          }
         />
         <MessageTypingStatus>
           {isRecipientTyping && `${recipient?.firstName} is typing...`}

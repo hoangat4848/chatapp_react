@@ -8,6 +8,7 @@ type Props = {
   setContent: Dispatch<SetStateAction<string>>;
   sendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
   sendTypingStatus: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  placeholderName: string;
 };
 
 const MessageInputField = ({
@@ -15,6 +16,7 @@ const MessageInputField = ({
   setContent,
   sendMessage,
   sendTypingStatus,
+  placeholderName,
 }: Props) => {
   return (
     <>
@@ -24,6 +26,7 @@ const MessageInputField = ({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             onKeyDown={sendTypingStatus}
+            placeholder={`Send a message to ${placeholderName}`}
           />
         </form>
       </MessageInputContainer>
