@@ -38,7 +38,7 @@ const MessagePanelHeader = () => {
       {showModal && <AddGroupRecipientModal setShowModal={setShowModal} />}
       <StyledMessagePanelHeader>
         <p>{headerTitle}</p>
-        {type === "group" && (
+        {type === "group" && user?.id === group?.creator.id && (
           <PersonAdd
             size={24}
             cursor="pointer"
