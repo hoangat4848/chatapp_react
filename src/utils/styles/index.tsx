@@ -660,8 +660,16 @@ export const GroupRecipientsSidebarHeader = styled.header`
 `;
 
 export const GroupRecipientsSidebarItemContainer = styled.div`
-  padding-top: 10px;
+  flex: 1 1 auto;
+
+  padding-top: 10px 0 0 20px;
+
+  overflow-y: auto;
+  &::webkit-scrollbar {
+    display: none;
+  }
 `;
+
 export const GroupRecipientsSidebarItem = styled.div`
   display: flex;
   align-items: center;
