@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../../components/messages/MessagePanel";
+import GroupRecipientsSidebar from "../../components/sidebars/GroupRecipientsSidebar";
 import { AppDispatch } from "../../store";
 import {
   fetchGroupMessagesThunk,
@@ -54,6 +55,7 @@ const GroupChannelPage = () => {
         sendTypingStatus={sendTypingStatus}
         isRecipientTyping={isRecipientTyping}
       />
+      <GroupRecipientsSidebar />
     </StyledConversationChannelPage>
   );
 };

@@ -12,12 +12,11 @@ import { socket, SocketContext } from "./utils/context/SocketContext";
 import { Provider as ReduxProvider } from "react-redux";
 import { User } from "./utils/types";
 import { store } from "./store";
-import { enableMapSet } from "immer";
 import GroupPage from "./pages/group/GroupPage";
 import GroupChannelPage from "./pages/group/GroupChannelPage";
 import { AppPage } from "./pages/AppPage";
-
-enableMapSet();
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
   user?: User;
@@ -72,6 +71,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <ToastContainer theme="dark" limit={3} />
     </AppWithProvider>
   );
 }

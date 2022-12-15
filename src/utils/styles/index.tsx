@@ -101,6 +101,8 @@ export const Page = styled.div<PageProps>`
 `;
 
 export const StyledConversationChannelPage = styled.div`
+  display: flex;
+
   height: 100vh;
   width: 100%;
 `;
@@ -201,6 +203,7 @@ export const TextField = styled.textarea`
 export const StyledMessagePanel = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   height: 100vh;
 
@@ -213,12 +216,13 @@ export const StyledMessagePanelHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 
-  min-height: 100px;
+  height: 100px;
   padding: 0 18px;
 
-  background-color: #151515;
-  border-bottom: solid 1px #fff;
+  border-bottom: 1px solid #22222256;
+  box-shadow: 5px 0 5px 1px #000;
 `;
 
 export const MessagePanelBody = styled.div`
@@ -624,4 +628,47 @@ export const ConversationCreateButton = styled.div`
   background-color: #1a1a1a;
 
   cursor: pointer;
+`;
+
+export const StyledGroupRecipientsSidebar = styled.aside`
+  display: flex;
+  flex-direction: column;
+
+  width: 400px;
+  height: 100%;
+
+  background-color: #141414;
+`;
+
+export const GroupRecipientsSidebarHeader = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+
+  width: 100%;
+  height: 100px;
+  padding: 10px 32px;
+
+  border-bottom: 1px solid #22222256;
+  box-shadow: 5px 0 5px 1px #000;
+
+  & span {
+    font-size: 18px;
+    font-weight: 500;
+  }
+`;
+
+export const GroupRecipientsSidebarItemContainer = styled.div`
+  padding-top: 10px;
+`;
+export const GroupRecipientsSidebarItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 0;
+
+  font-size: 18px;
+  font-weight: 500;
 `;

@@ -2,7 +2,7 @@ import { formatRelative } from "date-fns";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
-  MessageItemAvatar,
+  UserAvatar,
   MessageItemContainer,
   MessageItemContent,
   MessageItemDetails,
@@ -29,7 +29,7 @@ export const FormattedMessage = ({
 
   return (
     <MessageItemContainer onContextMenu={onContextMenu}>
-      <MessageItemAvatar />
+      <UserAvatar />
       <MessageItemDetails>
         <MessageItemHeader>
           <span

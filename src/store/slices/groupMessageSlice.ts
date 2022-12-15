@@ -110,7 +110,6 @@ export const selectGroupMessage = createSelector(
   (groupMessages, id) => groupMessages.find((gm) => gm.id === id)
 );
 
-export const { addGroupMessage, editGroupMessage: updateGroupMessage } =
-  groupMessagesSlice.actions;
+export const { addGroupMessage, editGroupMessage } = groupMessagesSlice.actions;
 
 export default groupMessagesSlice.reducer;
