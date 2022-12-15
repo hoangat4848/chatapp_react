@@ -54,6 +54,17 @@ export const groupMessagesSlice = createSlice({
       const groupMessage = state.messages.find((gm) => gm.id === group.id);
       groupMessage?.messages.unshift(message);
     },
+    editGroupMessage: (state, action: PayloadAction<GroupMessageType>) => {
+      const updatedMessage = action.payload;
+      if (!updatedMessage.group) return;
+      const { id } = updatedMessage.group;
+      const groupMessage = state.messages.find((gm) => gm.id === id);
+      if (!groupMessage) return;
+      const messageIndex = groupMessage.messages.findIndex(
+        (m) => m.id === updatedMessage.id
+      );
+      groupMessage.messages[messageIndex] = updatedMessage;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -77,18 +88,18 @@ export const groupMessagesSlice = createSlice({
         if (messageIndex !== -1) {
           groupMessages.messages.splice(messageIndex, 1);
         }
-      })
-      .addCase(editGroupMessageThunk.fulfilled, (state, action) => {
-        const { data: editedMessage } = action.payload;
-        const group = editedMessage.group;
-        if (!group) return;
-        const groupMessages = state.messages.find((cm) => cm.id === group.id);
-        if (!groupMessages) return;
-        const messageIndex = groupMessages.messages.findIndex(
-          (m) => m.id === editedMessage.id
-        );
-        groupMessages.messages[messageIndex] = editedMessage;
       });
+    // .addCase(editGroupMessageThunk.fulfilled, (state, action) => {
+    //   const { data: editedMessage } = action.payload;
+    //   const group = editedMessage.group;
+    //   if (!group) return;
+    //   const groupMessages = state.messages.find((cm) => cm.id === group.id);
+    //   if (!groupMessages) return;
+    //   const messageIndex = groupMessages.messages.findIndex(
+    //     (m) => m.id === editedMessage.id
+    //   );
+    //   groupMessages.messages[messageIndex] = editedMessage;
+    // });
   },
 });
 
@@ -99,6 +110,7 @@ export const selectGroupMessage = createSelector(
   (groupMessages, id) => groupMessages.find((gm) => gm.id === id)
 );
 
-export const { addGroupMessage } = groupMessagesSlice.actions;
+export const { addGroupMessage, editGroupMessage: updateGroupMessage } =
+  groupMessagesSlice.actions;
 
 export default groupMessagesSlice.reducer;

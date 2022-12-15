@@ -3,9 +3,13 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../../components/messages/MessagePanel";
 import { AppDispatch } from "../../store";
-import { fetchGroupMessagesThunk } from "../../store/slices/groupMessageSlice";
+import {
+  fetchGroupMessagesThunk,
+  editGroupMessage,
+} from "../../store/slices/groupMessageSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
 import { StyledConversationChannelPage } from "../../utils/styles";
+import { GroupMessageType } from "../../utils/types";
 
 const GroupChannelPage = () => {
   const { id } = useParams();
@@ -30,13 +34,17 @@ const GroupChannelPage = () => {
     socket.on("userLeaveGroup", () => {
       console.log(`someone leave group ${groupId}`);
     });
+    socket.on("onGroupMessageUpdate", (message: GroupMessageType) => {
+      dispatch(editGroupMessage(message));
+    });
 
     return () => {
       socket.emit("onGroupLeave", { groupId });
       socket.off("userJoinGroup");
       socket.off("userLeaveGroup");
+      socket.off("onGroupMessageUpdate");
     };
-  }, [socket, id]);
+  }, [socket, id, dispatch]);
 
   const sendTypingStatus = (e: React.KeyboardEvent<HTMLInputElement>) => {};
 
