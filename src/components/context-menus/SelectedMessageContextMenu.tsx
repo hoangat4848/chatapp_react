@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
@@ -9,7 +9,6 @@ import {
 } from "../../store/slices/messageContainerSlice";
 import { deleteMessageThunk } from "../../store/slices/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
-import { MessageMenuContext } from "../../utils/context/MessageMenuContext";
 import { ContextMenu } from "../../utils/styles";
 
 type Props = {
@@ -18,7 +17,7 @@ type Props = {
 const SelectedMessageContextMenu = ({ point }: Props) => {
   const { id: routeId } = useParams();
   const { user } = useContext(AuthContext);
-  const { isEditingMessage, selectedMessage, messageBeingEdited } = useSelector(
+  const { selectedMessage } = useSelector(
     (state: RootState) => state.messageContainer
   );
   const conversationType = useSelector(

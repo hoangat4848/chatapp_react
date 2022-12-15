@@ -1,16 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
-import {
-  editMessageBeingEditedContent,
-  setIsEditingMessage,
-} from "../../store/slices/messageContainerSlice";
+import { editGroupMessageThunk } from "../../store/slices/groupMessageSlice";
+import { setIsEditingMessage } from "../../store/slices/messageContainerSlice";
 import { editMessageThunk } from "../../store/slices/messageSlice";
 import {
   EditMessageActionsContainer,
   EditMessageInputField,
 } from "../../utils/styles";
-import { EditMessagePayload } from "../../utils/types";
+import { EditGroupMessagePayload, EditMessagePayload } from "../../utils/types";
 import styles from "./index.module.scss";
 
 type Props = {
@@ -18,9 +16,12 @@ type Props = {
 };
 
 const EditMessageContainer = ({ onEditMessageChange }: Props) => {
-  const { id } = useParams();
+  const { id: routeId } = useParams();
   const dispatch = useDispatch<AppDispatch>();
 
+  const conversationType = useSelector(
+    (state: RootState) => state.selectedConversationType.type
+  );
   const { messageBeingEdited } = useSelector(
     (state: RootState) => state.messageContainer
   );
@@ -31,15 +32,32 @@ const EditMessageContainer = ({ onEditMessageChange }: Props) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const params: EditMessagePayload = {
-      conversationId: parseInt(id!),
-      messageId: messageBeingEdited.id,
-      content: messageBeingEdited.content,
-    };
+    const id = parseInt(routeId!);
+    const messageId = messageBeingEdited.id;
+    const content = messageBeingEdited.content;
+    if (!content) return;
 
-    dispatch(editMessageThunk(params)).finally(() => {
-      dispatch(setIsEditingMessage(false));
-    });
+    if (conversationType === "private") {
+      const params: EditMessagePayload = {
+        conversationId: id,
+        messageId,
+        content,
+      };
+
+      dispatch(editMessageThunk(params)).finally(() => {
+        dispatch(setIsEditingMessage(false));
+      });
+    } else if (conversationType === "group") {
+      const params: EditGroupMessagePayload = {
+        groupId: id,
+        messageId,
+        content,
+      };
+
+      dispatch(editGroupMessageThunk(params)).finally(() =>
+        dispatch(setIsEditingMessage(false))
+      );
+    }
   };
 
   return (

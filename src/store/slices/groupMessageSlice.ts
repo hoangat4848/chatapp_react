@@ -7,6 +7,7 @@ import {
 import { RootState } from "..";
 import {
   deleteGroupMessage as deleteGroupMessageAPI,
+  editGroupMessage as editGroupMessageAPI,
   fetchGroupMessages as fetchGroupMessagesAPI,
 } from "../../utils/api";
 
@@ -15,6 +16,7 @@ import {
   GroupMessage,
   DeleteGroupMessageParams,
   GroupMessageType,
+  EditGroupMessagePayload,
 } from "../../utils/types";
 
 export interface GroupMessagesState {
@@ -33,6 +35,11 @@ export const fetchGroupMessagesThunk = createAsyncThunk(
 export const deleteGroupMessageThunk = createAsyncThunk(
   "groupMessages/delete",
   (params: DeleteGroupMessageParams) => deleteGroupMessageAPI(params)
+);
+
+export const editGroupMessageThunk = createAsyncThunk(
+  "groupMessages/edit",
+  (params: EditGroupMessagePayload) => editGroupMessageAPI(params)
 );
 
 export const groupMessagesSlice = createSlice({
@@ -70,6 +77,17 @@ export const groupMessagesSlice = createSlice({
         if (messageIndex !== -1) {
           groupMessages.messages.splice(messageIndex, 1);
         }
+      })
+      .addCase(editGroupMessageThunk.fulfilled, (state, action) => {
+        const { data: editedMessage } = action.payload;
+        const group = editedMessage.group;
+        if (!group) return;
+        const groupMessages = state.messages.find((cm) => cm.id === group.id);
+        if (!groupMessages) return;
+        const messageIndex = groupMessages.messages.findIndex(
+          (m) => m.id === editedMessage.id
+        );
+        groupMessages.messages[messageIndex] = editedMessage;
       });
   },
 });

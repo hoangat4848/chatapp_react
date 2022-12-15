@@ -127,3 +127,9 @@ export type DeleteGroupMessageParams = {
   groupId: number;
   messageId: number;
 };
+
+export type EditGroupMessagePayload = {
+  groupId: number;
+  messageId: number;
+  content: string;
+};
