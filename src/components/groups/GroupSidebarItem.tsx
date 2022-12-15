@@ -8,6 +8,9 @@ type Props = {
 };
 const GroupSidebarItem = ({ group }: Props) => {
   const navigate = useNavigate();
+  const content = group.lastMessageSent?.content;
+  const displayContent =
+    content && content.length > 10 ? content.substring(0, 20) + "..." : content;
 
   return (
     <StyledConversationSidebarItem
@@ -18,9 +21,7 @@ const GroupSidebarItem = ({ group }: Props) => {
         <span className={styles.conversationName}>
           {group.title ?? "Group"}
         </span>
-        <span className={styles.conversationLastMessage}>
-          {group.lastMessageSent?.content}
-        </span>
+        <span className={styles.conversationLastMessage}>{displayContent}</span>
       </div>
     </StyledConversationSidebarItem>
   );

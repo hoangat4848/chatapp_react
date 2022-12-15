@@ -13,6 +13,9 @@ const ConversationSidebarItem = ({ conversation }: Props) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const recipient = getRecipientFromConversation(user, conversation);
+  const content = conversation.lastMessageSent?.content;
+  const displayContent =
+    content && content.length > 10 ? content.substring(0, 20) + "..." : content;
 
   return (
     <StyledConversationSidebarItem
@@ -23,9 +26,7 @@ const ConversationSidebarItem = ({ conversation }: Props) => {
         <span className={styles.conversationName}>
           {`${recipient?.firstName} ${recipient?.lastName}`}
         </span>
-        <span className={styles.conversationLastMessage}>
-          {conversation.lastMessageSent?.content}
-        </span>
+        <span className={styles.conversationLastMessage}>{displayContent}</span>
       </div>
     </StyledConversationSidebarItem>
   );
