@@ -133,3 +133,8 @@ export type EditGroupMessagePayload = {
   messageId: number;
   content: string;
 };
+
+export type AddGroupRecipientParams = {
+  groupId: number;
+  email: string;
+};
