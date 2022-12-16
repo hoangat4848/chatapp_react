@@ -35,9 +35,16 @@ const GroupPage = () => {
       dispatch(addGroup(payload));
     });
 
+    socket.on("onGroupUserAdd", (payload) => {
+      console.log("onGroupUserAdd");
+      console.log(payload);
+      dispatch(addGroup(payload));
+    });
+
     return () => {
       socket.off("onGroupMessage");
       socket.off("onGroupCreate");
+      socket.off("onGroupUserAdd");
     };
   }, [dispatch, socket]);
   return (

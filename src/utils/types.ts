@@ -145,6 +145,7 @@ export type Point = {
 };
 
 export type UserContextMenuActionType = "kick" | "transfer_owner" | "profile";
+
 export type ContextMenuItemType = {
   label: string;
   action: UserContextMenuActionType;
