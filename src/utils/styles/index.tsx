@@ -323,33 +323,38 @@ export const MessageItemContent = styled.div<MessageItemContentProps>`
   width: 100%;
 `;
 
-export const ContextMenu = styled.div<ContextMenuProps>`
+export const ContextMenu = styled.ul<ContextMenuProps>`
   position: fixed;
   ${(props) => css`
     top: ${props.top}px;
     left: ${props.left}px;
   `}
 
-  box-sizing: border-box;
-  width: 200px;
+  width: 220px;
+  margin: 0;
+  padding: 10px;
 
   border-radius: 8px;
 
-  background-color: #252525;
+  background-color: #1a1a1a;
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 10px;
-  }
+  list-style-type: none;
+`;
 
-  ul li {
-    padding: 14px 16px;
+export const ContextMenuItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    border-radius: 8px;
-  }
+  border-radius: 8px;
 
-  ul li:hover {
+  padding: 14px 16px;
+  margin: 6px 0;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  &:hover {
     cursor: pointer;
     background-color: #1f1f1f;
   }

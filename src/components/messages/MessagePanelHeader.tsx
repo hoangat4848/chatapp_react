@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { selectConversationById } from "../../store/slices/conversationSlice";
-import { toggleSidebar } from "../../store/slices/groupSidebarSlice";
+import { toggleSidebar } from "../../store/slices/groupRecipientsSidebarSlice";
 import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
 import { AuthContext } from "../../utils/context/AuthContext";

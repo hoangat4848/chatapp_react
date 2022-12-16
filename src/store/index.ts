@@ -5,7 +5,7 @@ import selectedTypeReducer from "./slices/selectedSlice";
 import groupReducer from "./slices/groupSlice";
 import groupMessageReducer from "./slices/groupMessageSlice";
 import messageContainerReducer from "./slices/messageContainerSlice";
-import groupSidebarReducer from "./slices/groupSidebarSlice";
+import groupSidebarReducer from "./slices/groupRecipientsSidebarSlice";
 
 export const store = configureStore({
   reducer: {

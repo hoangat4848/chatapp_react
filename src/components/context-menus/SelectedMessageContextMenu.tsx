@@ -9,7 +9,7 @@ import {
 } from "../../store/slices/messageContainerSlice";
 import { deleteMessageThunk } from "../../store/slices/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
-import { ContextMenu } from "../../utils/styles";
+import { ContextMenu, ContextMenuItem } from "../../utils/styles";
 
 type Props = {
   point: { x: number; y: number };
@@ -56,14 +56,12 @@ const SelectedMessageContextMenu = ({ point }: Props) => {
 
   return (
     <ContextMenu top={point.y} left={point.x}>
-      <ul>
-        {selectedMessage?.author.id === user?.id && (
-          <li onClick={handleDeleteClick}>Delete</li>
-        )}
-        {selectedMessage?.author.id === user?.id && (
-          <li onClick={handleEditClick}>Edit</li>
-        )}
-      </ul>
+      {selectedMessage?.author.id === user?.id && (
+        <ContextMenuItem onClick={handleDeleteClick}>Delete</ContextMenuItem>
+      )}
+      {selectedMessage?.author.id === user?.id && (
+        <ContextMenuItem onClick={handleEditClick}>Edit</ContextMenuItem>
+      )}
     </ContextMenu>
   );
 };
