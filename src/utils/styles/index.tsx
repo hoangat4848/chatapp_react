@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { fadeInUpwards } from "./keyframes";
+import { fadeOpacity, fadeInUpwards } from "./keyframes";
 import {
   ContextMenuProps,
   ConversationTabItemProps,
@@ -227,7 +227,6 @@ export const StyledMessagePanelHeader = styled.header`
   padding: 0 24px;
 
   border-bottom: 1px solid #49494925;
-  box-shadow: 5px 0 5px 1px #000;
 `;
 
 export const MessagePanelBody = styled.div`
@@ -577,6 +576,7 @@ export const UserSidebarItem = styled.div<SidebarItemProps>`
 export const StyledConversationSidebar = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
 
   height: 100vh;
   width: 400px;
@@ -638,11 +638,14 @@ export const ConversationCreateButton = styled.div`
 export const StyledGroupRecipientsSidebar = styled.aside`
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
 
-  width: 400px;
+  width: 350px;
   height: 100%;
 
   background-color: #111111;
+
+  animation: ${fadeOpacity} 500ms ease;
 `;
 
 export const GroupRecipientsSidebarHeader = styled.header`
