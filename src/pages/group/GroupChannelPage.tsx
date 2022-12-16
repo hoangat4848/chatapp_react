@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../../components/messages/MessagePanel";
 import GroupRecipientsSidebar from "../../components/sidebars/GroupRecipientsSidebar";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import {
   fetchGroupMessagesThunk,
   editGroupMessage,
@@ -16,6 +16,9 @@ const GroupChannelPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
+  const showSidebar = useSelector(
+    (state: RootState) => state.groupSidebar.showSidebar
+  );
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const [isTyping, setIsTyping] = useState(false);
@@ -55,7 +58,7 @@ const GroupChannelPage = () => {
         sendTypingStatus={sendTypingStatus}
         isRecipientTyping={isRecipientTyping}
       />
-      <GroupRecipientsSidebar />
+      {showSidebar && <GroupRecipientsSidebar />}
     </StyledConversationChannelPage>
   );
 };

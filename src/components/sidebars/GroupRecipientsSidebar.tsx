@@ -1,9 +1,5 @@
-import { PeopleGroup } from "akar-icons";
-import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { RootState } from "../../store";
-import { selectGroupById } from "../../store/slices/groupSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
 import {
   GroupRecipientsSidebarHeader,
@@ -16,9 +12,6 @@ import { User } from "../../utils/types";
 
 const GroupRecipientsSidebar = () => {
   const { id: groupId } = useParams();
-  const group = useSelector((state: RootState) =>
-    selectGroupById(state, parseInt(groupId!))
-  );
   const socket = useContext(SocketContext);
   const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
   const [offlineUsers, setOfflineUsers] = useState<User[]>([]);
@@ -47,7 +40,6 @@ const GroupRecipientsSidebar = () => {
     <StyledGroupRecipientsSidebar>
       <GroupRecipientsSidebarHeader>
         <span>Participants</span>
-        <PeopleGroup size={24} strokeWidth={2} />
       </GroupRecipientsSidebarHeader>
       <GroupRecipientsSidebarItemContainer>
         <p>Online Users</p>

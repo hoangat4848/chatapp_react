@@ -226,7 +226,7 @@ export const StyledMessagePanelHeader = styled.header`
   height: 100px;
   padding: 0 24px;
 
-  border-bottom: 1px solid #22222256;
+  border-bottom: 1px solid #49494925;
   box-shadow: 5px 0 5px 1px #000;
 `;
 
@@ -642,7 +642,7 @@ export const StyledGroupRecipientsSidebar = styled.aside`
   width: 400px;
   height: 100%;
 
-  background-color: #141414;
+  background-color: #111111;
 `;
 
 export const GroupRecipientsSidebarHeader = styled.header`
@@ -655,8 +655,7 @@ export const GroupRecipientsSidebarHeader = styled.header`
   height: 100px;
   padding: 10px 32px;
 
-  border-bottom: 1px solid #22222256;
-  box-shadow: 5px 0 5px 1px #000;
+  border-bottom: 1px solid #49494925;
 
   & span {
     font-size: 18px;
@@ -667,7 +666,7 @@ export const GroupRecipientsSidebarHeader = styled.header`
 export const GroupRecipientsSidebarItemContainer = styled.div`
   flex: 1 1 auto;
 
-  padding-top: 10px 0 0 20px;
+  padding: 30px 0 0 30px;
 
   overflow-y: auto;
   &::webkit-scrollbar {
@@ -684,4 +683,10 @@ export const GroupRecipientsSidebarItem = styled.div`
 
   font-size: 18px;
   font-weight: 500;
+`;
+
+export const GroupHeaderIcons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `;
