@@ -36,9 +36,11 @@ export const groupsSlice = createSlice({
     },
     updateGroup: (state, action: PayloadAction<Group>) => {
       const updatedGroup = action.payload;
+      const existingGroup = state.groups.find((g) => g.id === updatedGroup.id);
       const index = state.groups.findIndex((c) => c.id === updatedGroup.id);
-      if (index > -1) state.groups.splice(index, 1);
-      state.groups.unshift(updatedGroup);
+      // if (index > -1) state.groups.splice(index, 1);
+      // state.groups.unshift(updatedGroup);
+      if (index > -1) state.groups[index] = updatedGroup;
     },
   },
 

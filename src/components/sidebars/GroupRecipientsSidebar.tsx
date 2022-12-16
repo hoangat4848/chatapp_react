@@ -39,11 +39,9 @@ const GroupRecipientsSidebar = () => {
     const interval = setInterval(() => {
       console.log(`Pinging Group${groupId}`);
       socket.emit("getOnlineGroupUsers", { groupId: parseInt(groupId!) });
-    }, 10000);
+    }, 120000);
 
     socket.on("onlineGroupUsersReceived", (payload) => {
-      console.log("received payload for online users");
-      console.log(payload);
       setOnlineUsers(payload.onlineUsers);
       setOfflineUsers(payload.offlineUsers);
     });

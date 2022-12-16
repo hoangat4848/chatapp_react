@@ -11,7 +11,7 @@ import {
 } from "../../store/slices/groupSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
-import { Group, GroupMessageEventPayload } from "../../utils/types";
+import { Group, GroupMessageEventPayload, User } from "../../utils/types";
 
 const GroupPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,16 +35,23 @@ const GroupPage = () => {
       dispatch(addGroup(payload));
     });
 
-    socket.on("onGroupUserAdd", (payload) => {
+    // Adds the group to the new user being added to the group
+    socket.on("onGroupUserAdd", (payload: Group) => {
       console.log("onGroupUserAdd");
       console.log(payload);
       dispatch(addGroup(payload));
+    });
+
+    socket.on("onGroupReceivedNewUser", (payload: Group) => {
+      console.log("received onGroupReceivedNewUser");
+      dispatch(updateGroup(payload));
     });
 
     return () => {
       socket.off("onGroupMessage");
       socket.off("onGroupCreate");
       socket.off("onGroupUserAdd");
+      socket.off("onGroupReceivedNewUser");
     };
   }, [dispatch, socket]);
   return (
