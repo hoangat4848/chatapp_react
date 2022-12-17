@@ -337,6 +337,7 @@ export const ContextMenu = styled.ul<ContextMenuProps>`
     top: ${props.top}px;
     left: ${props.left}px;
   `}
+  z-index: 999;
 
   width: 220px;
   margin: 0;
