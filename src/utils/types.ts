@@ -90,6 +90,7 @@ export type Group = {
   title?: string;
   users: User[];
   creator: User;
+  owner: User;
   messages: Message[];
   lastMessageSent: Message;
   lastMessageSentAt: Date;

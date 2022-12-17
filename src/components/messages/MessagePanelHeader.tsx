@@ -8,6 +8,10 @@ import { toggleSidebar } from "../../store/slices/groupRecipientsSidebarSlice";
 import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
+import {
+  getRecipientFullnameFromConversation,
+  isGroupOwner,
+} from "../../utils/helpers";
 import { GroupHeaderIcons, StyledMessagePanelHeader } from "../../utils/styles";
 import AddGroupRecipientModal from "../modals/AddGroupRecipientModal";
 
@@ -31,10 +35,7 @@ const MessagePanelHeader = () => {
     selectGroupById(state, parseInt(id!))
   );
 
-  const displayName =
-    user?.id === conversation?.creator.id
-      ? `${conversation?.recipient.firstName} ${conversation?.recipient.lastName}`
-      : `${conversation?.creator.firstName} ${conversation?.creator.lastName}`;
+  const displayName = getRecipientFullnameFromConversation(user, conversation);
 
   const groupTitle = group?.title ?? "Group";
 
@@ -47,7 +48,7 @@ const MessagePanelHeader = () => {
       <StyledMessagePanelHeader>
         <p>{headerTitle}</p>
         <GroupHeaderIcons>
-          {type === "group" && user?.id === group?.creator.id && (
+          {type === "group" && isGroupOwner(user, group) && (
             <PersonAdd
               size={ICONS_SETTINGS.size}
               strokeWidth={ICONS_SETTINGS.strokeWith}

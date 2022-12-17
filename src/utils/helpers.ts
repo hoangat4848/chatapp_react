@@ -10,6 +10,17 @@ export const getRecipientFromConversation = (
     : conversation?.creator;
 };
 
+export const getRecipientFullnameFromConversation = (
+  user?: User,
+  conversation?: Conversation
+) => {
+  if (!user || !conversation) return;
+  const { creator, recipient } = conversation;
+  return user.id === creator.id
+    ? `${recipient.firstName} ${recipient.lastName}`
+    : `${creator.firstName} ${creator.lastName}`;
+};
+
 export const getUserContextMenuIcon = (type: UserContextMenuActionType) => {
   switch (type) {
     case "kick":
@@ -22,4 +33,4 @@ export const getUserContextMenuIcon = (type: UserContextMenuActionType) => {
 };
 
 export const isGroupOwner = (user?: User, group?: Group) =>
-  user?.id === group?.creator.id;
+  user?.id === group?.owner.id;
