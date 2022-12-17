@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
@@ -41,20 +41,16 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
   const recipient = getRecipientFromConversation(user, conversation);
 
   const sendMessage = async () => {
-    if (!routeId || !content) return;
+    const trimmedContent = content.trim();
+    if (!routeId || !trimmedContent) return;
     const id = parseInt(routeId);
+    const params = { id, content: trimmedContent };
     try {
       if (selectedType === "private") {
-        await postNewMessage({
-          id,
-          content,
-        });
+        await postNewMessage(params);
       }
       if (selectedType === "group") {
-        await postGroupMessage({
-          id,
-          content,
-        });
+        await postGroupMessage(params);
       }
     } catch (error) {
       console.log(error);
@@ -68,18 +64,6 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
       <MessagePanelHeader />
       <MessagePanelBody>
         <MessageContainer />
-        {/* <MessageInputField
-          content={content}
-          setContent={setContent}
-          sendMessage={sendMessage}
-          sendTypingStatus={sendTypingStatus}
-          placeholderName={
-            selectedType === "group"
-              ? group?.title || "Group"
-              : recipient?.firstName || "User"
-          }
-        /> */}
-
         <MessageInputField
           content={content}
           setContent={setContent}
