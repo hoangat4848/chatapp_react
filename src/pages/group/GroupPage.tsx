@@ -9,6 +9,7 @@ import {
   fetchGroupsThunk,
   removeGroup,
   updateGroup,
+  updateGroupLastMessageSent,
 } from "../../store/slices/groupSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
@@ -32,7 +33,7 @@ const GroupPage = () => {
       const { group, message } = payload;
       console.log(group, message);
       dispatch(addGroupMessage(payload));
-      dispatch(updateGroup(group));
+      dispatch(updateGroupLastMessageSent(group));
     });
 
     socket.on("onGroupCreate", (payload: Group) => {
@@ -66,14 +67,20 @@ const GroupPage = () => {
       if (parseInt(id!) === payload.id) navigate("/groups");
     });
 
+    socket.on("onGroupOwnerUpdate", (payload: Group) => {
+      console.log("received onGroupOwnerUpdate");
+      dispatch(updateGroup(payload));
+    });
+
     return () => {
       console.log("clear groupPage sockets");
 
       socket.off("onGroupMessage");
       socket.off("onGroupCreate");
       socket.off("onGroupUserAdd");
-      // socket.off("onGroupReceivedNewUser");
-      // socket.off("onGroupRecipientRemoved");
+      socket.off("onGroupRecipientRemoved");
+      socket.off("onGroupRemoved");
+      socket.off("onGroupOwnerUpdate");
     };
   }, [dispatch, socket, id, navigate]);
   return (

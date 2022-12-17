@@ -38,8 +38,6 @@ const SelectedParticipantContextMenu = ({ location }: Props) => {
     (state: RootState) => state.groupSidebar.selectedUser
   );
 
-  console.log(user, group);
-
   const isOwner = isGroupOwner(user, group);
 
   const kickUser = () => {
