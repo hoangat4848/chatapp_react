@@ -28,3 +28,11 @@ export type SidebarItemProps = {
 export type ModalContainerProps = Partial<{
   showModal: boolean;
 }>;
+
+export type CharacterLimitProps = {
+  atMaxLength: boolean;
+};
+
+export type MessageInputContainerProps = {
+  isMultiLine: boolean;
+};

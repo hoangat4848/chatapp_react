@@ -1,13 +1,19 @@
-import React, { Dispatch } from "react";
-import { MessageInput, MessageInputContainer } from "../../utils/styles";
+import React, { Dispatch, useState } from "react";
+import {
+  CharacterLimit,
+  MessageInput,
+  MessageInputContainer,
+} from "../../utils/styles";
 import { SetStateAction } from "react";
 import styles from "./index.module.scss";
+import { CirclePlusFill, FaceVeryHappy } from "akar-icons";
+import MessageTextField from "../inputs/MessageTextField";
 
 type Props = {
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
-  sendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
-  sendTypingStatus: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  sendMessage: () => void;
+  sendTypingStatus: () => void;
   placeholderName: string;
 };
 
@@ -18,17 +24,32 @@ const MessageInputField = ({
   sendTypingStatus,
   placeholderName,
 }: Props) => {
+  const ICON_SIZE = 36;
+  const MAX_LENGTH = 2048;
+  const [isMultiLine, setIsMultiLine] = useState(false);
+  const atMaxLength = content.length === MAX_LENGTH;
+
   return (
     <>
-      <MessageInputContainer>
+      <MessageInputContainer isMultiLine={isMultiLine}>
+        <CirclePlusFill className={styles.icon} size={ICON_SIZE} />
         <form onSubmit={sendMessage} className={styles.form}>
-          <MessageInput
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            onKeyDown={sendTypingStatus}
-            placeholder={`Send a message to ${placeholderName}`}
+          <MessageTextField
+            message={content}
+            setMessage={setContent}
+            maxLength={MAX_LENGTH}
+            setIsMultiline={setIsMultiLine}
+            sendTypingStatus={sendTypingStatus}
+            sendMessage={sendMessage}
+            placeholderName={placeholderName}
           />
         </form>
+        <FaceVeryHappy className={styles.icon} size={ICON_SIZE} />
+        {atMaxLength && (
+          <CharacterLimit atMaxLength={atMaxLength}>
+            {`${content.length}/${MAX_LENGTH}`}
+          </CharacterLimit>
+        )}
       </MessageInputContainer>
     </>
   );

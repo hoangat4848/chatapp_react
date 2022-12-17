@@ -60,11 +60,7 @@ const ConversationChannelPage = () => {
     };
   }, [id, socket]);
 
-  const sendTypingStatus = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ALT") {
-      console.log("pressed ALT");
-      return;
-    }
+  const sendTypingStatus = () => {
     if (!isTyping) {
       setIsTyping(true);
       socket.emit("onTypingStart", { conversationId: parseInt(id!) });

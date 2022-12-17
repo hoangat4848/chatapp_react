@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components";
 import { fadeOpacity, fadeInUpwards } from "./keyframes";
 import {
+  CharacterLimitProps,
   ContextMenuProps,
   ConversationTabItemProps,
   InputContainerProps,
+  MessageInputContainerProps,
   MessageItemContentProps,
   ModalContainerProps,
   PageProps,
@@ -253,7 +255,10 @@ export const StyledMessageContainer = styled.div`
   overflow-y: auto;
 `;
 
-export const MessageInputContainer = styled.div`
+export const MessageInputContainer = styled.div<MessageInputContainerProps>`
+  display: flex;
+  align-items: ${({ isMultiLine }) => (isMultiLine ? "top" : "center")};
+
   width: 100%;
   padding: 15px 16px;
   margin-top: 10px;
@@ -288,7 +293,8 @@ export const MessageItemContainer = styled.div`
 
   width: 100%;
 
-  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
 `;
 
 export const MessageItemAvatar = styled.div`
@@ -699,4 +705,39 @@ export const GroupHeaderIcons = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+`;
+
+export const MessageTextArea = styled.textarea`
+  flex: 0 0 auto;
+
+  width: 100%;
+  height: 20px;
+  max-height: 200px;
+  padding: 0;
+  margin: 4px 0;
+
+  border: none;
+  outline: none;
+
+  font-family: "Inter";
+  font-size: 18px;
+
+  background-color: inherit;
+  color: #ffffff;
+
+  resize: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const CharacterLimit = styled.span<CharacterLimitProps>`
+  position: absolute;
+  bottom: 8px;
+  right: 32px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ atMaxLength }) => (atMaxLength ? "#ff0000" : "rgb(129,129,129)")};
 `;

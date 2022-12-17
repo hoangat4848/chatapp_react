@@ -18,7 +18,7 @@ import MessageInputField from "./MessageInputField";
 import MessagePanelHeader from "./MessagePanelHeader";
 
 type Props = {
-  sendTypingStatus: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  sendTypingStatus: () => void;
   isRecipientTyping: boolean;
 };
 
@@ -40,8 +40,7 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
 
   const recipient = getRecipientFromConversation(user, conversation);
 
-  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const sendMessage = async () => {
     if (!routeId || !content) return;
     const id = parseInt(routeId);
     try {
@@ -69,6 +68,18 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
       <MessagePanelHeader />
       <MessagePanelBody>
         <MessageContainer />
+        {/* <MessageInputField
+          content={content}
+          setContent={setContent}
+          sendMessage={sendMessage}
+          sendTypingStatus={sendTypingStatus}
+          placeholderName={
+            selectedType === "group"
+              ? group?.title || "Group"
+              : recipient?.firstName || "User"
+          }
+        /> */}
+
         <MessageInputField
           content={content}
           setContent={setContent}

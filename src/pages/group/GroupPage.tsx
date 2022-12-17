@@ -91,7 +91,7 @@ const GroupPage = () => {
       socket.off("onGroupOwnerUpdate");
       socket.off("onGroupParticipantLeft");
     };
-  }, [dispatch, socket, id, navigate]);
+  }, [dispatch, socket, id, navigate, user]);
   return (
     <>
       <ConversationSidebar />

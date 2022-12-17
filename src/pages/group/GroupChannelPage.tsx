@@ -49,7 +49,7 @@ const GroupChannelPage = () => {
     };
   }, [socket, id, dispatch]);
 
-  const sendTypingStatus = (e: React.KeyboardEvent<HTMLInputElement>) => {};
+  const sendTypingStatus = () => {};
 
   return (
     <StyledConversationChannelPage>
