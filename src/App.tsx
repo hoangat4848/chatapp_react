@@ -17,6 +17,8 @@ import GroupChannelPage from "./pages/group/GroupChannelPage";
 import { AppPage } from "./pages/AppPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ConversationPageGuard from "./guards/ConversationPageGuard";
+import GroupPageGuard from "./guards/GroupPageGuard";
 
 type Props = {
   user?: User;
@@ -62,12 +64,26 @@ function App() {
         >
           <Route path="conversations" element={<ConversationPage />}>
             <Route index element={<ConversationPanel />}></Route>
-            <Route path=":id" element={<ConversationChannelPage />}></Route>
+            <Route
+              path=":id"
+              element={
+                <ConversationPageGuard>
+                  <ConversationChannelPage />
+                </ConversationPageGuard>
+              }
+            ></Route>
           </Route>
 
           <Route path="groups" element={<GroupPage />}>
             <Route index element={<ConversationPanel />}></Route>
-            <Route path=":id" element={<GroupChannelPage />}></Route>
+            <Route
+              path=":id"
+              element={
+                <GroupPageGuard>
+                  <GroupChannelPage />
+                </GroupPageGuard>
+              }
+            ></Route>
           </Route>
         </Route>
       </Routes>

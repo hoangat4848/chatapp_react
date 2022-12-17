@@ -41,6 +41,9 @@ export const getAuthUser = () => axiosClient.get<User>(`/auth/status`, config);
 export const getConversations = () =>
   axiosClient.get<Conversation[]>(`/conversations`, config);
 
+export const getConversationById = (id: number) =>
+  axiosClient.get<Conversation>(`/conversations/${id}`, config);
+
 export const getConversationMessages = (conversationId: number) =>
   axiosClient.get<ConversationMessage>(
     `/conversations/${conversationId}/messages`,
@@ -86,6 +89,9 @@ export const createGroup = (payload: CreateGroupPayload) =>
   axiosClient.post("/groups", payload, config);
 
 export const fetchGroups = () => axiosClient.get<Group[]>(`/groups`, config);
+
+export const fetchGroupById = (id: number) =>
+  axiosClient.get(`/groups/${id}`, config);
 
 export const fetchGroupMessages = (groupId: number) =>
   axiosClient.get<FetchGroupMessagePayload>(
