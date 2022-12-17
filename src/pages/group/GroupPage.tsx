@@ -12,6 +12,7 @@ import {
   updateGroupLastMessageSent,
 } from "../../store/slices/groupSlice";
 import { updateType } from "../../store/slices/selectedSlice";
+import { AuthContext } from "../../utils/context/AuthContext";
 import { SocketContext } from "../../utils/context/SocketContext";
 import { Group, GroupMessageEventPayload } from "../../utils/types";
 
@@ -20,6 +21,7 @@ const GroupPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     dispatch(updateType("group"));
@@ -69,6 +71,17 @@ const GroupPage = () => {
       dispatch(updateGroup(payload));
     });
 
+    socket.on("onGroupParticipantLeft", (payload: any) => {
+      console.log("onGroupParticipantLeft received");
+      console.log(payload.group);
+      dispatch(updateGroup(payload.group));
+
+      if (payload.userId === user?.id) dispatch(removeGroup(payload.group));
+      if (id && parseInt(id!) === payload.group.id) {
+        navigate("/groups");
+      }
+    });
+
     return () => {
       socket.off("onGroupMessage");
       socket.off("onGroupCreate");
@@ -76,6 +89,7 @@ const GroupPage = () => {
       socket.off("onGroupRecipientRemoved");
       socket.off("onGroupRemoved");
       socket.off("onGroupOwnerUpdate");
+      socket.off("onGroupParticipantLeft");
     };
   }, [dispatch, socket, id, navigate]);
   return (

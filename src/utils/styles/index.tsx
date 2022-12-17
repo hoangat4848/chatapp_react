@@ -287,6 +287,8 @@ export const MessageItemContainer = styled.div`
   gap: 15px;
 
   width: 100%;
+
+  word-wrap: break-word;
 `;
 
 export const MessageItemAvatar = styled.div`
