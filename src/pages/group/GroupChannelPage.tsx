@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MessagePanel from "../../components/messages/MessagePanel";
 import GroupRecipientsSidebar from "../../components/sidebars/GroupRecipientsSidebar";
 import { AppDispatch, RootState } from "../../store";
@@ -10,7 +10,7 @@ import {
 } from "../../store/slices/groupMessageSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
 import { StyledConversationChannelPage } from "../../utils/styles";
-import { GroupMessageType } from "../../utils/types";
+import { Group, GroupMessageType } from "../../utils/types";
 
 const GroupChannelPage = () => {
   const { id } = useParams();
@@ -41,7 +41,6 @@ const GroupChannelPage = () => {
     socket.on("onGroupMessageUpdate", (message: GroupMessageType) => {
       dispatch(editGroupMessage(message));
     });
-
     return () => {
       socket.emit("onGroupLeave", { groupId });
       socket.off("userJoinGroup");

@@ -39,7 +39,7 @@ const GroupRecipientsSidebar = () => {
     const interval = setInterval(() => {
       console.log(`Pinging Group${groupId}`);
       socket.emit("getOnlineGroupUsers", { groupId: parseInt(groupId!) });
-    }, 120000);
+    }, 5000);
 
     socket.on("onlineGroupUsersReceived", (payload) => {
       setOnlineUsers(payload.onlineUsers);
@@ -48,7 +48,7 @@ const GroupRecipientsSidebar = () => {
     return () => {
       console.log("Clearing interval for groupRecipientsSidebar");
       clearInterval(interval);
-      socket.off();
+      socket.off("onlineGroupUsersReceived");
     };
   }, [groupId, socket]);
 

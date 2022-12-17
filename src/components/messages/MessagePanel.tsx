@@ -39,6 +39,7 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
   const selectedType = useSelector(selectType);
 
   const recipient = getRecipientFromConversation(user, conversation);
+
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!routeId || !content) return;
@@ -49,7 +50,8 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
           id,
           content,
         });
-      } else {
+      }
+      if (selectedType === "group") {
         await postGroupMessage({
           id,
           content,

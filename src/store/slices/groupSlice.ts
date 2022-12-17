@@ -48,11 +48,18 @@ export const groupsSlice = createSlice({
       state.groups.unshift(action.payload);
     },
     updateGroup: (state, action: PayloadAction<Group>) => {
+      console.log("update group");
+
       const updatedGroup = action.payload;
       const index = state.groups.findIndex((c) => c.id === updatedGroup.id);
       // if (index > -1) state.groups.splice(index, 1);
       // state.groups.unshift(updatedGroup);
       if (index > -1) state.groups[index] = updatedGroup;
+    },
+    removeGroup: (state, action: PayloadAction<Group>) => {
+      const index = state.groups.findIndex((g) => g.id === action.payload.id);
+      if (index < 0) return;
+      state.groups.splice(index, 1);
     },
   },
 
@@ -80,6 +87,6 @@ export const selectGroupById = createSelector(
   (groups, groupId) => groups.find((g) => g.id === groupId)
 );
 
-export const { addGroup, updateGroup } = groupsSlice.actions;
+export const { addGroup, updateGroup, removeGroup } = groupsSlice.actions;
 
 export default groupsSlice.reducer;

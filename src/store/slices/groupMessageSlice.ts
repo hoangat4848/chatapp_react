@@ -50,6 +50,8 @@ export const groupMessagesSlice = createSlice({
       state,
       action: PayloadAction<GroupMessageEventPayload>
     ) => {
+      console.log("add group message");
+
       const { group, message } = action.payload;
       const groupMessage = state.messages.find((gm) => gm.id === group.id);
       groupMessage?.messages.unshift(message);

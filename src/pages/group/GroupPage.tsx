@@ -1,27 +1,26 @@
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
 import { AppDispatch } from "../../store";
 import { addGroupMessage } from "../../store/slices/groupMessageSlice";
 import {
   addGroup,
   fetchGroupsThunk,
+  removeGroup,
   updateGroup,
 } from "../../store/slices/groupSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
-import {
-  Group,
-  GroupMessageEventPayload,
-  RemoveGroupUserMessagePayload,
-  User,
-} from "../../utils/types";
+import { Group, GroupMessageEventPayload } from "../../utils/types";
 
 const GroupPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
-  const navigate = useNavigate();
+
+  console.log("GroupPage render");
 
   useEffect(() => {
     dispatch(updateType("group"));
@@ -54,26 +53,29 @@ const GroupPage = () => {
       dispatch(updateGroup(payload));
     });
 
-    socket.on("onGroupUserRemove", (payload: RemoveGroupUserMessagePayload) => {
-      console.log("onGroupRemovedUser");
+    socket.on("onGroupRecipientRemoved", (payload: Group) => {
+      console.log("onGroupRecipientRemoved");
       console.log(payload);
-      const { group, user } = payload;
-      dispatch(updateGroup(group));
-      if (user.id === user?.id) {
-        console.log("user is logged in was removed from the group");
-        console.log("navigating...");
-        navigate("/groups");
-      }
+      dispatch(updateGroup(payload));
+    });
+
+    socket.on("onGroupRemoved", (payload: Group) => {
+      console.log("user is logged in was removed from the group");
+      console.log("navigating...");
+      dispatch(removeGroup(payload));
+      if (parseInt(id!) === payload.id) navigate("/groups");
     });
 
     return () => {
+      console.log("clear groupPage sockets");
+
       socket.off("onGroupMessage");
       socket.off("onGroupCreate");
       socket.off("onGroupUserAdd");
-      socket.off("onGroupReceivedNewUser");
-      socket.off("onGroupUserRemove");
+      // socket.off("onGroupReceivedNewUser");
+      // socket.off("onGroupRecipientRemoved");
     };
-  }, [dispatch, socket, navigate]);
+  }, [dispatch, socket, id, navigate]);
   return (
     <>
       <ConversationSidebar />
