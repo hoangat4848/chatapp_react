@@ -21,8 +21,6 @@ const GroupPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
 
-  console.log("GroupPage render");
-
   useEffect(() => {
     dispatch(updateType("group"));
     dispatch(fetchGroupsThunk());
@@ -30,8 +28,7 @@ const GroupPage = () => {
 
   useEffect(() => {
     socket.on("onGroupMessage", (payload: GroupMessageEventPayload) => {
-      const { group, message } = payload;
-      console.log(group, message);
+      const { group } = payload;
       dispatch(addGroupMessage(payload));
       dispatch(updateGroupLastMessageSent(group));
     });
@@ -73,8 +70,6 @@ const GroupPage = () => {
     });
 
     return () => {
-      console.log("clear groupPage sockets");
-
       socket.off("onGroupMessage");
       socket.off("onGroupCreate");
       socket.off("onGroupUserAdd");

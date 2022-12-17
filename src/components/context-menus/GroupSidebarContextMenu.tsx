@@ -1,30 +1,27 @@
-import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
-import { selectGroupById } from "../../store/slices/groupSlice";
-import { AuthContext } from "../../utils/context/AuthContext";
-import { isGroupOwner } from "../../utils/helpers";
+import { leaveGroupThunk } from "../../store/slices/groupSlice";
 import { ContextMenu, ContextMenuItem } from "../../utils/styles";
 import { IoMdExit, IoIosArchive } from "react-icons/io";
 
 const GroupSidebarContextMenu = () => {
-  const { id } = useParams();
-  const { user } = useContext(AuthContext);
   const dispatch = useDispatch<AppDispatch>();
   const location = useSelector(
     (state: RootState) => state.group.contextMenuLocation
   );
 
-  const group = useSelector((state: RootState) =>
-    selectGroupById(state, parseInt(id!))
+  const selectedGroupContextMenu = useSelector(
+    (state: RootState) => state.group.selectedGroupContextMenu
   );
 
-  const isOwner = isGroupOwner(user, group);
+  const leaveGroup = () => {
+    if (!selectedGroupContextMenu) return;
+    dispatch(leaveGroupThunk(selectedGroupContextMenu.id));
+  };
 
   return (
     <ContextMenu top={location.y} left={location.x}>
-      <ContextMenuItem>
+      <ContextMenuItem onClick={leaveGroup}>
         <IoMdExit size={20} color="#ff0000" />
         <span style={{ color: "#ff0000" }}>Leave Group</span>
       </ContextMenuItem>

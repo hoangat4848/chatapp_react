@@ -146,3 +146,6 @@ export const updateGroupOwner = ({
   newOwnerId,
 }: UpdateGroupOwnerParams) =>
   axiosClient.patch<Group>(`/groups/${groupId}/owner`, { newOwnerId }, config);
+
+export const leaveGroup = (groupId: number) =>
+  axiosClient.delete<Group>(`/groups/${groupId}/recipients/leave`, config);

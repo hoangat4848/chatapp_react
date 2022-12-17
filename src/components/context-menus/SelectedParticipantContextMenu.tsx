@@ -1,5 +1,5 @@
 import { Crown, Person, PersonCross } from "akar-icons";
-import { forwardRef, useContext } from "react";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
@@ -83,4 +83,4 @@ const SelectedParticipantContextMenu = ({ location }: Props) => {
   );
 };
 
-export default forwardRef<null, Props>(SelectedParticipantContextMenu);
+export default SelectedParticipantContextMenu;

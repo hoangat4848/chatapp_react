@@ -8,6 +8,7 @@ import { RootState } from "..";
 import {
   createGroup as createGroupAPI,
   fetchGroups,
+  leaveGroup as leaveGroupAPI,
   removeGroupRecipient as removeGroupRecipientAPI,
   updateGroupOwner as updateGroupOwnerAPI,
 } from "../../utils/api";
@@ -49,6 +50,11 @@ export const removeGroupRecipientThunk = createAsyncThunk(
 export const updateGroupOwnerThunk = createAsyncThunk(
   "groups/owner/update",
   (params: UpdateGroupOwnerParams) => updateGroupOwnerAPI(params)
+);
+
+export const leaveGroupThunk = createAsyncThunk(
+  "groups/leave",
+  (groupId: number) => leaveGroupAPI(groupId)
 );
 
 export const groupsSlice = createSlice({
@@ -113,6 +119,9 @@ export const groupsSlice = createSlice({
         );
         if (index < 0) return;
         state.groups[index] = updatedGroup;
+      })
+      .addCase(leaveGroupThunk.fulfilled, (state, action) => {
+        console.log("leave group fulfilled");
       });
   },
 });
