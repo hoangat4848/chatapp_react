@@ -163,3 +163,8 @@ export type ContextMenuItemType = {
   color: string;
   ownerOnly: boolean;
 };
+
+export type UpdateGroupOwnerParams = {
+  groupId: number;
+  newOwnerId: number;
+};

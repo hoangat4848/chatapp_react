@@ -20,6 +20,7 @@ import {
   GroupMessageType,
   AddGroupRecipientParams,
   RemoveGroupRecipientParams,
+  UpdateGroupOwnerParams,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -139,3 +140,9 @@ export const removeGroupRecipient = ({
   userId,
 }: RemoveGroupRecipientParams) =>
   axiosClient.delete<Group>(`/groups/${groupId}/recipients/${userId}`, config);
+
+export const updateGroupOwner = ({
+  groupId,
+  newOwnerId,
+}: UpdateGroupOwnerParams) =>
+  axiosClient.patch<Group>(`/groups/${groupId}/owner`, { newOwnerId }, config);

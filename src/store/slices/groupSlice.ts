@@ -9,11 +9,13 @@ import {
   createGroup as createGroupAPI,
   fetchGroups,
   removeGroupRecipient as removeGroupRecipientAPI,
+  updateGroupOwner as updateGroupOwnerAPI,
 } from "../../utils/api";
 import {
   CreateGroupPayload,
   Group,
   RemoveGroupRecipientParams,
+  UpdateGroupOwnerParams,
 } from "../../utils/types";
 
 export interface GroupState {
@@ -36,6 +38,11 @@ export const createGroupThunk = createAsyncThunk(
 export const removeGroupRecipientThunk = createAsyncThunk(
   "groups/recipients/delete",
   (params: RemoveGroupRecipientParams) => removeGroupRecipientAPI(params)
+);
+
+export const updateGroupOwnerThunk = createAsyncThunk(
+  "groups/owner/update",
+  (params: UpdateGroupOwnerParams) => updateGroupOwnerAPI(params)
 );
 
 export const groupsSlice = createSlice({
@@ -75,6 +82,14 @@ export const groupsSlice = createSlice({
           state.groups[index] = updatedGroup;
           console.log("updating group...");
         }
+      })
+      .addCase(updateGroupOwnerThunk.fulfilled, (state, action) => {
+        const { data: updatedGroup } = action.payload;
+        const index = state.groups.findIndex(
+          (group) => group.id === updatedGroup.id
+        );
+        if (index < 0) return;
+        state.groups[index] = updatedGroup;
       });
   },
 });
