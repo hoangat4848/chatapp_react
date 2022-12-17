@@ -1,5 +1,5 @@
 import { Crown, Person, PersonCross } from "akar-icons";
-import { useContext } from "react";
+import { forwardRef, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
@@ -8,7 +8,6 @@ import {
   selectGroupById,
   updateGroupOwnerThunk,
 } from "../../store/slices/groupSlice";
-import { removeGroupRecipient } from "../../utils/api";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getUserContextMenuIcon, isGroupOwner } from "../../utils/helpers";
 import { ContextMenu, ContextMenuItem } from "../../utils/styles";
@@ -84,4 +83,4 @@ const SelectedParticipantContextMenu = ({ location }: Props) => {
   );
 };
 
-export default SelectedParticipantContextMenu;
+export default forwardRef<null, Props>(SelectedParticipantContextMenu);

@@ -14,16 +14,22 @@ import {
 import {
   CreateGroupPayload,
   Group,
+  Point,
   RemoveGroupRecipientParams,
   UpdateGroupOwnerParams,
 } from "../../utils/types";
 
 export interface GroupState {
   groups: Group[];
+  showGroupContextMenu: boolean;
+  selectedGroupContextMenu?: Group;
+  contextMenuLocation: Point;
 }
 
 const initialState: GroupState = {
   groups: [],
+  showGroupContextMenu: false,
+  contextMenuLocation: { x: 0, y: 0 },
 };
 
 export const fetchGroupsThunk = createAsyncThunk("groups/fetch", () => {
@@ -76,6 +82,15 @@ export const groupsSlice = createSlice({
       if (index < 0) return;
       state.groups.splice(index, 1);
     },
+    setShowGroupContextMenu: (state, action: PayloadAction<boolean>) => {
+      state.showGroupContextMenu = action.payload;
+    },
+    setSelectedGroup: (state, action: PayloadAction<Group>) => {
+      state.selectedGroupContextMenu = action.payload;
+    },
+    setGroupContextMenuLocation: (state, action: PayloadAction<Point>) => {
+      state.contextMenuLocation = action.payload;
+    },
   },
 
   extraReducers(builder) {
@@ -115,6 +130,9 @@ export const {
   updateGroup,
   updateGroupLastMessageSent,
   removeGroup,
+  setSelectedGroup,
+  setShowGroupContextMenu,
+  setGroupContextMenuLocation,
 } = groupsSlice.actions;
 
 export default groupsSlice.reducer;

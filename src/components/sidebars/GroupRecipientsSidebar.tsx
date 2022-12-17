@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import useResize from "../../hooks/useResize";
 import { AppDispatch, RootState } from "../../store";
 import {
   setContextMenuLocation,
@@ -60,11 +61,11 @@ const GroupRecipientsSidebar = () => {
     };
   }, [groupId, dispatch]);
 
-  useEffect(() => {
-    const handleResize = (e: UIEvent) => dispatch(setShowContextMenu(false));
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [dispatch]);
+  const handleResize = useCallback(
+    (e: UIEvent) => dispatch(setShowContextMenu(false)),
+    [dispatch]
+  );
+  useResize(handleResize);
 
   const handleUserContextMenu = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
