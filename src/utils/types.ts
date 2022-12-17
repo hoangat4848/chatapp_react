@@ -139,6 +139,16 @@ export type AddGroupRecipientParams = {
   email: string;
 };
 
+export type RemoveGroupRecipientParams = {
+  groupId: number;
+  userId: number;
+};
+
+export type RemoveGroupUserMessagePayload = {
+  group: Group;
+  user: User;
+};
+
 export type Point = {
   x: number;
   y: number;

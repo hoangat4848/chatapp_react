@@ -1,6 +1,4 @@
 import { Crown, Minus, PersonCross } from "akar-icons";
-import { Message } from "react-hook-form";
-import { userContextMenuItems } from "./constants";
 import { Conversation, Group, User, UserContextMenuActionType } from "./types";
 
 export const getRecipientFromConversation = (
@@ -23,9 +21,5 @@ export const getUserContextMenuIcon = (type: UserContextMenuActionType) => {
   }
 };
 
-export const getUserContextMenuActions = (user?: User, group?: Group) => {
-  if (!user || !group) return [];
-  return user.id === group.creator.id
-    ? userContextMenuItems
-    : userContextMenuItems.filter((item) => !item.ownerOnly);
-};
+export const isGroupOwner = (user?: User, group?: Group) =>
+  user?.id === group?.creator.id;

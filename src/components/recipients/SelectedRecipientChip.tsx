@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { StyledSelectedRecipientPill } from "../../utils/styles";
 import { User } from "../../utils/types";
 import { CircleX } from "akar-icons";

@@ -19,6 +19,7 @@ import {
   EditGroupMessagePayload,
   GroupMessageType,
   AddGroupRecipientParams,
+  RemoveGroupRecipientParams,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -126,3 +127,9 @@ export const addGroupRecipient = ({
   email,
 }: AddGroupRecipientParams) =>
   axiosClient.post<Group>(`/groups/${groupId}/recipients`, { email }, config);
+
+export const removeGroupRecipient = ({
+  groupId,
+  userId,
+}: RemoveGroupRecipientParams) =>
+  axiosClient.delete<Group>(`/groups/${groupId}/recipients/${userId}`, config);

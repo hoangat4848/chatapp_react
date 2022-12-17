@@ -5,8 +5,16 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { createGroup as createGroupAPI, fetchGroups } from "../../utils/api";
-import { CreateGroupPayload, Group, User } from "../../utils/types";
+import {
+  createGroup as createGroupAPI,
+  fetchGroups,
+  removeGroupRecipient as removeGroupRecipientAPI,
+} from "../../utils/api";
+import {
+  CreateGroupPayload,
+  Group,
+  RemoveGroupRecipientParams,
+} from "../../utils/types";
 
 export interface GroupState {
   groups: Group[];
@@ -25,6 +33,11 @@ export const createGroupThunk = createAsyncThunk(
   (payload: CreateGroupPayload) => createGroupAPI(payload)
 );
 
+export const removeGroupRecipientThunk = createAsyncThunk(
+  "groups/recipients/delete",
+  (params: RemoveGroupRecipientParams) => removeGroupRecipientAPI(params)
+);
+
 export const groupsSlice = createSlice({
   name: "groups",
   initialState,
@@ -36,7 +49,6 @@ export const groupsSlice = createSlice({
     },
     updateGroup: (state, action: PayloadAction<Group>) => {
       const updatedGroup = action.payload;
-      const existingGroup = state.groups.find((g) => g.id === updatedGroup.id);
       const index = state.groups.findIndex((c) => c.id === updatedGroup.id);
       // if (index > -1) state.groups.splice(index, 1);
       // state.groups.unshift(updatedGroup);
@@ -45,9 +57,18 @@ export const groupsSlice = createSlice({
   },
 
   extraReducers(builder) {
-    builder.addCase(fetchGroupsThunk.fulfilled, (state, action) => {
-      state.groups = action.payload.data;
-    });
+    builder
+      .addCase(fetchGroupsThunk.fulfilled, (state, action) => {
+        state.groups = action.payload.data;
+      })
+      .addCase(removeGroupRecipientThunk.fulfilled, (state, action) => {
+        const { data: updatedGroup } = action.payload;
+        const index = state.groups.findIndex((g) => g.id === updatedGroup.id);
+        if (index > -1) {
+          state.groups[index] = updatedGroup;
+          console.log("updating group...");
+        }
+      });
   },
 });
 

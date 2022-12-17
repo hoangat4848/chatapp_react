@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
 import { AppDispatch } from "../../store";
 import { addGroupMessage } from "../../store/slices/groupMessageSlice";
@@ -11,11 +11,17 @@ import {
 } from "../../store/slices/groupSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
-import { Group, GroupMessageEventPayload, User } from "../../utils/types";
+import {
+  Group,
+  GroupMessageEventPayload,
+  RemoveGroupUserMessagePayload,
+  User,
+} from "../../utils/types";
 
 const GroupPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(updateType("group"));
@@ -42,9 +48,22 @@ const GroupPage = () => {
       dispatch(addGroup(payload));
     });
 
+    // Update to all other clients in the room so that they can also see the participants
     socket.on("onGroupReceivedNewUser", (payload: Group) => {
       console.log("received onGroupReceivedNewUser");
       dispatch(updateGroup(payload));
+    });
+
+    socket.on("onGroupUserRemove", (payload: RemoveGroupUserMessagePayload) => {
+      console.log("onGroupRemovedUser");
+      console.log(payload);
+      const { group, user } = payload;
+      dispatch(updateGroup(group));
+      if (user.id === user?.id) {
+        console.log("user is logged in was removed from the group");
+        console.log("navigating...");
+        navigate("/groups");
+      }
     });
 
     return () => {
@@ -52,8 +71,9 @@ const GroupPage = () => {
       socket.off("onGroupCreate");
       socket.off("onGroupUserAdd");
       socket.off("onGroupReceivedNewUser");
+      socket.off("onGroupUserRemove");
     };
-  }, [dispatch, socket]);
+  }, [dispatch, socket, navigate]);
   return (
     <>
       <ConversationSidebar />
