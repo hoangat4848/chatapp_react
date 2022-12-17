@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getRecipientFromConversation } from "../../utils/helpers";
 import { StyledConversationSidebarItem } from "../../utils/styles";
@@ -10,8 +10,9 @@ type Props = {
   conversation: Conversation;
 };
 const ConversationSidebarItem = ({ conversation }: Props) => {
-  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
   const recipient = getRecipientFromConversation(user, conversation);
   const content = conversation.lastMessageSent?.content;
   const displayContent =
@@ -20,6 +21,7 @@ const ConversationSidebarItem = ({ conversation }: Props) => {
   return (
     <StyledConversationSidebarItem
       onClick={() => navigate(`/conversations/${conversation.id}`)}
+      selected={parseInt(id!) === conversation.id}
     >
       <div className={styles.conversationAvatar}></div>
       <div>

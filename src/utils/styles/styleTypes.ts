@@ -36,3 +36,7 @@ export type CharacterLimitProps = {
 export type MessageInputContainerProps = {
   isMultiLine: boolean;
 };
+
+export type ConversationSidebarItemProps = {
+  selected: boolean;
+};

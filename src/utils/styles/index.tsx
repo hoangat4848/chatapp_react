@@ -3,6 +3,7 @@ import { fadeOpacity, fadeInUpwards } from "./keyframes";
 import {
   CharacterLimitProps,
   ContextMenuProps,
+  ConversationSidebarItemProps,
   ConversationTabItemProps,
   InputContainerProps,
   MessageInputContainerProps,
@@ -130,19 +131,20 @@ export const ConversationSiderbarHeader = styled.header`
 
 export const ConversationSidebarContainer = styled.div``;
 
-export const StyledConversationSidebarItem = styled.div`
+export const StyledConversationSidebarItem = styled.div<ConversationSidebarItemProps>`
   display: flex;
   align-items: center;
   gap: 14px;
 
   padding: 8px 14px;
 
-  background-color: #131313;
+  background-color: ${({ selected }) => selected && "#1a1a1a"};
   border-bottom: 1px solid #3030303e;
 
   cursor: pointer;
+  transition: 150ms background-color ease;
   &:hover {
-    background-color: #3030303e;
+    background-color: #222222;
   }
 `;
 

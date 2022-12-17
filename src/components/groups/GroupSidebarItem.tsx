@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { StyledConversationSidebarItem } from "../../utils/styles";
 import { ContextMenuEvent, Group } from "../../utils/types";
 import styles from "./index.module.scss";
@@ -11,6 +11,7 @@ const GroupSidebarItem = ({ group, onContextMenu }: Props) => {
   const MAX_TITLE_LENGTH = 20;
   const MAX_MESSAGE_LENGTH = 20;
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const content = group.lastMessageSent?.content;
   const displayGroupLastMessageSent =
@@ -38,6 +39,7 @@ const GroupSidebarItem = ({ group, onContextMenu }: Props) => {
     <StyledConversationSidebarItem
       onClick={() => navigate(`/groups/${group.id}`)}
       onContextMenu={(e) => onContextMenu(e, group)}
+      selected={parseInt(id!) === group.id}
     >
       <div className={styles.conversationAvatar}></div>
       <div>
