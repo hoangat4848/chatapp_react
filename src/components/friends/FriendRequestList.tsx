@@ -12,7 +12,10 @@ const FriendRequestList = () => {
     <FriendListContainer>
       {friendRequests.length === 0 && <div>No friend requests..</div>}
       {friendRequests.map((friendRequest) => (
-        <FriendRequestListItem friendRequest={friendRequest} />
+        <FriendRequestListItem
+          key={friendRequest.id}
+          friendRequest={friendRequest}
+        />
       ))}
     </FriendListContainer>
   );
