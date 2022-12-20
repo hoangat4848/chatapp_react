@@ -20,6 +20,9 @@ const FriendRequestItem = ({ friendRequest }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const isIncomingRequest = () => user?.id === friendRequest.receiver.id;
+  const displayUser = isIncomingRequest()
+    ? friendRequest.sender
+    : friendRequest.receiver;
 
   const handleFriendRequest = (type: HandleFriendRequestAction) => {
     console.log(type);
@@ -45,7 +48,7 @@ const FriendRequestItem = ({ friendRequest }: Props) => {
       <div className="user">
         <div className="avatar"></div>
         <div className="name">
-          <span>{`${friendRequest.receiver.firstName} ${friendRequest.receiver.lastName}`}</span>
+          <span>{`${displayUser.firstName} ${displayUser.lastName}`}</span>
           {isIncomingRequest() ? (
             <span className="status">Incoming Friend Request</span>
           ) : (

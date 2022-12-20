@@ -3,7 +3,10 @@ import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import UserSidebar from "../components/sidebars/UserSidebar";
 import { AppDispatch } from "../store";
-import { addFriendRequest } from "../store/slices/friendSlice";
+import {
+  addFriendRequest,
+  removeFriendRequest,
+} from "../store/slices/friendSlice";
 import { SocketContext } from "../utils/context/SocketContext";
 import { LayoutPage } from "../utils/styles";
 import { FriendRequest } from "../utils/types";
@@ -16,6 +19,12 @@ export const AppPage = () => {
       console.log("onFriendRequestReceived");
       console.log(payload);
       dispatch(addFriendRequest(payload));
+    });
+
+    socket.on("onFriendRequestCanceled", (payload: FriendRequest) => {
+      console.log("onFriendRequestReceived");
+      console.log(payload);
+      dispatch(removeFriendRequest(payload));
     });
 
     return () => {
