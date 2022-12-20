@@ -9,14 +9,19 @@ export const StyledFriendsPage = styled.div`
 
 export const FriendsNavbar = styled.nav`
   display: flex;
-  align-items: center;
-  gap: 80px;
+  justify-content: space-between;
 
   padding: 48px 60px;
 
   border-bottom: 1px solid #30303035;
 
   font-size: 20px;
+
+  & .navLinks {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
 `;
 
 export const FriendsNavbarItem = styled.span<FriendsNavbarItemProps>`
