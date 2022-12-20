@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { FriendListContainer } from "../../utils/styles/friends";
-import FriendRequestListItem from "./FriendRequestListItem";
+import FriendRequestItem from "./FriendRequestItem";
 
 const FriendRequestList = () => {
   const friendRequests = useSelector(
@@ -12,7 +12,7 @@ const FriendRequestList = () => {
     <FriendListContainer>
       {friendRequests.length === 0 && <div>No friend requests..</div>}
       {friendRequests.map((friendRequest) => (
-        <FriendRequestListItem
+        <FriendRequestItem
           key={friendRequest.id}
           friendRequest={friendRequest}
         />
