@@ -180,3 +180,10 @@ export type Friend = {
   receiver: User;
   createdAt: number;
 };
+
+export type FriendRequest = {
+  id: number;
+  sender: User;
+  receiver: User;
+  createdAt: number;
+};

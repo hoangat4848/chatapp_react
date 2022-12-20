@@ -21,6 +21,7 @@ import ConversationPageGuard from "./guards/ConversationPageGuard";
 import GroupPageGuard from "./guards/GroupPageGuard";
 import FriendsLayoutPage from "./pages/friends/FriendsLayoutPage";
 import FriendsPage from "./pages/friends/FriendsPage";
+import FriendRequestPage from "./pages/friends/FriendRequestPage";
 
 type Props = {
   user?: User;
@@ -90,7 +91,7 @@ function App() {
 
           <Route path="friends" element={<FriendsLayoutPage />}>
             <Route index element={<FriendsPage />} />
-            <Route path="requests" element={<div>Request Page</div>} />
+            <Route path="requests" element={<FriendRequestPage />} />
             <Route path="blocked" element={<div>Blocked Page</div>} />
           </Route>
         </Route>

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import friendSlice from "../../store/slices/friendSlice";
+import { useContext } from "react";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getFriendEmailFromFriend } from "../../utils/helpers";
 import { FriendListItemContainer } from "../../utils/styles/friends";
