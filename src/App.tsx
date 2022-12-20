@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ConversationPageGuard from "./guards/ConversationPageGuard";
 import GroupPageGuard from "./guards/GroupPageGuard";
+import FriendsPage from "./pages/friends/FriendsPage";
 
 type Props = {
   user?: User;
@@ -84,6 +85,11 @@ function App() {
                 </GroupPageGuard>
               }
             ></Route>
+          </Route>
+
+          <Route path="friends" element={<FriendsPage />}>
+            <Route path="requests" element={<div>Request Page</div>} />
+            <Route path="blocked" element={<div>Blocked Page</div>} />
           </Route>
         </Route>
       </Routes>
