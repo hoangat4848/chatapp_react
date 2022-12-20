@@ -21,6 +21,7 @@ import {
   AddGroupRecipientParams,
   RemoveGroupRecipientParams,
   UpdateGroupOwnerParams,
+  Friend,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -149,3 +150,5 @@ export const updateGroupOwner = ({
 
 export const leaveGroup = (groupId: number) =>
   axiosClient.delete<Group>(`/groups/${groupId}/recipients/leave`, config);
+
+export const fetchFriends = () => axiosClient.get<Friend[]>(`/friends`, config);

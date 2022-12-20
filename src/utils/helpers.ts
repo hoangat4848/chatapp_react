@@ -1,5 +1,11 @@
 import { Crown, Minus, PersonCross } from "akar-icons";
-import { Conversation, Group, User, UserContextMenuActionType } from "./types";
+import {
+  Conversation,
+  Friend,
+  Group,
+  User,
+  UserContextMenuActionType,
+} from "./types";
 
 export const getRecipientFromConversation = (
   user?: User,
@@ -34,3 +40,11 @@ export const getUserContextMenuIcon = (type: UserContextMenuActionType) => {
 
 export const isGroupOwner = (user?: User, group?: Group) =>
   user?.id === group?.owner.id;
+
+export const getFriendEmailFromFriend = (friend?: Friend, userId?: number) => {
+  if (!userId || !friend) return "";
+
+  return userId === friend.sender.id
+    ? friend.receiver.email
+    : friend.sender.email;
+};

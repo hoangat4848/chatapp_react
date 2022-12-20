@@ -29,3 +29,28 @@ export const FriendsNavbarItem = styled.span<FriendsNavbarItemProps>`
       text-underline-offset: 14px;
     `}
 `;
+
+export const FriendListContainer = styled.div`
+  padding: 40px 60px;
+`;
+
+export const FriendListItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #181818;
+
+  & .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #227eff;
+  }
+
+  &:last-child {
+    border-bottom: unset;
+  }
+`;
