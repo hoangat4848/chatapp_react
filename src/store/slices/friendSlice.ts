@@ -58,6 +58,14 @@ export const friendSlice = createSlice({
         console.log(action.payload.data);
 
         state.friendRequests.push(action.payload.data);
+      })
+      .addCase(cancelFriendRequestThunk.fulfilled, (state, action) => {
+        console.log("inside cancel friend request thunk fulfilled");
+
+        const { id } = action.payload.data;
+        state.friendRequests = state.friendRequests.filter(
+          (friendRequest) => friendRequest.id !== id
+        );
       }),
 });
 

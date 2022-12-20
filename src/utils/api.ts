@@ -161,4 +161,4 @@ export const createFriendRequest = (email: string) =>
   axiosClient.post<FriendRequest>(`friends/requests`, { email }, config);
 
 export const cancelFriendRequest = (id: number) =>
-  axiosClient.delete(`/friends/requests/${id}/cancel`, config);
+  axiosClient.delete<FriendRequest>(`/friends/requests/${id}/cancel`, config);
