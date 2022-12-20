@@ -1,15 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import { SetStateAction, useEffect, useRef } from "react";
 import { ModalContainer, ModalContentBody, ModalHeader } from ".";
 import { StyledOverlay } from "../../utils/styles";
-import CreateConversationForm from "../forms/CreateConversationForm";
 import { MdClose } from "react-icons/md";
-import AddGroupRecipientForm from "../forms/AddGroupRecipientForm";
+import SendFriendRequestForm from "../forms/SendFriendRequestForm";
 
 type Props = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowModal: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const AddGroupRecipientModal = ({ setShowModal }: Props) => {
+const CreateFriendRequestModal = ({ setShowModal }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -33,15 +32,15 @@ const AddGroupRecipientModal = ({ setShowModal }: Props) => {
     <StyledOverlay ref={ref} onClick={handleOverlayClick}>
       <ModalContainer>
         <ModalHeader>
-          <h2>Add recipient</h2>
+          <h2>Send a Friend Request</h2>
           <MdClose size={32} onClick={() => setShowModal(false)} />
         </ModalHeader>
         <ModalContentBody>
-          <AddGroupRecipientForm />
+          <SendFriendRequestForm setShowModal={setShowModal} />
         </ModalContentBody>
       </ModalContainer>
     </StyledOverlay>
   );
 };
 
-export default AddGroupRecipientModal;
+export default CreateFriendRequestModal;

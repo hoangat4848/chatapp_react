@@ -16,7 +16,7 @@ const CreateConversationModal = ({ setShowModal }: Props) => {
       e.key === "Escape" && setShowModal(false);
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keyup", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [setShowModal]);
 
   const handleOverlayClick = (
