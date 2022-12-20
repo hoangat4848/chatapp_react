@@ -187,3 +187,5 @@ export type FriendRequest = {
   receiver: User;
   createdAt: number;
 };
+
+export type HandleFriendRequestAction = "accept" | "reject" | "cancel";

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  cancelFriendRequest as cancelFriendRequestAPI,
   createFriendRequest as createFriendRequestAPI,
   fetchFriendRequests as fetchFriendRequestsAPI,
   fetchFriends as fetchFriendsAPI,
@@ -28,6 +29,11 @@ export const fetchFriendRequestThunk = createAsyncThunk(
 export const createFriendRequestThunk = createAsyncThunk(
   "friends/requests/create",
   (email: string) => createFriendRequestAPI(email)
+);
+
+export const cancelFriendRequestThunk = createAsyncThunk(
+  "friends/requests/cancel",
+  (id: number) => cancelFriendRequestAPI(id)
 );
 
 export const friendSlice = createSlice({
