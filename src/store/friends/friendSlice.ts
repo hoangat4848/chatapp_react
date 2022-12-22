@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Friend, FriendRequest } from "../../utils/types";
+import { Friend, FriendRequest, Point } from "../../utils/types";
 import {
   fetchFriendThunk,
   fetchFriendRequestThunk,
@@ -7,6 +7,7 @@ import {
   cancelFriendRequestThunk,
   acceptFriendRequestThunk,
   rejectFriendRequestThunk,
+  removeFriendThunk,
 } from "./friendThunk";
 
 export interface FriendState {
@@ -14,6 +15,9 @@ export interface FriendState {
   friendRequests: FriendRequest[];
   onlineFriends: Friend[];
   offlineFriends: Friend[];
+  showContextMenu: boolean;
+  selectedFriendContextMenu?: Friend;
+  contextMenuLocation: Point;
 }
 
 const initialState: FriendState = {
@@ -21,6 +25,8 @@ const initialState: FriendState = {
   friendRequests: [],
   onlineFriends: [],
   offlineFriends: [],
+  showContextMenu: false,
+  contextMenuLocation: { x: 0, y: 0 },
 };
 
 export const friendSlice = createSlice({
@@ -46,6 +52,15 @@ export const friendSlice = createSlice({
             (onlineFriend) => onlineFriend.id === friend.id
           )
       );
+    },
+    setShowContextMenu: (state, action: PayloadAction<boolean>) => {
+      state.showContextMenu = action.payload;
+    },
+    setSelectedFriend: (state, action: PayloadAction<Friend>) => {
+      state.selectedFriendContextMenu = action.payload;
+    },
+    setContextMenuLocation: (state, action: PayloadAction<Point>) => {
+      state.contextMenuLocation = action.payload;
     },
   },
   extraReducers: (builder) =>
@@ -85,6 +100,11 @@ export const friendSlice = createSlice({
         state.friendRequests = state.friendRequests.filter(
           (friendRequest) => friendRequest.id !== id
         );
+      })
+      .addCase(removeFriendThunk.fulfilled, (state, action) => {
+        state.friends = state.friends.filter(
+          (friend) => friend.id !== action.payload.data.id
+        );
       }),
 });
 
@@ -93,6 +113,9 @@ export const {
   removeFriendRequest,
   setOnlineFriends,
   setOfflineFriends,
+  setContextMenuLocation,
+  setSelectedFriend,
+  setShowContextMenu,
 } = friendSlice.actions;
 
 export default friendSlice.reducer;

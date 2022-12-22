@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { leaveGroupThunk } from "../../store/slices/groupSlice";
 import { ContextMenu, ContextMenuItem } from "../../utils/styles";
-import { IoMdExit, IoIosArchive } from "react-icons/io";
+import { MdOutlineTextsms, MdPersonRemove } from "react-icons/md";
 
 const GroupSidebarContextMenu = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,11 +22,11 @@ const GroupSidebarContextMenu = () => {
   return (
     <ContextMenu top={location.y} left={location.x}>
       <ContextMenuItem onClick={leaveGroup}>
-        <IoMdExit size={20} color="#ff0000" />
+        <MdPersonRemove size={20} color="#ff0000" />
         <span style={{ color: "#ff0000" }}>Leave Group</span>
       </ContextMenuItem>
       <ContextMenuItem>
-        <IoIosArchive size={20} color="#fff" />
+        <MdOutlineTextsms size={20} color="#fff" />
         <span style={{ color: "#fff" }}>Archive Group</span>
       </ContextMenuItem>
     </ContextMenu>
