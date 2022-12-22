@@ -1,4 +1,8 @@
-import { ContextMenuItemType, ConversationTypeData } from "./types";
+import {
+  ContextMenuItemType,
+  ConversationTypeData,
+  UserSidebarItemType,
+} from "./types";
 
 export const chatTypes: ConversationTypeData[] = [
   {
@@ -36,4 +40,19 @@ export const friendsNavbarItems = [
   { id: "friends", label: "Friends", pathname: "/friends" },
   { id: "requests", label: "Requests", pathname: "/friends/requests" },
   { id: "blocked", label: "Blocked", pathname: "/friends/blocked" },
+];
+
+export const useSidebarItems: UserSidebarItemType[] = [
+  {
+    id: "conversations",
+    pathname: "/conversations",
+  },
+  {
+    id: "friends",
+    pathname: "/friends",
+  },
+  {
+    id: "connections",
+    pathname: "/connections",
+  },
 ];

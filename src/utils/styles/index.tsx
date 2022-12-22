@@ -576,7 +576,7 @@ export const StyledUserSidebar = styled.div`
   z-index: 1;
 `;
 
-export const UserSidebarItem = styled.div<SidebarItemProps>`
+export const StyledUserSidebarItem = styled.div<SidebarItemProps>`
   display: flex;
   justify-content: center;
   align-items: center;
