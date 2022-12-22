@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
+import { createMessageThunk } from "../../store/messages/messageThunk";
 import { selectConversationById } from "../../store/slices/conversationSlice";
 import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
-import { postGroupMessage, postNewMessage } from "../../utils/api";
+import { postGroupMessage } from "../../utils/api";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getRecipientFromConversation } from "../../utils/helpers";
 import {
@@ -27,6 +28,7 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
   const { id: routeId } = useParams();
 
   const { user } = useContext(AuthContext);
+  const dispatch = useDispatch<AppDispatch>();
 
   const conversation = useSelector((state: RootState) =>
     selectConversationById(state, parseInt(routeId!))
@@ -45,18 +47,16 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
     if (!routeId || !trimmedContent) return;
     const id = parseInt(routeId);
     const params = { id, content: trimmedContent };
-    try {
-      if (selectedType === "private") {
-        await postNewMessage(params);
-      }
-      if (selectedType === "group") {
-        await postGroupMessage(params);
-      }
-    } catch (error) {
-      console.log(error);
+    switch (selectedType) {
+      case "private":
+        return dispatch(createMessageThunk(params))
+          .then(() => setContent(""))
+          .catch((err) => console.log(err));
+      case "group":
+        return postGroupMessage(params)
+          .then(() => setContent(""))
+          .catch((err) => console.log(err));
     }
-
-    setContent("");
   };
 
   return (

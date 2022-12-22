@@ -54,7 +54,7 @@ export const getConversationMessages = (conversationId: number) =>
     config
   );
 
-export const postNewMessage = ({
+export const createMessage = ({
   id: conversationId,
   content,
 }: CreateMessageParams) =>
