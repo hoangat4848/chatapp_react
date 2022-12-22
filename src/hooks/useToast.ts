@@ -8,7 +8,8 @@ export function useToast(defaultOptions?: ToastOptions<{}>) {
   );
 
   const error = useCallback(
-    (data: string) => toast(data, { ...defaultOptions, type: "error" }),
+    (data: string, options?: ToastOptions<{}>) =>
+      toast(data, { ...defaultOptions, ...options, type: "error" }),
     []
   );
 
