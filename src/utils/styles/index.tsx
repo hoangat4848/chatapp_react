@@ -577,6 +577,8 @@ export const StyledUserSidebar = styled.div`
 `;
 
 export const StyledUserSidebarItem = styled.div<SidebarItemProps>`
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -587,6 +589,25 @@ export const StyledUserSidebarItem = styled.div<SidebarItemProps>`
   background-color: ${({ active }) => active && "#1e1e1e"};
 
   cursor: pointer;
+`;
+
+export const IconBadge = styled.div`
+  position: absolute;
+  top: 2px;
+  right: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 5px;
+
+  background-color: #ff3535;
+
+  font-size: 10px;
 `;
 
 export const StyledConversationSidebar = styled.div`

@@ -13,12 +13,17 @@ import {
 import { SocketContext } from "../utils/context/SocketContext";
 import { LayoutPage } from "../utils/styles";
 import { AcceptFriendRequestResponse, FriendRequest } from "../utils/types";
+import { fetchFriendRequestThunk } from "../store/friends/friendThunk";
 
 export const AppPage = () => {
   const socket = useContext(SocketContext);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { info } = useToast();
+
+  useEffect(() => {
+    dispatch(fetchFriendRequestThunk());
+  }, [dispatch]);
 
   useEffect(() => {
     socket.on("onFriendRequestReceived", (payload: FriendRequest) => {
@@ -70,7 +75,10 @@ export const AppPage = () => {
     });
 
     return () => {
-      socket.removeAllListeners();
+      socket.off("onFriendRequestCanceled");
+      socket.off("onFriendRequestRejected");
+      socket.off("onFriendRequestReceived");
+      socket.off("onFriendRequestAccepted");
     };
   }, [dispatch, socket, navigate, info]);
 

@@ -1,10 +1,18 @@
-import { Crown, Minus, PersonCross } from "akar-icons";
+import {
+  ArrowCycle,
+  ChatDots,
+  Crown,
+  Minus,
+  Person,
+  PersonCross,
+} from "akar-icons";
 import {
   Conversation,
   Friend,
   Group,
   User,
   UserContextMenuActionType,
+  UserSidebarRoute,
 } from "./types";
 
 export const getRecipientFromConversation = (
@@ -47,4 +55,17 @@ export const getFriendEmailFromFriend = (friend?: Friend, userId?: number) => {
   return userId === friend.sender.id
     ? friend.receiver.email
     : friend.sender.email;
+};
+
+export const getUserSidebarIcon = (id: UserSidebarRoute) => {
+  switch (id) {
+    case "conversations":
+      return ChatDots;
+    case "friends":
+      return Person;
+    case "connections":
+      return ArrowCycle;
+    default:
+      throw new Error("invalid id in getIcon");
+  }
 };
