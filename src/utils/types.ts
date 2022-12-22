@@ -189,3 +189,8 @@ export type FriendRequest = {
 };
 
 export type HandleFriendRequestAction = "accept" | "reject" | "cancel";
+
+export type AcceptFriendRequestResponse = {
+  friend: Friend;
+  friendRequest: FriendRequest;
+};

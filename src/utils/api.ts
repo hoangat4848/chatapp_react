@@ -23,6 +23,7 @@ import {
   UpdateGroupOwnerParams,
   Friend,
   FriendRequest,
+  AcceptFriendRequestResponse,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -162,3 +163,9 @@ export const createFriendRequest = (email: string) =>
 
 export const cancelFriendRequest = (id: number) =>
   axiosClient.delete<FriendRequest>(`/friends/requests/${id}/cancel`, config);
+
+export const acceptFriendRequest = (id: number) =>
+  axiosClient.patch<AcceptFriendRequestResponse>(
+    `/friends/requests/${id}/accept`,
+    config
+  );
