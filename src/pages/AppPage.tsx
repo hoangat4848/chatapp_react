@@ -60,6 +60,13 @@ export const AppPage = () => {
     socket.on("onFriendRequestRejected", (payload: FriendRequest) => {
       console.log("onFriendRequestRejected");
       dispatch(removeFriendRequest(payload));
+      const receiverFullname =
+        payload.receiver.firstName + " " + payload.receiver.lastName;
+      info(`${receiverFullname} rejected your friend request`, {
+        position: "bottom-left",
+        icon: BsFillPersonCheckFill,
+        onClick: () => navigate("/friends/requests"),
+      });
     });
 
     return () => {

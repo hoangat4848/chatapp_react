@@ -4,14 +4,21 @@ import { FriendListContainer } from "../../utils/styles/friends";
 import FriendListItem from "./FriendListItem";
 
 const FriendList = () => {
-  const friends = useSelector((state: RootState) => state.friend.friends);
+  const { onlineFriends, offlineFriends } = useSelector(
+    (state: RootState) => state.friend
+  );
 
   return (
     <FriendListContainer>
-      {friends.map((friend) => (
-        <>
-          <FriendListItem key={friend.id} friend={friend} />
-        </>
+      {onlineFriends.length > 0 && <span>Online ({onlineFriends.length})</span>}
+      {onlineFriends.map((friend) => (
+        <FriendListItem key={friend.id} friend={friend} />
+      ))}
+      {offlineFriends.length > 0 && (
+        <span>Offline ({offlineFriends.length})</span>
+      )}
+      {offlineFriends.map((friend) => (
+        <FriendListItem key={friend.id} friend={friend} />
       ))}
     </FriendListContainer>
   );

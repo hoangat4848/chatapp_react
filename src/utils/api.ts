@@ -167,5 +167,13 @@ export const cancelFriendRequest = (id: number) =>
 export const acceptFriendRequest = (id: number) =>
   axiosClient.patch<AcceptFriendRequestResponse>(
     `/friends/requests/${id}/accept`,
+    {},
+    config
+  );
+
+export const rejectFriendRequest = (id: number) =>
+  axiosClient.patch<FriendRequest>(
+    `/friends/requests/${id}/reject`,
+    {},
     config
   );

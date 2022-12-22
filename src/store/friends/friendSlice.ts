@@ -6,16 +6,21 @@ import {
   createFriendRequestThunk,
   cancelFriendRequestThunk,
   acceptFriendRequestThunk,
+  rejectFriendRequestThunk,
 } from "./friendThunk";
 
 export interface FriendState {
   friends: Friend[];
   friendRequests: FriendRequest[];
+  onlineFriends: Friend[];
+  offlineFriends: Friend[];
 }
 
 const initialState: FriendState = {
   friends: [],
   friendRequests: [],
+  onlineFriends: [],
+  offlineFriends: [],
 };
 
 export const friendSlice = createSlice({
@@ -29,6 +34,17 @@ export const friendSlice = createSlice({
       const { id } = action.payload;
       state.friendRequests = state.friendRequests.filter(
         (friendRequest) => friendRequest.id !== id
+      );
+    },
+    setOnlineFriends: (state, action: PayloadAction<Friend[]>) => {
+      state.onlineFriends = action.payload;
+    },
+    setOfflineFriends: (state) => {
+      state.offlineFriends = state.friends.filter(
+        (friend) =>
+          !state.onlineFriends.find(
+            (onlineFriend) => onlineFriend.id === friend.id
+          )
       );
     },
   },
@@ -58,15 +74,25 @@ export const friendSlice = createSlice({
       .addCase(acceptFriendRequestThunk.fulfilled, (state, action) => {
         console.log("acceptFriendRequestThunk.fulfilled");
         const {
-          friend,
           friendRequest: { id },
         } = action.payload.data;
+        state.friendRequests = state.friendRequests.filter(
+          (friendRequest) => friendRequest.id !== id
+        );
+      })
+      .addCase(rejectFriendRequestThunk.fulfilled, (state, action) => {
+        const { id } = action.payload.data;
         state.friendRequests = state.friendRequests.filter(
           (friendRequest) => friendRequest.id !== id
         );
       }),
 });
 
-export const { addFriendRequest, removeFriendRequest } = friendSlice.actions;
+export const {
+  addFriendRequest,
+  removeFriendRequest,
+  setOnlineFriends,
+  setOfflineFriends,
+} = friendSlice.actions;
 
 export default friendSlice.reducer;

@@ -5,6 +5,7 @@ import { AppDispatch } from "../../store";
 import {
   acceptFriendRequestThunk,
   cancelFriendRequestThunk,
+  rejectFriendRequestThunk,
 } from "../../store/friends/friendThunk";
 import { AuthContext } from "../../utils/context/AuthContext";
 import {
@@ -35,7 +36,9 @@ const FriendRequestItem = ({ friendRequest }: Props) => {
         return dispatch(acceptFriendRequestThunk(id));
       }
       case "reject": {
-        return;
+        console.log("ahoi");
+
+        return dispatch(rejectFriendRequestThunk(id));
       }
       case "cancel": {
         console.log("canceling friend request");
