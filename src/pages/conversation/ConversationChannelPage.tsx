@@ -3,10 +3,8 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import MessagePanel from "../../components/messages/MessagePanel";
 import { AppDispatch } from "../../store";
-import {
-  editMessage,
-  fetchMessagesThunk,
-} from "../../store/slices/messageSlice";
+import { editMessage } from "../../store/messages/messageSlice";
+import { fetchMessagesThunk } from "../../store/messages/messageThunk";
 import { SocketContext } from "../../utils/context/SocketContext";
 import { StyledConversationChannelPage } from "../../utils/styles";
 import { Message } from "../../utils/types";

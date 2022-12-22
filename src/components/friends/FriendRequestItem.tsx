@@ -5,10 +5,9 @@ import { AppDispatch } from "../../store";
 import {
   acceptFriendRequestThunk,
   cancelFriendRequestThunk,
-} from "../../store/slices/friendSlice";
+} from "../../store/friends/friendThunk";
 import { AuthContext } from "../../utils/context/AuthContext";
 import {
-  FriendListItemContainer,
   FriendRequestItemContainer,
   FriendRequestItemIcon,
 } from "../../utils/styles/friends";

@@ -8,7 +8,7 @@ import {
   fetchConversationsThunk,
   updateConversation,
 } from "../../store/slices/conversationSlice";
-import { addMessage, deleteMessage } from "../../store/slices/messageSlice";
+import { addMessage, deleteMessage } from "../../store/messages/messageSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
 import { Page } from "../../utils/styles";

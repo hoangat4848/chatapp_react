@@ -1,23 +1,16 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import {
-  deleteMessage as deleteMessageAPI,
-  editMessage as editMessageAPI,
-  getConversationMessages,
-} from "../../utils/api";
-import {
   ConversationMessage,
-  DeleteMessageParams,
   DeleteMessageResponse,
-  EditMessagePayload,
   Message,
   MessageEventPayload,
 } from "../../utils/types";
+import {
+  deleteMessageThunk,
+  editMessageThunk,
+  fetchMessagesThunk,
+} from "./messageThunk";
 
 export interface MessagesState {
   messages: ConversationMessage[];
@@ -28,27 +21,6 @@ const initialState: MessagesState = {
   messages: [],
   loading: false,
 };
-
-export const fetchMessagesThunk = createAsyncThunk(
-  "messages/fetch",
-  async (id: number) => {
-    return getConversationMessages(id);
-  }
-);
-
-export const deleteMessageThunk = createAsyncThunk(
-  "messages/delete",
-  async (params: DeleteMessageParams) => {
-    return deleteMessageAPI(params);
-  }
-);
-
-export const editMessageThunk = createAsyncThunk(
-  "messages/edit",
-  async (params: EditMessagePayload) => {
-    return editMessageAPI(params);
-  }
-);
 
 export const messageSlice = createSlice({
   name: "messages",

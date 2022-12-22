@@ -9,7 +9,7 @@ import {
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { createFriendRequestThunk } from "../../store/slices/friendSlice";
+import { createFriendRequestThunk } from "../../store/friends/friendThunk";
 
 type Props = {
   setShowModal: Dispatch<SetStateAction<boolean>>;

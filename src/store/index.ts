@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import conversationReducer from "./slices/conversationSlice";
-import messageReducer from "./slices/messageSlice";
+import messageReducer from "./messages/messageSlice";
 import selectedTypeReducer from "./slices/selectedSlice";
 import groupReducer from "./slices/groupSlice";
 import groupMessageReducer from "./slices/groupMessageSlice";
 import messageContainerReducer from "./slices/messageContainerSlice";
 import groupSidebarReducer from "./slices/groupRecipientsSidebarSlice";
-import friendReducer from "./slices/friendSlice";
+import friendReducer from "./friends/friendSlice";
 
 export const store = configureStore({
   reducer: {

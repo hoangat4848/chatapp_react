@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  acceptFriendRequest as acceptFriendRequestAPI,
-  cancelFriendRequest as cancelFriendRequestAPI,
-  createFriendRequest as createFriendRequestAPI,
-  fetchFriendRequests as fetchFriendRequestsAPI,
-  fetchFriends as fetchFriendsAPI,
-} from "../../utils/api";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Friend, FriendRequest } from "../../utils/types";
+import {
+  fetchFriendThunk,
+  fetchFriendRequestThunk,
+  createFriendRequestThunk,
+  cancelFriendRequestThunk,
+  acceptFriendRequestThunk,
+} from "./friendThunk";
 
 export interface FriendState {
   friends: Friend[];
@@ -17,30 +17,6 @@ const initialState: FriendState = {
   friends: [],
   friendRequests: [],
 };
-
-export const fetchFriendThunk = createAsyncThunk("friends/fetch", () =>
-  fetchFriendsAPI()
-);
-
-export const fetchFriendRequestThunk = createAsyncThunk(
-  "friends/requests/fetch",
-  () => fetchFriendRequestsAPI()
-);
-
-export const createFriendRequestThunk = createAsyncThunk(
-  "friends/requests/create",
-  (email: string) => createFriendRequestAPI(email)
-);
-
-export const cancelFriendRequestThunk = createAsyncThunk(
-  "friends/requests/cancel",
-  (id: number) => cancelFriendRequestAPI(id)
-);
-
-export const acceptFriendRequestThunk = createAsyncThunk(
-  "friends/requests/accept",
-  (id: number) => acceptFriendRequestAPI(id)
-);
 
 export const friendSlice = createSlice({
   name: "friends",

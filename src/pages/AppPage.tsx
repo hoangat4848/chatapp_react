@@ -9,7 +9,7 @@ import { AppDispatch } from "../store";
 import {
   addFriendRequest,
   removeFriendRequest,
-} from "../store/slices/friendSlice";
+} from "../store/friends/friendSlice";
 import { SocketContext } from "../utils/context/SocketContext";
 import { LayoutPage } from "../utils/styles";
 import { AcceptFriendRequestResponse, FriendRequest } from "../utils/types";

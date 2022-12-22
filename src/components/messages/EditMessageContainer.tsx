@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../../store";
 import { editGroupMessageThunk } from "../../store/slices/groupMessageSlice";
 import { setIsEditingMessage } from "../../store/slices/messageContainerSlice";
-import { editMessageThunk } from "../../store/slices/messageSlice";
+import { editMessageThunk } from "../../store/messages/messageThunk";
 import {
   EditMessageActionsContainer,
   EditMessageInputField,

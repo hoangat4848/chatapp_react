@@ -9,7 +9,7 @@ import {
   setIsEditingMessage,
   setSelectedMessage,
 } from "../../store/slices/messageContainerSlice";
-import { selectConversationMessage } from "../../store/slices/messageSlice";
+import { selectConversationMessage } from "../../store/messages/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
 import {
   MessageItemContainer,

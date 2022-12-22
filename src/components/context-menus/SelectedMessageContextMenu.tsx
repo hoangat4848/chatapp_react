@@ -7,7 +7,7 @@ import {
   setIsEditingMessage,
   setMessageBeingEdited,
 } from "../../store/slices/messageContainerSlice";
-import { deleteMessageThunk } from "../../store/slices/messageSlice";
+import { deleteMessageThunk } from "../../store/messages/messageThunk";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { ContextMenu, ContextMenuItem } from "../../utils/styles";
 
