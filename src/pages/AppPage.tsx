@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { IoMdPersonAdd } from "react-icons/io";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserSidebar from "../components/sidebars/UserSidebar";
 import { useToast } from "../hooks/useToast";
 import { AppDispatch } from "../store";
@@ -19,6 +19,7 @@ export const AppPage = () => {
   const socket = useContext(SocketContext);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
   const { info } = useToast();
 
   useEffect(() => {
@@ -46,11 +47,9 @@ export const AppPage = () => {
     socket.on(
       "onFriendRequestAccepted",
       (payload: AcceptFriendRequestResponse) => {
-        console.log("onFriendRequestAccepted");
-        console.log(payload);
-
         const { friendRequest } = payload;
         dispatch(removeFriendRequest(friendRequest));
+        pathname.includes("/friends") && socket.emit("getOnlineFriends");
         info(
           `${payload.friendRequest.receiver.firstName} accepted your friend request`,
           {

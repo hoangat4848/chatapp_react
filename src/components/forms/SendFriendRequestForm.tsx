@@ -24,6 +24,7 @@ const SendFriendRequestForm = ({ setShowModal }: Props) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(createFriendRequestThunk(email))
+      .unwrap()
       .then(() => {
         success("Sent friend request");
         setShowModal(false);

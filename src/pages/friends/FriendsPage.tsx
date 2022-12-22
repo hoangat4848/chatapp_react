@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import FriendList from "../../components/friends/FriendList";
 import { AppDispatch } from "../../store";
 import {
+  removeFriend,
   setOfflineFriends,
   setOnlineFriends,
 } from "../../store/friends/friendSlice";
@@ -35,8 +36,13 @@ const FriendsPage = () => {
       dispatch(setOfflineFriends());
     });
 
+    socket.on("onFriendRemoved", (friend: Friend) => {
+      dispatch(removeFriend(friend));
+    });
+
     return () => {
       socket.off("getOnlineFriends");
+      socket.off("onFriendRemoved");
     };
   }, [dispatch, socket]);
 
