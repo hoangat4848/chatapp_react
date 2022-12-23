@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../utils/context/AuthContext";
-import { getFriendEmailFromFriend } from "../../utils/helpers";
+import { getFriendUsernameFromFriend } from "../../utils/helpers";
 import { FriendListItemContainer } from "../../utils/styles/friends";
 import { ContextMenuEvent, Friend } from "../../utils/types";
 
@@ -14,7 +14,7 @@ const FriendListItem = ({ friend, onContextMenu }: Props) => {
   return (
     <FriendListItemContainer onContextMenu={(e) => onContextMenu(e, friend)}>
       <div className="avatar"></div>
-      <div>{getFriendEmailFromFriend(friend, user?.id)}</div>
+      <div>{getFriendUsernameFromFriend(friend, user?.id)}</div>
     </FriendListItemContainer>
   );
 };

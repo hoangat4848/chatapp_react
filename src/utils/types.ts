@@ -12,7 +12,7 @@ export type UserCredentialsParams = {
 
 export type User = {
   id: number;
-  email: string;
+  username: string;
   firstName: string;
   lastName: string;
 };
@@ -27,7 +27,7 @@ export type Conversation = {
 };
 
 export type CreateConversationParams = {
-  email: string;
+  username: string;
   message: string;
 };
 
@@ -137,7 +137,7 @@ export type EditGroupMessagePayload = {
 
 export type AddGroupRecipientParams = {
   groupId: number;
-  email: string;
+  username: string;
 };
 
 export type RemoveGroupRecipientParams = {

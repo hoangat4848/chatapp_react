@@ -34,7 +34,7 @@ const CreateConversationForm = ({ setShowModal }: Props) => {
     if (!selectedUser || !message) return;
 
     const data: CreateConversationParams = {
-      email: selectedUser.email,
+      username: selectedUser.username,
       message,
     };
     dispatch(createConversationThunk(data))

@@ -97,7 +97,7 @@ const GroupRecipientsSidebar = () => {
           >
             <div className="left">
               <MessageItemAvatar />
-              {user.email}
+              {user.username}
             </div>
             {user.id === group?.owner.id && <Crown color="#ffbf00" />}
           </GroupRecipientsSidebarItem>
@@ -110,7 +110,7 @@ const GroupRecipientsSidebar = () => {
           >
             <div className="left">
               <MessageItemAvatar />
-              {user.email}
+              {user.username}
             </div>
             {user.id === group?.owner.id && <Crown color="#ffbf00" />}
           </GroupRecipientsSidebarItem>

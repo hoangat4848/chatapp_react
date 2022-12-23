@@ -49,12 +49,15 @@ export const getUserContextMenuIcon = (type: UserContextMenuActionType) => {
 export const isGroupOwner = (user?: User, group?: Group) =>
   user?.id === group?.owner.id;
 
-export const getFriendEmailFromFriend = (friend?: Friend, userId?: number) => {
+export const getFriendUsernameFromFriend = (
+  friend?: Friend,
+  userId?: number
+) => {
   if (!userId || !friend) return "";
 
   return userId === friend.sender.id
-    ? friend.receiver.email
-    : friend.sender.email;
+    ? friend.receiver.username
+    : friend.sender.username;
 };
 
 export const getUserSidebarIcon = (id: UserSidebarRoute) => {

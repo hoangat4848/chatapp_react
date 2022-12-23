@@ -46,7 +46,7 @@ const CreateGroupForm = ({ setShowModal }: Props) => {
     e.preventDefault();
     if (selectedUsers.length === 0 || !message || !title) return;
 
-    const users = selectedUsers.map((user) => user.email);
+    const users = selectedUsers.map((user) => user.username);
     const payload = {
       users,
       title,

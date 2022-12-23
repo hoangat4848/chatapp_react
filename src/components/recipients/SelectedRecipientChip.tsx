@@ -10,7 +10,7 @@ const SelectedRecipientChip = ({ user, onChipClose }: Props) => {
   return (
     <StyledSelectedRecipientPill>
       <div className="container">
-        <span>{user.email}</span>
+        <span>{user.username}</span>
         <CircleX className="icon" onClick={() => onChipClose(user)} />
       </div>
     </StyledSelectedRecipientPill>

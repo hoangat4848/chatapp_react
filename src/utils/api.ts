@@ -134,9 +134,13 @@ export const searchUsers = (query: string) =>
 
 export const addGroupRecipient = ({
   groupId,
-  email,
+  username,
 }: AddGroupRecipientParams) =>
-  axiosClient.post<Group>(`/groups/${groupId}/recipients`, { email }, config);
+  axiosClient.post<Group>(
+    `/groups/${groupId}/recipients`,
+    { username },
+    config
+  );
 
 export const removeGroupRecipient = ({
   groupId,
@@ -158,8 +162,8 @@ export const fetchFriends = () => axiosClient.get<Friend[]>(`/friends`, config);
 export const fetchFriendRequests = () =>
   axiosClient.get<FriendRequest[]>(`/friends/requests`, config);
 
-export const createFriendRequest = (email: string) =>
-  axiosClient.post<FriendRequest>(`friends/requests`, { email }, config);
+export const createFriendRequest = (username: string) =>
+  axiosClient.post<FriendRequest>(`friends/requests`, { username }, config);
 
 export const cancelFriendRequest = (id: number) =>
   axiosClient.delete<FriendRequest>(`/friends/requests/${id}/cancel`, config);
