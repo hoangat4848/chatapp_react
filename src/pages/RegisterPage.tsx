@@ -1,5 +1,4 @@
-import React from "react";
-import RegisterForm from "../components/forms/RegisterForm";
+import RegisterForm from "../components/forms/register";
 import { Page } from "../utils/styles";
 
 const RegisterPage = () => {

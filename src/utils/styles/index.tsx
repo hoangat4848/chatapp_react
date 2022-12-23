@@ -28,6 +28,13 @@ export const InputContainer = styled.div<InputContainerProps>`
   background-color: ${(props) => props.backgroundColor || "#131313"};
 `;
 
+export const InputContainerHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+`;
+
 export const RecipientChipContainer = styled.div<InputContainerProps>`
   display: flex;
   flex-wrap: wrap;
@@ -64,6 +71,13 @@ export const InputLabel = styled.label`
   color: #afafaf;
 
   font-size: 14px;
+`;
+
+export const InputError = styled.span`
+  color: #ff0000;
+
+  font-size: 11px;
+  text-transform: uppercase;
 `;
 
 export const Button = styled.button`

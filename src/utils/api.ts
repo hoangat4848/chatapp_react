@@ -180,3 +180,6 @@ export const rejectFriendRequest = (id: number) =>
 
 export const removeFriend = (id: number) =>
   axiosClient.delete<Friend>(`/friends/${id}`, config);
+
+export const checkUsernameExists = (username: string) =>
+  axiosClient.get<User>(`/users/check?username=${username}`, config);
