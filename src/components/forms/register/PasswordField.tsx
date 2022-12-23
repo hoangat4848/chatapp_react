@@ -12,7 +12,7 @@ const PasswordField = ({ register, errors }: RegisterFormFieldProps) => {
     <InputContainer>
       <InputContainerHeader>
         <InputLabel htmlFor="password">Password</InputLabel>
-        <InputError>{errors.password?.message}</InputError>
+        {errors.password && <InputError>{errors.password.message}</InputError>}
       </InputContainerHeader>
       <InputField
         type="password"

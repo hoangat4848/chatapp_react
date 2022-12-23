@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { postLoginUser } from "../../utils/api";
-import { SocketContext } from "../../utils/context/SocketContext";
+import { postLoginUser } from "../../../utils/api";
+import { SocketContext } from "../../../utils/context/SocketContext";
 import {
   Button,
   InputContainer,
   InputField,
   InputLabel,
-} from "../../utils/styles";
-import { UserCredentialsParams } from "../../utils/types";
-import styles from "./index.module.scss";
+} from "../../../utils/styles";
+import { UserCredentialsParams } from "../../../utils/types";
+import styles from "../index.module.scss";
 
 const LoginForm = () => {
   const {
@@ -35,11 +35,11 @@ const LoginForm = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <InputContainer>
-        <InputLabel htmlFor="email">Email</InputLabel>
+        <InputLabel htmlFor="username">Username</InputLabel>
         <InputField
-          id="email"
-          type="email"
-          {...register("email", { required: "Email is required" })}
+          id="username"
+          type="text"
+          {...register("username", { required: "Username is required" })}
         />
       </InputContainer>
       <InputContainer className={styles.loginFormPassword}>
