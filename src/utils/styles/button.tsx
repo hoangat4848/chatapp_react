@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 type Size = "sm" | "md" | "lg";
-type ButtonVariant = "primary" | "outline";
+type ButtonVariant = "primary" | "secondary";
 
 type ButtonProps = Partial<{
   size: Size;
@@ -50,16 +50,18 @@ export const getButtonVariantStyle = (variant?: ButtonVariant) => {
       cursor: not-allowed;
     }
   `;
-  const outline = css`
+
+  const secondary = css`
     background-color: inherit;
     border: 1px solid #2b09ff;
     color: #fff;
   `;
+
   switch (variant) {
     case "primary":
       return primary;
-    case "outline":
-      return outline;
+    case "secondary":
+      return secondary;
     default:
       return primary;
   }
