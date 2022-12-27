@@ -17,7 +17,7 @@ const GroupRecipientField = ({ query, setQuery }: Props) => {
   return (
     <section>
       <InputContainer backgroundColor="#161616">
-        <InputLabel htmlFor="email">Recipients</InputLabel>
+        <InputLabel htmlFor="username">Recipients</InputLabel>
         <RecipientChipContainer>
           <InputField
             value={query}

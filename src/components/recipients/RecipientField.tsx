@@ -21,7 +21,7 @@ const RecipientField = ({
   return (
     <section>
       <InputContainer backgroundColor="#161616">
-        <InputLabel htmlFor="email">Recipient</InputLabel>
+        <InputLabel htmlFor="username">Recipient</InputLabel>
         {selectedUser ? (
           <SelectedRecipientChip
             user={selectedUser}
@@ -29,7 +29,7 @@ const RecipientField = ({
           />
         ) : (
           <InputField
-            id="email"
+            id="username"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
