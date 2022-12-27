@@ -54,3 +54,7 @@ export type FlexProps = Partial<{
 export type FriendRequestItemIconProps = Partial<{
   isAccept: boolean;
 }>;
+
+export type SettingsSidebarItemProps = {
+  isActive: boolean;
+};

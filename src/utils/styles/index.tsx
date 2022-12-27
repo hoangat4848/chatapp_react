@@ -588,6 +588,12 @@ export const StyledUserSidebar = styled.div`
   background-color: #121212;
 
   z-index: 1;
+
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const StyledUserSidebarItem = styled.div<SidebarItemProps>`

@@ -2,14 +2,23 @@ import {
   ArrowCycle,
   ChatDots,
   Crown,
+  Gear,
   Minus,
   Person,
   PersonCross,
 } from "akar-icons";
 import {
+  IoIosPerson,
+  IoIosLock,
+  IoIosNotifications,
+  IoMdInfinite,
+  IoMdColorPalette,
+} from "react-icons/io";
+import {
   Conversation,
   Friend,
   Group,
+  SettingsSidebarRouteType,
   User,
   UserContextMenuActionType,
   UserSidebarRoute,
@@ -68,7 +77,26 @@ export const getUserSidebarIcon = (id: UserSidebarRoute) => {
       return Person;
     case "connections":
       return ArrowCycle;
+    case "settings":
+      return Gear;
     default:
       throw new Error("invalid id in getIcon");
+  }
+};
+
+export const getSettingsSidebarIcon = (id: SettingsSidebarRouteType) => {
+  switch (id) {
+    case "profile":
+      return IoIosPerson;
+    case "security":
+      return IoIosLock;
+    case "notifications":
+      return IoIosNotifications;
+    case "integrations":
+      return IoMdInfinite;
+    case "appearance":
+      return IoMdColorPalette;
+    default:
+      throw new Error("Invalid Settings Sidebar Item Id");
   }
 };

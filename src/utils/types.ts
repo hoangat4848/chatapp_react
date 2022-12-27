@@ -195,9 +195,26 @@ export type AcceptFriendRequestResponse = {
   friendRequest: FriendRequest;
 };
 
-export type UserSidebarRoute = "conversations" | "friends" | "connections";
+export type UserSidebarRoute =
+  | "conversations"
+  | "friends"
+  | "connections"
+  | "settings";
 export type UserSidebarItemType = {
   id: UserSidebarRoute;
+  pathname: string;
+};
+
+export type SettingsSidebarRouteType =
+  | "profile"
+  | "security"
+  | "notifications"
+  | "integrations"
+  | "appearance";
+
+export type SettingsItem = {
+  id: SettingsSidebarRouteType;
+  label: string;
   pathname: string;
 };
 

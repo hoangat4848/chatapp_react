@@ -22,6 +22,8 @@ import GroupPageGuard from "./guards/GroupPageGuard";
 import FriendsLayoutPage from "./pages/friends/FriendsLayoutPage";
 import FriendsPage from "./pages/friends/FriendsPage";
 import FriendRequestPage from "./pages/friends/FriendRequestPage";
+import SettingsProfilePage from "./pages/settings/SettingsProfilePage";
+import SettingsPage from "./pages/settings/SettingsPage";
 
 type Props = {
   user?: User;
@@ -93,6 +95,10 @@ function App() {
             <Route index element={<FriendsPage />} />
             <Route path="requests" element={<FriendRequestPage />} />
             <Route path="blocked" element={<div>Blocked Page</div>} />
+          </Route>
+
+          <Route path="settings" element={<SettingsPage />}>
+            <Route path="profile" element={<SettingsProfilePage />} />
           </Route>
         </Route>
       </Routes>
