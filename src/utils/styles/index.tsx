@@ -114,6 +114,7 @@ export const Page = styled.div<PageProps>`
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
 
+  width: 100%;
   height: 100vh;
 
   background-color: #1a1a1a;
