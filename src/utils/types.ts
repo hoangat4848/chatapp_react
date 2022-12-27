@@ -15,6 +15,12 @@ export type User = {
   username: string;
   firstName: string;
   lastName: string;
+  profile?: Profile;
+};
+
+export type Profile = {
+  id: number;
+  about?: string;
 };
 
 export type Conversation = {

@@ -1,7 +1,9 @@
 import { Edit } from "akar-icons";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
 import UserBanner from "../../components/settings/profile/UserBanner";
+import { updateUserProfile } from "../../utils/api";
+import { AuthContext } from "../../utils/context/AuthContext";
 import { Page, StyledOverlay } from "../../utils/styles";
 import { Button } from "../../utils/styles/button";
 import {
@@ -14,18 +16,38 @@ import {
 } from "../../utils/styles/settings";
 
 const SettingsProfilePage = () => {
-  const [about, setAbout] = useState("hello world");
-  const [editedAbout, setEditedAbout] = useState(about);
+  const { user, updateAuthUser } = useContext(AuthContext);
+  const [about, setAbout] = useState(user?.profile?.about || "");
+  const [aboutCopy, setAboutCopy] = useState(about);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    console.log("Updating about");
+    setAbout(user?.profile?.about || "");
+  }, [user?.profile?.about]);
+
   const reset = () => {
-    setEditedAbout(about);
+    setAboutCopy(about);
     setIsEditing(false);
   };
 
-  const save = () => {
-    setLoading(true);
+  const save = async () => {
+    const formData = new FormData();
+    about !== aboutCopy && formData.append("about", aboutCopy);
+
+    console.log("hello world");
+
+    try {
+      setLoading(true);
+      const { data: updatedUser } = await updateUserProfile(formData);
+      updateAuthUser(updatedUser);
+      setIsEditing(false);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -57,11 +79,11 @@ const SettingsProfilePage = () => {
             <ProfileDescriptionField
               maxLength={200}
               disabled={isEditing}
-              value={editedAbout}
-              onChange={(e) => setEditedAbout(e.target.value)}
+              value={aboutCopy}
+              onChange={(e) => setAboutCopy(e.target.value)}
             />
           </ProfileAboutSection>
-          {editedAbout !== about && (
+          {aboutCopy !== about && (
             <ProfileEditActionBar>
               <div>
                 <span>You have unsaved changes</span>

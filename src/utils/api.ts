@@ -187,3 +187,9 @@ export const removeFriend = (id: number) =>
 
 export const checkUsernameExists = (username: string) =>
   axiosClient.get<User>(`/users/check?username=${username}`, config);
+
+export const updateUserProfile = (data: FormData) =>
+  axiosClient.patch<User>("/users/profile", data, {
+    ...config,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
