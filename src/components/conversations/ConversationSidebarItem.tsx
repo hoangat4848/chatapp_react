@@ -1,3 +1,4 @@
+import { formatRelative } from "date-fns";
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../utils/context/AuthContext";
@@ -29,6 +30,9 @@ const ConversationSidebarItem = ({ conversation }: Props) => {
           {`${recipient?.firstName} ${recipient?.lastName}`}
         </span>
         <span className={styles.conversationLastMessage}>{displayContent}</span>
+        <span className={styles.conversationLastMessageSentTime}>
+          {formatRelative(new Date(conversation.lastMessageSentAt), new Date())}
+        </span>
       </div>
     </StyledConversationSidebarItem>
   );

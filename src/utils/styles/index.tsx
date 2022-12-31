@@ -151,6 +151,8 @@ export const StyledConversationSidebarItem = styled.div<ConversationSidebarItemP
   align-items: center;
   gap: 14px;
 
+  position: relative;
+
   padding: 8px 14px;
 
   background-color: ${({ selected }) => selected && "#1a1a1a"};
@@ -457,7 +459,6 @@ export const ConversationTabItem = styled.div<ConversationTabItemProps>`
 export const UserAvatar = styled.img`
   width: 55px;
   height: 55px;
-  margin: 10px 0;
 
   border-radius: 50%;
 
