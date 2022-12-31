@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 export const ProtectedRoutes = ({ children }: PropsWithChildren) => {
   const location = useLocation();
   const { user, loading } = useAuth();
+  console.log("hello from protectedRoute");
 
   if (loading) {
     return <div key="loading">loading...</div>;
