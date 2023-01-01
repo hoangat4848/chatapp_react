@@ -173,3 +173,54 @@ export const ProfileEditActionBar = styled.div`
     gap: 10px;
   }
 `;
+
+export const UserAvatarContainer = styled.div<{ url?: string }>`
+  width: 150px;
+  height: 150px;
+
+  border-radius: 100%;
+  border: 4px solid #afafaf;
+
+  cursor: pointer;
+
+  ${({ url }) =>
+    url
+      ? css`
+          transition: 1s background ease;
+          background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url("${url}") no-repeat center;
+          opacity: 100%;
+          transition: 300ms opacity ease;
+          background-size: cover;
+          &:hover {
+            opacity: 100%;
+          }
+        `
+      : css`
+          background-color: #404040;
+        `}
+
+  &::before {
+    content: "Change Avatar";
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 150px;
+
+    background-color: none;
+    color: #b5b5b5;
+    opacity: 0;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: 300ms opacity ease;
+  }
+
+  &:hover:before {
+    opacity: 1;
+  }
+`;

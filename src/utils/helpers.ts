@@ -14,6 +14,7 @@ import {
   IoMdInfinite,
   IoMdColorPalette,
 } from "react-icons/io";
+import { PUBLIC_URL } from "./constants";
 import {
   Conversation,
   Friend,
@@ -99,4 +100,9 @@ export const getSettingsSidebarIcon = (id: SettingsSidebarRouteType) => {
     default:
       throw new Error("Invalid Settings Sidebar Item Id");
   }
+};
+
+export const getImageUrl = (imageName: string) => {
+  if (!imageName) return "";
+  return PUBLIC_URL.concat(imageName);
 };

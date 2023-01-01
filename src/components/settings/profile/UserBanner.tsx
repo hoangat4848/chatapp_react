@@ -1,8 +1,40 @@
+import { Dispatch, SetStateAction, useRef } from "react";
+import { FileInput } from "../../../utils/styles";
 import { SettingsProfileBanner } from "../../../utils/styles/settings";
+import { DivMouseEvent, InputChangeEvent } from "../../../utils/types";
 
-const UserBanner = () => {
+type Props = {
+  bannerSource: string;
+  bannerSourceCopy: string;
+  setBannerSourceCopy: Dispatch<SetStateAction<string>>;
+  setBannerFile: Dispatch<SetStateAction<File | undefined>>;
+};
+const UserBanner = ({
+  bannerSource,
+  bannerSourceCopy,
+  setBannerFile,
+  setBannerSourceCopy,
+}: Props) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  const handleBannerClick = (e: DivMouseEvent) => fileInputRef.current?.click();
+
+  const handleFileChange = (e: InputChangeEvent) => {
+    const file = e.target.files?.item(0);
+    setBannerSourceCopy(file ? URL.createObjectURL(file) : bannerSource);
+    setBannerFile(file || undefined);
+  };
+
   return (
-    <SettingsProfileBanner backgroundUrl="https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2671&q=80" />
+    <>
+      <SettingsProfileBanner
+        backgroundUrl={bannerSourceCopy}
+        ref={bannerRef}
+        onClick={handleBannerClick}
+      />
+      <FileInput type="file" ref={fileInputRef} onChange={handleFileChange} />
+    </>
   );
 };
 

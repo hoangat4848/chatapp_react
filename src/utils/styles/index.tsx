@@ -793,3 +793,11 @@ export const CharacterLimit = styled.span<CharacterLimitProps>`
   font-weight: 500;
   color: ${({ atMaxLength }) => (atMaxLength ? "#ff0000" : "rgb(129,129,129)")};
 `;
+
+export const FileInput = styled.input`
+  ${({ type }) =>
+    type === "file" &&
+    css`
+      display: none;
+    `}
+`;

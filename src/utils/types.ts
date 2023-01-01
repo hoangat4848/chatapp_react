@@ -21,6 +21,8 @@ export type User = {
 export type Profile = {
   id: number;
   about?: string;
+  banner?: string;
+  avatar?: string;
 };
 
 export type Conversation = {
@@ -179,6 +181,8 @@ export type ContextMenuEvent<T = HTMLDivElement> = React.MouseEvent<
   T,
   MouseEvent
 >;
+export type DivMouseEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
+export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export type Friend = {
   id: number;
