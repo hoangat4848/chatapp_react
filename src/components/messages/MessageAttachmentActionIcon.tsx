@@ -1,6 +1,7 @@
 import { CirclePlusFill } from "akar-icons";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "../../hooks/useToast";
 import { AppDispatch, RootState } from "../../store";
 import {
   addAttachment,
@@ -14,8 +15,9 @@ const MessageAttachmentActionIcon = () => {
   const attachmentIconRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const { error } = useToast({ theme: "dark" });
   const dispatch = useDispatch<AppDispatch>();
-  const { attachmentCounter } = useSelector(
+  const { attachmentCounter, attachments } = useSelector(
     (state: RootState) => state.messagePanel
   );
 
@@ -25,6 +27,10 @@ const MessageAttachmentActionIcon = () => {
 
   const handleFileChange = (e: InputChangeEvent) => {
     const file = e.target.files?.item(0);
+    if (attachments.length > 5)
+      return error("Maximum 5 attachments allowed", { position: "top-center" });
+    if (file && file.size > 1000000)
+      return error("File exceeds limit: 1MB", { position: "top-center" });
     if (file) {
       dispatch(addAttachment({ id: attachmentCounter, file }));
       dispatch(incrementAttachmentCounter());
