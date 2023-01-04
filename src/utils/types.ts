@@ -233,3 +233,8 @@ export type UpdateRateLimitPayload = {
   type: RateLimitType;
   status: boolean;
 };
+
+export type Attachment = {
+  id: number;
+  file: File;
+};

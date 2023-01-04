@@ -3,6 +3,7 @@ import { CharacterLimit, MessageInputContainer } from "../../utils/styles";
 import { SetStateAction } from "react";
 import styles from "./index.module.scss";
 import MessageTextField from "../inputs/MessageTextField";
+import MessageAttachmentActionIcon from "./MessageAttachmentActionIcon";
 
 type Props = {
   content: string;
@@ -26,6 +27,7 @@ const MessageInputField = ({
   return (
     <>
       <MessageInputContainer isMultiLine={isMultiLine}>
+        <MessageAttachmentActionIcon />
         <form onSubmit={sendMessage} className={styles.form}>
           <MessageTextField
             message={content}

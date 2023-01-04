@@ -1,10 +1,9 @@
 import { AxiosError } from "axios";
 import { useContext, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useToast } from "../../hooks/useToast";
-import { AppDispatch, RootState } from "../../store";
-import { createMessageThunk } from "../../store/messages/messageThunk";
+import { RootState } from "../../store";
 import { selectConversationById } from "../../store/slices/conversationSlice";
 import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
@@ -16,6 +15,7 @@ import {
   MessageTypingStatus,
   StyledMessagePanel,
 } from "../../utils/styles";
+import MessageAttachmentContainer from "./attachments/MessageAttachmentContainer";
 import MessageContainer from "./MessageContainer";
 import MessageInputField from "./MessageInputField";
 import MessagePanelHeader from "./MessagePanelHeader";
@@ -29,10 +29,10 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
   const toastId = "rateLimitToast";
   const { error } = useToast({ theme: "dark" });
   const [content, setContent] = useState("");
+  const { attachments } = useSelector((state: RootState) => state.messagePanel);
   const { id: routeId } = useParams();
 
   const { user } = useContext(AuthContext);
-  const dispatch = useDispatch<AppDispatch>();
 
   const conversation = useSelector((state: RootState) =>
     selectConversationById(state, parseInt(routeId!))
@@ -67,6 +67,7 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
       <MessagePanelHeader />
       <MessagePanelBody>
         <MessageContainer />
+        {attachments.length > 0 && <MessageAttachmentContainer />}
         <MessageInputField
           content={content}
           setContent={setContent}

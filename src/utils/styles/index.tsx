@@ -801,3 +801,40 @@ export const FileInput = styled.input`
       display: none;
     `}
 `;
+
+export const StyledMessageAttachmentContainer = styled.div`
+  display: flex;
+  gap: 10px;
+
+  margin: 10px 0;
+
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    background-color: #101010;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #1c1c1c;
+    border-radius: 5px;
+  }
+`;
+
+export const StyledMessageAttachment = styled.div`
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  margin: 10px 0;
+  padding: 50px 0 0 0;
+  max-height: 300px;
+  height: 300px;
+
+  border-radius: 10px;
+
+  text-align: center;
+
+  background-color: #161616;
+`;
