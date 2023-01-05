@@ -1,5 +1,13 @@
 import React, { Dispatch, SetStateAction, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "../../hooks/useToast";
+import { AppDispatch, RootState } from "../../store";
+import {
+  addAttachment,
+  incrementAttachmentCounter,
+} from "../../store/message-panel/messagePanelSlice";
 import { MessageTextArea } from "../../utils/styles";
+import { ClipboardEvent, DragEvent } from "../../utils/types";
 
 type Props = {
   message: string;
@@ -21,6 +29,11 @@ const MessageTextField = ({
 }: Props) => {
   const DEFAULT_TEXTAREA_HEIGHT = 21;
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const { attachments, attachmentCounter } = useSelector(
+    (state: RootState) => state.messagePanel
+  );
+  const { error } = useToast({ theme: "dark" });
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -44,6 +57,34 @@ const MessageTextField = ({
     }
   };
 
+  const handleFileAdd = (files: FileList) => {
+    const maxFilesDropped = 5 - attachments.length;
+    if (maxFilesDropped === 0) return error("Max files reached");
+    const filesArray = Array.from(files);
+    let localCounter = attachmentCounter;
+    for (let i = 0; i < filesArray.length; ++i) {
+      if (i === maxFilesDropped) break;
+      dispatch(addAttachment({ id: localCounter++, file: filesArray[i] }));
+      dispatch(incrementAttachmentCounter());
+    }
+  };
+
+  const handleOnDrop = (e: DragEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log("dragging");
+    const { files } = e.dataTransfer;
+    console.log(files);
+    handleFileAdd(files);
+  };
+
+  const handleOnPaste = (e: ClipboardEvent) => {
+    const { files } = e.clipboardData;
+    console.log("pasting...");
+    console.log(files);
+    // handleFileAdd(files);
+  };
+
   return (
     <MessageTextArea
       ref={textAreaRef}
@@ -52,6 +93,8 @@ const MessageTextField = ({
       maxLength={maxLength}
       onKeyDown={handleKeyDown}
       placeholder={`Send a message to ${placeholderName}`}
+      onDrop={handleOnDrop}
+      onPaste={handleOnPaste}
     ></MessageTextArea>
   );
 };

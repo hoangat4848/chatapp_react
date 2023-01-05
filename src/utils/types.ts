@@ -1,3 +1,5 @@
+import React from "react";
+
 export type CreateUserParams = {
   username: string;
   firstName: string;
@@ -41,7 +43,7 @@ export type CreateConversationParams = {
 
 export type Message = {
   id: number;
-  content: string;
+  content?: string;
   createdAt: string;
   author: User;
   conversation?: Conversation;
@@ -107,7 +109,7 @@ export type Group = {
 
 export type GroupMessageType = {
   id: number;
-  content: string;
+  content?: string;
   createdAt: string;
   author: User;
   group?: Group;
@@ -185,6 +187,8 @@ export type ContextMenuEvent<T = HTMLDivElement> = React.MouseEvent<
 >;
 export type DivMouseEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
 export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type DragEvent = React.DragEvent<HTMLTextAreaElement>;
+export type ClipboardEvent = React.ClipboardEvent<HTMLTextAreaElement>;
 
 export type Friend = {
   id: number;

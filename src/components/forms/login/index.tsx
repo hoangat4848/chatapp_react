@@ -1,6 +1,8 @@
+import { AxiosError } from "axios";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "../../../hooks/useToast";
 import { postLoginUser } from "../../../utils/api";
 import { SocketContext } from "../../../utils/context/SocketContext";
 import {
@@ -21,14 +23,19 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
   const socket = useContext(SocketContext);
+  const { error } = useToast({ theme: "dark" });
 
   const onSubmit = async (data: UserCredentialsParams) => {
     try {
       await postLoginUser(data);
       navigate("/conversations");
       socket.connect();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const axiosErr = err as AxiosError;
+      console.log(err);
+
+      axiosErr.response?.status === 401 &&
+        error("Uncorrect username or password.");
     }
   };
 

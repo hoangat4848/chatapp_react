@@ -15,7 +15,7 @@ const ConversationSidebarItem = ({ conversation }: Props) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const recipient = getRecipientFromConversation(user, conversation);
-  const content = conversation.lastMessageSent?.content;
+  const content = conversation.lastMessageSent?.content ?? null;
   const displayContent =
     content && content.length > 10 ? content.substring(0, 20) + "..." : content;
 
