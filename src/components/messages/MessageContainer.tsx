@@ -14,7 +14,6 @@ import {
 import { selectConversationMessage } from "../../store/messages/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
 import {
-  MessageItemAvatar,
   MessageItemContainer,
   MessageItemDetails,
   StyledMessageContainer,
@@ -25,6 +24,7 @@ import useClick from "../../hooks/useClick";
 import useKeydown from "../../hooks/useKeydown";
 import MessageItemContainerBody from "./MessageItemContainerBody";
 import MessageItemHeader from "./MessageItemHeader";
+import MessageItemAvatar from "./MessageItemAvatar";
 
 const MessageContainer = () => {
   const { showContextMenu } = useSelector(
@@ -92,7 +92,7 @@ const MessageContainer = () => {
         key={message.id}
         onContextMenu={(e) => onContextMenu(e, message)}
       >
-        {showMessageHeader && <MessageItemAvatar />}
+        {showMessageHeader && <MessageItemAvatar message={message} />}
         {showMessageHeader ? (
           <MessageItemDetails>
             <MessageItemHeader message={message} />

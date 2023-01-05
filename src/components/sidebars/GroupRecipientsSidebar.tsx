@@ -15,7 +15,7 @@ import {
   GroupRecipientsSidebarHeader,
   GroupRecipientsSidebarItem,
   GroupRecipientsSidebarItemContainer,
-  MessageItemAvatar,
+  StyledMessageItemAvatar,
   StyledGroupRecipientsSidebar,
 } from "../../utils/styles";
 import { User } from "../../utils/types";
@@ -96,7 +96,7 @@ const GroupRecipientsSidebar = () => {
             onContextMenu={(e) => handleUserContextMenu(e, user)}
           >
             <div className="left">
-              <MessageItemAvatar />
+              <StyledMessageItemAvatar />
               {user.username}
             </div>
             {user.id === group?.owner.id && <Crown color="#ffbf00" />}
@@ -109,7 +109,7 @@ const GroupRecipientsSidebar = () => {
             onContextMenu={(e) => handleUserContextMenu(e, user)}
           >
             <div className="left">
-              <MessageItemAvatar />
+              <StyledMessageItemAvatar />
               {user.username}
             </div>
             {user.id === group?.owner.id && <Crown color="#ffbf00" />}

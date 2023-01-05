@@ -316,13 +316,10 @@ export const MessageItemContainer = styled.div`
   white-space: pre-wrap;
 `;
 
-export const MessageItemAvatar = styled.div`
+export const StyledMessageItemAvatar = styled.img`
   width: 50px;
   height: 50px;
-
   border-radius: 50%;
-
-  background-color: #fff;
 `;
 
 export const MessageItemDetails = styled.div`
