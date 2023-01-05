@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { MdClose } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { MessageItemContent } from "../../utils/styles";
+import { MessageItemContent, StyledOverlay } from "../../utils/styles";
 import { GroupMessageType, Message } from "../../utils/types";
 import EditMessageContainer from "./EditMessageContainer";
 import MessageItemAttachmentContainer from "./MessageItemAttachmentContainer";
@@ -16,12 +17,22 @@ const MessageItemContainerBody = ({
   onEditMessageChange,
   padding,
 }: Props) => {
+  const [showOverlay, setShowOverlay] = useState(false);
   const { isEditingMessage, messageBeingEdited } = useSelector(
     (state: RootState) => state.messageContainer
   );
 
   return (
     <>
+      {showOverlay && (
+        <StyledOverlay>
+          <MdClose
+            className={styles.closeIcon}
+            onClick={() => setShowOverlay(false)}
+          />
+          <img src={imageUrl} alt="overlay" />
+        </StyledOverlay>
+      )}
       {isEditingMessage && messageBeingEdited?.id ? (
         <MessageItemContent padding={padding}>
           <EditMessageContainer onEditMessageChange={onEditMessageChange} />

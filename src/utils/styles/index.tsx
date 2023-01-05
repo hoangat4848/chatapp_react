@@ -272,6 +272,17 @@ export const StyledMessageContainer = styled.div`
   background: inherit;
 
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #161616;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #0e0e0e;
+    width: 5px;
+    border-radius: 5px;
+  }
 `;
 
 export const MessageInputContainer = styled.div<MessageInputContainerProps>`

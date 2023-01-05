@@ -127,7 +127,15 @@ const MessageContainer = () => {
   };
 
   return (
-    <StyledMessageContainer>
+    <StyledMessageContainer
+      onScroll={(e) => {
+        const node = e.target as HTMLDivElement;
+        const scrollTopMax = node.scrollHeight - node.clientHeight;
+        if (-scrollTopMax === node.scrollTop) {
+          console.log("asd");
+        }
+      }}
+    >
       <>{formatMessages()}</>
       {showContextMenu && <SelectedMessageContextMenu />}
     </StyledMessageContainer>

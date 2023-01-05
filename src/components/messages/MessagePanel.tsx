@@ -59,6 +59,8 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
     attachments.forEach((attachments) =>
       formData.append("attachments", attachments.file)
     );
+    console.log("asd");
+    console.log(trimmedContent);
 
     try {
       selectedType === "private"
@@ -67,6 +69,8 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
       setContent("");
       dispatch(removeAllAttachments());
     } catch (err) {
+      console.log(err);
+
       (err as AxiosError).response?.status === 429 &&
         error("You are rate limited", { toastId });
     }

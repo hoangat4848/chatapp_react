@@ -1,10 +1,9 @@
 import { Edit } from "akar-icons";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { MoonLoader } from "react-spinners";
 import UserAvatar from "../../components/settings/profile/UserAvatar";
 import UserBanner from "../../components/settings/profile/UserBanner";
 import { updateUserProfile } from "../../utils/api";
-import { PUBLIC_URL } from "../../utils/constants";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getImageUrl } from "../../utils/helpers";
 import { Page, StyledOverlay } from "../../utils/styles";
@@ -30,8 +29,6 @@ const SettingsProfilePage = () => {
   const avatarSource = getImageUrl(user?.profile?.avatar ?? "");
   const [avatarSourceCopy, setAvatarSourceCopy] = useState(avatarSource);
   const [avatarFile, setAvatarFile] = useState<File>();
-
-  console.log(user);
 
   // useEffect(() => {
   //   console.log("Updating about");
