@@ -45,6 +45,7 @@ export type Message = {
   createdAt: string;
   author: User;
   conversation?: Conversation;
+  attachments?: MessageAttachment[];
 };
 
 export type ConversationMessage = {
@@ -110,6 +111,7 @@ export type GroupMessageType = {
   createdAt: string;
   author: User;
   group?: Group;
+  attachments?: MessageAttachment[];
 };
 
 export type GroupMessage = {
@@ -237,4 +239,8 @@ export type UpdateRateLimitPayload = {
 export type Attachment = {
   id: number;
   file: File;
+};
+
+export type MessageAttachment = {
+  key: string;
 };

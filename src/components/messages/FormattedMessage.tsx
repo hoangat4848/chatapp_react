@@ -1,6 +1,7 @@
 import { formatRelative } from "date-fns";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { getImageUrl } from "../../utils/helpers";
 import {
   UserAvatar,
   MessageItemContainer,
@@ -42,15 +43,27 @@ export const FormattedMessage = ({
             {formatRelative(new Date(message.createdAt), new Date())}
           </span>
         </MessageItemHeader>
-        <MessageItemContent padding="8px 0 0 0">
-          {isEditingMessage && message.id === messageBeingEdited?.id ? (
+        {isEditingMessage && message.id === messageBeingEdited?.id ? (
+          <MessageItemContent padding="8px 0 0 0">
             <EditMessageContainer
               onEditMessageChange={onEditMessageInputChange}
             />
-          ) : (
-            message.content
-          )}
-        </MessageItemContent>
+          </MessageItemContent>
+        ) : (
+          <MessageItemContent padding="8px 0 0 0">
+            {message.content}
+            <div>
+              {message.attachments?.map((attachment) => (
+                <img
+                  key={attachment.key}
+                  src={getImageUrl(attachment.key)}
+                  width={300}
+                  alt={attachment.key}
+                />
+              ))}
+            </div>
+          </MessageItemContent>
+        )}
       </MessageItemDetails>
     </MessageItemContainer>
   );

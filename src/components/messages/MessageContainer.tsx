@@ -20,6 +20,7 @@ import { GroupMessageType, Message } from "../../utils/types";
 import SelectedMessageContextMenu from "../context-menus/SelectedMessageContextMenu";
 import EditMessageContainer from "./EditMessageContainer";
 import { FormattedMessage } from "./FormattedMessage";
+import { getImageUrl } from "../../utils/helpers";
 
 const MessageContainer = () => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -112,7 +113,19 @@ const MessageContainer = () => {
                 onEditMessageChange={onEditMessageInputChange}
               />
             ) : (
-              m.content
+              <>
+                {m.content}
+                <div>
+                  {m.attachments?.map((attachment) => (
+                    <img
+                      key={attachment.key}
+                      src={getImageUrl(attachment.key)}
+                      width={300}
+                      alt={attachment.key}
+                    />
+                  ))}
+                </div>
+              </>
             )}
           </MessageItemContent>
         </MessageItemContainer>
