@@ -329,7 +329,7 @@ export const MessageItemDetails = styled.div`
   width: 100%;
 `;
 
-export const MessageItemHeader = styled.div`
+export const MessageItemHeaderContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;

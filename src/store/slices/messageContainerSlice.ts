@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { Message } from "../../utils/types";
+import { Message, Point } from "../../utils/types";
 
 export interface MessageContainerState {
   selectedMessage?: Message;
   messageBeingEdited?: Message;
   isEditingMessage: boolean;
+  showContextMenu: boolean;
+  selectedContextMenuPosition: Point;
 }
 
 const initialState: MessageContainerState = {
   isEditingMessage: false,
+  showContextMenu: false,
+  selectedContextMenuPosition: { x: 0, y: 0 },
 };
 
 export const messageContainerSlice = createSlice({
@@ -36,6 +40,12 @@ export const messageContainerSlice = createSlice({
       state.selectedMessage = undefined;
       state.messageBeingEdited = undefined;
     },
+    setShowContextMenu: (state, action: PayloadAction<boolean>) => {
+      state.showContextMenu = action.payload;
+    },
+    setSelectedContextMenuPosition: (state, action: PayloadAction<Point>) => {
+      state.selectedContextMenuPosition = action.payload;
+    },
   },
 });
 
@@ -51,6 +61,8 @@ export const {
   setMessageBeingEdited,
   editMessageBeingEditedContent,
   resetMessageContainer,
+  setShowContextMenu,
+  setSelectedContextMenuPosition,
 } = messageContainerSlice.actions;
 
 export default messageContainerSlice.reducer;

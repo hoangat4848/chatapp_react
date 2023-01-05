@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
@@ -7,33 +7,31 @@ import {
   editMessageBeingEditedContent,
   resetMessageContainer,
   setIsEditingMessage,
+  setSelectedContextMenuPosition,
   setSelectedMessage,
+  setShowContextMenu,
 } from "../../store/slices/messageContainerSlice";
 import { selectConversationMessage } from "../../store/messages/messageSlice";
 import { AuthContext } from "../../utils/context/AuthContext";
 import {
+  MessageItemAvatar,
   MessageItemContainer,
-  MessageItemContent,
+  MessageItemDetails,
   StyledMessageContainer,
 } from "../../utils/styles";
 import { GroupMessageType, Message } from "../../utils/types";
 import SelectedMessageContextMenu from "../context-menus/SelectedMessageContextMenu";
-import EditMessageContainer from "./EditMessageContainer";
-import { FormattedMessage } from "./FormattedMessage";
-import { getImageUrl } from "../../utils/helpers";
+import useClick from "../../hooks/useClick";
+import useKeydown from "../../hooks/useKeydown";
+import MessageItemContainerBody from "./MessageItemContainerBody";
+import MessageItemHeader from "./MessageItemHeader";
 
 const MessageContainer = () => {
-  const [showContextMenu, setShowContextMenu] = useState(false);
-  const [contextMenuPosition, setContextMenuPosition] = useState({
-    x: 0,
-    y: 0,
-  });
-  const { user } = useContext(AuthContext);
-
-  const { isEditingMessage, messageBeingEdited } = useSelector(
+  const { showContextMenu } = useSelector(
     (state: RootState) => state.messageContainer
   );
   const dispatch = useDispatch();
+  const { user } = useContext(AuthContext);
 
   const { id } = useParams();
   const conversationMessages = useSelector((state: RootState) =>
@@ -52,27 +50,26 @@ const MessageContainer = () => {
   ) => {
     e.preventDefault();
     if (message.author.id !== user?.id) return;
-    setContextMenuPosition({ x: e.pageX, y: e.pageY });
-    setShowContextMenu(true);
+    dispatch(setSelectedContextMenuPosition({ x: e.pageX, y: e.pageY }));
+    dispatch(setShowContextMenu(true));
     dispatch(setSelectedMessage(message));
   };
 
   const onEditMessageInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(editMessageBeingEditedContent(e.target.value));
 
-  useEffect(() => {
-    const handleClick = () => setShowContextMenu(false);
-    window.addEventListener("click", handleClick);
-    return () => window.removeEventListener("click", handleClick);
-  }, []);
+  const handleClick = useCallback(
+    () => dispatch(setShowContextMenu(false)),
+    [dispatch]
+  );
+  useClick(handleClick);
 
-  useEffect(() => {
-    const handleKeydown = (e: KeyboardEvent) =>
-      e.key === "Escape" && dispatch(setIsEditingMessage(false));
-    window.addEventListener("keydown", handleKeydown);
-
-    return () => window.removeEventListener("keydown", handleKeydown);
-  }, [dispatch]);
+  const handleKeydown = useCallback(
+    (e: KeyboardEvent) =>
+      e.key === "Escape" && dispatch(setIsEditingMessage(false)),
+    [dispatch]
+  );
+  useKeydown(handleKeydown);
 
   useEffect(() => {
     return () => {
@@ -81,57 +78,41 @@ const MessageContainer = () => {
   }, [id, dispatch]);
 
   const mapMessages = (
-    m: Message | GroupMessageType,
+    message: Message | GroupMessageType,
     index: number,
-    arr: Message[] | GroupMessageType[]
+    messages: Message[] | GroupMessageType[]
   ) => {
-    const currentMessage = arr[index];
-    const nextMessage = arr[index + 1];
-    if (
-      index === arr.length - 1 ||
-      currentMessage.author.id !== nextMessage.author.id
-    )
-      return (
-        <FormattedMessage
-          key={m.id}
-          user={user}
-          message={m}
-          onContextMenu={(e) => onContextMenu(e, m)}
-          onEditMessageInputChange={onEditMessageInputChange}
-        />
-      );
-
-    if (currentMessage.author.id === nextMessage.author.id)
-      return (
-        <MessageItemContainer
-          key={m.id}
-          onContextMenu={(e) => onContextMenu(e, m)}
-        >
-          <MessageItemContent padding="0 0 0 65px">
-            {isEditingMessage && m.id === messageBeingEdited?.id ? (
-              <EditMessageContainer
-                onEditMessageChange={onEditMessageInputChange}
-              />
-            ) : (
-              <>
-                {m.content}
-                <div>
-                  {m.attachments?.map((attachment) => (
-                    <img
-                      key={attachment.key}
-                      src={getImageUrl(attachment.key)}
-                      width={300}
-                      alt={attachment.key}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </MessageItemContent>
-        </MessageItemContainer>
-      );
-
-    return null;
+    const currentMessage = messages[index];
+    const nextMessage = messages[index + 1];
+    const showMessageHeader =
+      index + 1 === messages.length ||
+      currentMessage.author.id !== nextMessage.author.id;
+    return (
+      <MessageItemContainer
+        key={message.id}
+        onContextMenu={(e) => onContextMenu(e, message)}
+      >
+        {showMessageHeader && <MessageItemAvatar />}
+        {showMessageHeader ? (
+          <MessageItemDetails>
+            <MessageItemHeader message={message} />
+            <MessageItemContainerBody
+              key={message.id}
+              message={message}
+              onEditMessageChange={onEditMessageInputChange}
+              padding="8px 0 0 0"
+            />
+          </MessageItemDetails>
+        ) : (
+          <MessageItemContainerBody
+            key={message.id}
+            message={message}
+            onEditMessageChange={onEditMessageInputChange}
+            padding="0 0 0 60px"
+          />
+        )}
+      </MessageItemContainer>
+    );
   };
 
   const formatMessages = () => {
@@ -148,9 +129,7 @@ const MessageContainer = () => {
   return (
     <StyledMessageContainer>
       <>{formatMessages()}</>
-      {showContextMenu && (
-        <SelectedMessageContextMenu point={contextMenuPosition} />
-      )}
+      {showContextMenu && <SelectedMessageContextMenu />}
     </StyledMessageContainer>
   );
 };

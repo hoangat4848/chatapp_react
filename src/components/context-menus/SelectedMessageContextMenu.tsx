@@ -11,13 +11,10 @@ import { deleteMessageThunk } from "../../store/messages/messageThunk";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { ContextMenu, ContextMenuItem } from "../../utils/styles";
 
-type Props = {
-  point: { x: number; y: number };
-};
-const SelectedMessageContextMenu = ({ point }: Props) => {
+const SelectedMessageContextMenu = () => {
   const { id: routeId } = useParams();
   const { user } = useContext(AuthContext);
-  const { selectedMessage } = useSelector(
+  const { selectedMessage, selectedContextMenuPosition: point } = useSelector(
     (state: RootState) => state.messageContainer
   );
   const conversationType = useSelector(
