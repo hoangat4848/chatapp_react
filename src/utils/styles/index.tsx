@@ -586,6 +586,7 @@ export const StyledUserSidebar = styled.div`
   flex-direction: column;
 
   height: 100vh;
+  padding: 10px 0;
 
   background-color: #121212;
 
