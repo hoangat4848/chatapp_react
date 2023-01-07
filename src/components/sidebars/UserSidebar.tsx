@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { StyledUserSidebar, UserAvatar } from "../../utils/styles";
+import { StyledUserSidebar, UserAvatarContainer } from "../../utils/styles";
 import styles from "./index.module.scss";
 import avatar from "../../__assets__/default-avatar.png";
 import CreateConversationModal from "../modals/CreateConversationModal";
@@ -21,7 +21,7 @@ const UserSidebar = () => {
     <>
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
       <StyledUserSidebar>
-        <UserAvatar
+        <UserAvatarContainer
           src={avatarSource}
           alt="avatar"
           width="55px"

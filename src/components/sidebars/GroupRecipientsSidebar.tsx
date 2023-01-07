@@ -20,6 +20,7 @@ import {
 } from "../../utils/styles";
 import { User } from "../../utils/types";
 import SelectedParticipantContextMenu from "../context-menus/SelectedParticipantContextMenu";
+import UserAvatar from "../users/UserAvatar";
 
 const GroupRecipientsSidebar = () => {
   const { id: groupId } = useParams();
@@ -96,7 +97,7 @@ const GroupRecipientsSidebar = () => {
             onContextMenu={(e) => handleUserContextMenu(e, user)}
           >
             <div className="left">
-              <StyledMessageItemAvatar />
+              <UserAvatar user={user} />
               {user.username}
             </div>
             {user.id === group?.owner.id && <Crown color="#ffbf00" />}
@@ -109,7 +110,7 @@ const GroupRecipientsSidebar = () => {
             onContextMenu={(e) => handleUserContextMenu(e, user)}
           >
             <div className="left">
-              <StyledMessageItemAvatar />
+              <UserAvatar user={user} />
               {user.username}
             </div>
             {user.id === group?.owner.id && <Crown color="#ffbf00" />}

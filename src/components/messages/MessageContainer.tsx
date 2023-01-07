@@ -24,7 +24,7 @@ import useClick from "../../hooks/useClick";
 import useKeydown from "../../hooks/useKeydown";
 import MessageItemContainerBody from "./MessageItemContainerBody";
 import MessageItemHeader from "./MessageItemHeader";
-import MessageItemAvatar from "./MessageItemAvatar";
+import UserAvatar from "../users/UserAvatar";
 
 const MessageContainer = () => {
   const { showContextMenu } = useSelector(
@@ -92,7 +92,7 @@ const MessageContainer = () => {
         key={message.id}
         onContextMenu={(e) => onContextMenu(e, message)}
       >
-        {showMessageHeader && <MessageItemAvatar message={message} />}
+        {showMessageHeader && <UserAvatar user={message.author} />}
         {showMessageHeader ? (
           <MessageItemDetails>
             <MessageItemHeader message={message} />

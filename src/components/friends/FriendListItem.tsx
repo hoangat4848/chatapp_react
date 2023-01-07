@@ -3,6 +3,7 @@ import { AuthContext } from "../../utils/context/AuthContext";
 import { getFriendUsernameFromFriend } from "../../utils/helpers";
 import { FriendListItemContainer } from "../../utils/styles/friends";
 import { ContextMenuEvent, Friend } from "../../utils/types";
+import UserAvatar from "../users/UserAvatar";
 
 type Props = {
   friend: Friend;
@@ -11,9 +12,12 @@ type Props = {
 
 const FriendListItem = ({ friend, onContextMenu }: Props) => {
   const { user } = useContext(AuthContext);
+  const friendUserInstance =
+    user?.id === friend.sender.id ? friend.receiver : friend.sender;
+
   return (
     <FriendListItemContainer onContextMenu={(e) => onContextMenu(e, friend)}>
-      <div className="avatar"></div>
+      <UserAvatar user={friendUserInstance} />
       <div>{getFriendUsernameFromFriend(friend, user?.id)}</div>
     </FriendListItemContainer>
   );

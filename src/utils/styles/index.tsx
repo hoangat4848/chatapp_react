@@ -464,7 +464,7 @@ export const ConversationTabItem = styled.div<ConversationTabItemProps>`
   transition: background-color linear 100ms;
 `;
 
-export const UserAvatar = styled.img`
+export const UserAvatarContainer = styled.img`
   width: 55px;
   height: 55px;
 
