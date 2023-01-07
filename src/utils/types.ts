@@ -248,3 +248,10 @@ export type Attachment = {
 export type MessageAttachment = {
   key: string;
 };
+
+export type FriendRequestDetail = {
+  status: string;
+  displayName: string;
+  user: User;
+  incoming: boolean;
+};

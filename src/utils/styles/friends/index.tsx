@@ -77,18 +77,12 @@ export const FriendRequestItemContainer = styled.div`
   padding: 10px 0;
   border-bottom: 1px solid #1f1f1fbf;
 
-  & .avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #227eff;
-    border-radius: 50%;
-  }
-
-  & .user {
+  & .details {
     display: flex;
     align-items: center;
     gap: 20px;
   }
+
   & .name {
     display: flex;
     flex-direction: column;

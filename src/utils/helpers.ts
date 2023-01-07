@@ -18,6 +18,8 @@ import { PUBLIC_URL } from "./constants";
 import {
   Conversation,
   Friend,
+  FriendRequest,
+  FriendRequestDetail,
   Group,
   SettingsSidebarRouteType,
   User,
@@ -105,4 +107,23 @@ export const getSettingsSidebarIcon = (id: SettingsSidebarRouteType) => {
 export const getImageUrl = (imageName: string) => {
   if (!imageName) return "";
   return PUBLIC_URL.concat(imageName);
+};
+
+export const getFriendRequestDetails = (
+  { receiver, sender }: FriendRequest,
+  user?: User
+): FriendRequestDetail => {
+  return user?.id === receiver.id
+    ? {
+        status: "Incoming Friend Request",
+        displayName: `${sender.firstName} ${sender.lastName}`,
+        user: sender,
+        incoming: true,
+      }
+    : {
+        status: "Outgoing Friend Request",
+        displayName: `${receiver.firstName} ${receiver.lastName}`,
+        user: receiver,
+        incoming: false,
+      };
 };
