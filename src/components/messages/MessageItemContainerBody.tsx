@@ -11,6 +11,7 @@ type Props = {
   onEditMessageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   padding: string;
 };
+
 const MessageItemContainerBody = ({
   message,
   onEditMessageChange,
@@ -22,7 +23,7 @@ const MessageItemContainerBody = ({
 
   return (
     <>
-      {isEditingMessage && messageBeingEdited?.id ? (
+      {isEditingMessage && messageBeingEdited?.id === message.id ? (
         <MessageItemContent padding={padding}>
           <EditMessageContainer onEditMessageChange={onEditMessageChange} />
         </MessageItemContent>

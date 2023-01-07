@@ -8,7 +8,7 @@ import { removeAllAttachments } from "../../store/message-panel/messagePanelSlic
 import { selectConversationById } from "../../store/slices/conversationSlice";
 import { selectGroupById } from "../../store/slices/groupSlice";
 import { selectType } from "../../store/slices/selectedSlice";
-import { createMessage, postGroupMessage } from "../../utils/api";
+import { createMessage, createGroupMessage } from "../../utils/api";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getRecipientFromConversation } from "../../utils/helpers";
 import {
@@ -52,7 +52,6 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
     if (!routeId) return;
     if (!trimmedContent && !attachments.length) return;
     const id = parseInt(routeId);
-    const params = { id, content: trimmedContent };
     const formData = new FormData();
     formData.append("id", routeId);
     trimmedContent && formData.append("content", trimmedContent);
@@ -65,7 +64,7 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
     try {
       selectedType === "private"
         ? await createMessage(id, formData)
-        : await postGroupMessage(params);
+        : await createGroupMessage(id, formData);
       setContent("");
       dispatch(removeAllAttachments());
     } catch (err) {

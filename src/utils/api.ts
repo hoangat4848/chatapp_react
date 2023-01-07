@@ -99,11 +99,11 @@ export const fetchGroupMessages = (groupId: number) =>
     config
   );
 
-export const postGroupMessage = ({
-  id: groupId,
-  content,
-}: CreateMessageParams) =>
-  axiosClient.post(`/groups/${groupId}/messages`, { content }, config);
+export const createGroupMessage = (groupId: number, data: FormData) =>
+  axiosClient.post(`/groups/${groupId}/messages`, data, {
+    ...config,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 
 export const deleteGroupMessage = ({
   groupId,
