@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/useDebounce";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { AppDispatch } from "../../store";
 import { createGroupThunk } from "../../store/slices/groupSlice";
 import { searchUsers } from "../../utils/api";
@@ -31,6 +32,7 @@ const CreateGroupForm = ({ setShowModal }: Props) => {
   const [userResults, setUserResults] = useState<User[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const recipientResultRef = useRef<HTMLDivElement>(null);
 
   const debouncedQuery = useDebounce(query, 500);
   useEffect(() => {
@@ -71,6 +73,9 @@ const CreateGroupForm = ({ setShowModal }: Props) => {
     setSelectedUsers((prev) => prev.filter((u) => u.id !== user.id));
   };
 
+  const handleCloseSuggestion = useCallback(() => setUserResults([]), []);
+  useOnClickOutside(recipientResultRef, handleCloseSuggestion);
+
   return (
     <form className={styles.createConversationForm} onSubmit={handleSubmit}>
       <RecipientChipContainer>
@@ -83,17 +88,13 @@ const CreateGroupForm = ({ setShowModal }: Props) => {
         ))}
       </RecipientChipContainer>
 
-      <GroupRecipientField
-        query={query}
-        setQuery={setQuery}
-        selectedUsers={selectedUsers}
-        setSelectedUsers={setSelectedUsers}
-      />
+      <GroupRecipientField query={query} setQuery={setQuery} />
 
       {userResults.length > 0 && query && (
         <RecipientResultContainer
           userResults={userResults}
           handleUserSelect={handleUserSelect}
+          ref={recipientResultRef}
         />
       )}
 

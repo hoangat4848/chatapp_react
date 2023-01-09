@@ -20,7 +20,7 @@ const RecipientField = ({
   };
   return (
     <section>
-      <InputContainer backgroundColor="#161616">
+      <InputContainer>
         <InputLabel htmlFor="username">Recipient</InputLabel>
         {selectedUser ? (
           <SelectedRecipientChip

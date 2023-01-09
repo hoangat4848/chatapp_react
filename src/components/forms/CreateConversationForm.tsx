@@ -78,7 +78,7 @@ const CreateConversationForm = ({ setShowModal }: Props) => {
         />
       )}
       <section className={styles.message}>
-        <InputContainer backgroundColor="#161616">
+        <InputContainer>
           <InputLabel htmlFor="message">Message (optional)</InputLabel>
           <TextField
             id="message"

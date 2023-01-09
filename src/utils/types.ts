@@ -255,3 +255,5 @@ export type FriendRequestDetail = {
   user: User;
   incoming: boolean;
 };
+
+export type SelectableTheme = "dark" | "light";

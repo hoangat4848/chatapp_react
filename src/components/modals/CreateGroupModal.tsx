@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { ModalContainer, ModalContentBody, ModalHeader } from ".";
 import { StyledOverlay } from "../../utils/styles";
 import { MdClose } from "react-icons/md";
 import CreateGroupForm from "../forms/CreateGroupForm";
+import useKeydown from "../../hooks/useKeydown";
 
 type Props = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,13 +12,13 @@ type Props = {
 const CreateGroupModal = ({ setShowModal }: Props) => {
   const ref = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) =>
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
       e.key === "Escape" && setShowModal(false);
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [setShowModal]);
+    },
+    [setShowModal]
+  );
+  useKeydown(handleKeyDown);
 
   const handleOverlayClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>

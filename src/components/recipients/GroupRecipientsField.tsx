@@ -5,18 +5,15 @@ import {
   InputLabel,
   RecipientChipContainer,
 } from "../../utils/styles";
-import { User } from "../../utils/types";
 
 type Props = {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
-  selectedUsers: User[];
-  setSelectedUsers: Dispatch<SetStateAction<User[]>>;
 };
 const GroupRecipientField = ({ query, setQuery }: Props) => {
   return (
     <section>
-      <InputContainer backgroundColor="#161616">
+      <InputContainer>
         <InputLabel htmlFor="username">Recipients</InputLabel>
         <RecipientChipContainer>
           <InputField

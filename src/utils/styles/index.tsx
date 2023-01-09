@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
+import { Theme } from "../theme";
 import { fadeOpacity, fadeInUpwards } from "./keyframes";
 import {
   CharacterLimitProps,
@@ -17,6 +18,14 @@ export const DARK = "131313";
 export const SIDEBAR_WIDTH = 350;
 export const USER_SIDEBAR_WIDTH = 90;
 
+export const GlobalStyle = createGlobalStyle`
+  body{
+    color: ${({ theme }: { theme: Theme }) => theme.text.primary};
+    background-color: ${({ theme }: { theme: Theme }) =>
+      theme.background.primary}
+  }
+`;
+
 export const InputContainer = styled.div<InputContainerProps>`
   position: relative;
 
@@ -25,7 +34,8 @@ export const InputContainer = styled.div<InputContainerProps>`
 
   border-radius: 10px;
 
-  background-color: ${(props) => props.backgroundColor || "#131313"};
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.input.backgroundColor};
 `;
 
 export const InputContainerHeader = styled.div`
@@ -44,7 +54,9 @@ export const RecipientChipContainer = styled.div<InputContainerProps>`
 
   border-radius: 10px;
 
-  background-color: #161616;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.primary};
+  color: ${({ theme }: { theme: Theme }) => theme.text.primary};
 `;
 
 export const InputField = styled.input`
@@ -56,8 +68,9 @@ export const InputField = styled.input`
   outline: none;
   border: none;
 
-  background-color: inherit;
-  color: #fff;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.input.backgroundColor};
+  color: ${({ theme }: { theme: Theme }) => theme.input.color};
 
   font-size: 18px;
   font-family: "Inter";
@@ -117,7 +130,8 @@ export const Page = styled.div<PageProps>`
   width: 100%;
   height: 100vh;
 
-  background-color: #1a1a1a;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.primary};
 `;
 
 export const StyledConversationChannelPage = styled.div`
@@ -125,6 +139,9 @@ export const StyledConversationChannelPage = styled.div`
 
   height: 100vh;
   width: 100%;
+
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.primary};
 `;
 
 export const ConversationSiderbarHeader = styled.header`
@@ -155,13 +172,44 @@ export const StyledConversationSidebarItem = styled.div<ConversationSidebarItemP
 
   padding: 8px 14px;
 
-  background-color: ${({ selected }) => selected && "#1a1a1a"};
+  background-color: ${({ selected, theme }) =>
+    selected && theme.conversationSidebar.conversationItem.selected};
   border-bottom: 1px solid #3030303e;
 
   cursor: pointer;
-  transition: 150ms background-color ease;
+  transition: 100ms background-color ease;
   &:hover {
-    background-color: #222222;
+    background-color: ${({ theme }) =>
+      theme.conversationSidebar.conversationItem.hover.backgroundColor};
+  }
+
+  & .title {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    color: ${({ theme }: { theme: Theme }) => theme.text.primary};
+  }
+`;
+
+export const ConversationSidebarItemDetails = styled.div`
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  & .conversationName {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    color: ${({ theme }) =>
+      theme.conversationSidebar.conversationItem.title.color};
+  }
+  & .conversationLastMessage {
+    font-size: 15px;
+    font-weight: 500;
+    color: #868686;
+    color: ${({ theme }) =>
+      theme.conversationSidebar.conversationItem.title.lastMessageColor};
   }
 `;
 
@@ -184,9 +232,11 @@ export const StyledOverlay = styled.div`
 export const StyledModalContainer = styled.div<ModalContainerProps>`
   border-radius: 10px;
 
-  background-color: #131313;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.secondary};
 
   animation: ${fadeInUpwards} 500ms ease;
+  overflow: hidden;
 `;
 
 export const StyledModalHeader = styled.div`
@@ -197,7 +247,8 @@ export const StyledModalHeader = styled.div`
   width: 100%;
   padding: 20px;
 
-  background-color: #121212;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.secondary};
   & h2 {
     font-weight: 500;
     font-size: 28px;
@@ -220,7 +271,7 @@ export const TextField = styled.textarea`
   border: none;
 
   background-color: inherit;
-  color: #fff;
+  color: ${({ theme }: { theme: Theme }) => theme.input.color};
 
   font-size: 18px;
   font-family: "Inter";
@@ -235,7 +286,7 @@ export const StyledMessagePanel = styled.div`
 
   border-left: 1px solid #5454543d;
 
-  background: #151515;
+  background: ${({ theme }) => theme.messagePanel.backgroundColor};
 `;
 
 export const StyledMessagePanelHeader = styled.header`
@@ -248,6 +299,8 @@ export const StyledMessagePanelHeader = styled.header`
   padding: 0 24px;
 
   border-bottom: 1px solid #49494925;
+
+  color: ${({ theme }) => theme.messagePanel.header.title};
 `;
 
 export const MessagePanelBody = styled.div`
@@ -276,12 +329,14 @@ export const StyledMessageContainer = styled.div`
     width: 8px;
   }
   &::-webkit-scrollbar-track {
-    background-color: #161616;
+    background-color: ${({ theme }: { theme: Theme }) =>
+      theme.background.primary};
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #0e0e0e;
+    background-color: ${({ theme }: { theme: Theme }) =>
+      theme.background.secondary};
     width: 5px;
-    border-radius: 5px;
+    border-radius: 20px;
   }
 `;
 
@@ -295,7 +350,8 @@ export const MessageInputContainer = styled.div<MessageInputContainerProps>`
 
   border-radius: 10px;
 
-  background-color: #101010;
+  background-color: ${({ theme }) =>
+    theme.messagePanel.inputContainer.backgroundColor};
 
   overflow: hidden;
 `;
@@ -356,6 +412,8 @@ export const MessageItemHeaderContainer = styled.div`
 export const MessageItemContent = styled.div<MessageItemContentProps>`
   padding: ${({ padding }) => padding || "0"};
   width: 100%;
+  white-space: pre-wrap;
+  color: ${({ theme }) => theme.messagePanel.body.content.color};
 `;
 
 export const ContextMenu = styled.ul<ContextMenuProps>`
@@ -401,7 +459,7 @@ export const MessageTypingStatus = styled.div`
   min-height: 20px;
   padding: 2.5px 0;
 
-  color: #6a6a6a;
+  color: ${({ theme }: { theme: Theme }) => theme.text.secondary};
 
   font-size: 12px;
   font-weight: bold;
@@ -440,7 +498,8 @@ export const StyledConversationTab = styled.div`
   width: 100%;
   margin: 10px 0;
 
-  background-color: #141414;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.conversationSidebar.backgroundColor};
 `;
 
 export const ConversationTabItem = styled.div<ConversationTabItemProps>`
@@ -452,12 +511,14 @@ export const ConversationTabItem = styled.div<ConversationTabItemProps>`
   font-weight: bold;
   text-transform: uppercase;
 
-  background-color: #212121;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.conversationSidebar.tabItem.backgroundColor};
 
   ${(props) =>
     props.selected &&
     css`
-      background-color: #303030;
+      background-color: ${({ theme }: { theme: Theme }) =>
+        theme.conversationSidebar.tabItem.selected};
     `};
 
   cursor: pointer;
@@ -499,18 +560,21 @@ export const UserSidebarBottom = styled.div`
 `;
 
 export const ConversationSearchbar = styled.input`
-  box-sizing: border-box;
-  background-color: #202020;
+  padding: 12px 18px;
+  width: 100%;
+  height: 29px;
+
   outline: none;
   border: none;
+  border-radius: 5px;
+
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.input.backgroundColor};
+  color: ${({ theme }: { theme: Theme }) => theme.input.color};
+
   font-family: "Inter";
   font-size: 14px;
   font-weight: 500;
-  padding: 12px 18px;
-  color: #6b6b6b;
-  border-radius: 5px;
-  width: 100%;
-  height: 29px;
 `;
 
 export const StyledRecipientResultContainer = styled.div`
@@ -519,7 +583,9 @@ export const StyledRecipientResultContainer = styled.div`
   width: 100%;
   margin-top: 4px;
 
-  background-color: #161616;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.primary};
+  color: ${({ theme }: { theme: Theme }) => theme.text.primary};
 
   z-index: 2;
 `;
@@ -548,7 +614,8 @@ export const RecipientResultItem = styled.div`
 
   transition: background-color ease 100ms;
   &:hover {
-    background-color: #0c0c0c;
+    background-color: ${({ theme }: { theme: Theme }) =>
+      theme.background.tertiary};
     cursor: pointer;
   }
 `;
@@ -596,7 +663,8 @@ export const StyledUserSidebar = styled.div`
   height: 100vh;
   padding: 10px 0;
 
-  background-color: #121212;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.userSidebar.backgroundColor};
 
   z-index: 1;
 
@@ -617,7 +685,8 @@ export const StyledUserSidebarItem = styled.div<SidebarItemProps>`
   width: 100%;
   padding: 18px;
 
-  background-color: ${({ active }) => active && "#1e1e1e"};
+  background-color: ${({ active, theme }) =>
+    active && theme.userSidebar.selected};
 
   cursor: pointer;
 `;
@@ -649,7 +718,12 @@ export const StyledConversationSidebar = styled.div`
   height: 100vh;
   width: 400px;
 
-  background-color: #111111;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.conversationSidebar.backgroundColor};
+
+  @media (max-width: 800px) {
+    width: calc(100% - 80px);
+  }
 `;
 
 export const ConversationSidebarHeader = styled.header`
@@ -686,8 +760,9 @@ export const ConversationSidebarSearchbar = styled.input`
 
   font-family: "Inter";
 
-  background-color: #1a1a1a;
-  color: #e1e1e1;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.input.backgroundColor};
+  color: ${({ theme }: { theme: Theme }) => theme.input.color};
 `;
 
 export const ConversationCreateButton = styled.div`
@@ -711,7 +786,8 @@ export const StyledGroupRecipientsSidebar = styled.aside`
   width: 350px;
   height: 100%;
 
-  background-color: #111111;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.secondary};
 
   animation: ${fadeOpacity} 500ms ease;
 `;
@@ -728,6 +804,8 @@ export const GroupRecipientsSidebarHeader = styled.header`
 
   border-bottom: 1px solid #49494925;
 
+  color: ${({ theme }: { theme: Theme }) => theme.text.primary};
+
   & span {
     font-size: 18px;
     font-weight: 500;
@@ -738,6 +816,8 @@ export const GroupRecipientsSidebarItemContainer = styled.div`
   flex: 1 1 auto;
 
   padding: 30px 0 0 30px;
+
+  color: ${({ theme }: { theme: Theme }) => theme.text.primary};
 
   overflow-y: auto;
   &::webkit-scrollbar {
@@ -784,7 +864,8 @@ export const MessageTextArea = styled.textarea`
   font-size: 18px;
 
   background-color: inherit;
-  color: #ffffff;
+  color: ${({ theme }: { theme: Theme }) =>
+    theme.messagePanel.inputContainer.color};
 
   resize: none;
 

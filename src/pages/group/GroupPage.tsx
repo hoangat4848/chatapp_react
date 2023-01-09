@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
@@ -22,6 +22,16 @@ const GroupPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
   const { user } = useContext(AuthContext);
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth > 800);
+
+  useEffect(() => {
+    const handleResize = () => setShowSidebar(window.innerWidth > 800);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(updateType("group"));
@@ -94,7 +104,7 @@ const GroupPage = () => {
   }, [dispatch, socket, id, navigate, user]);
   return (
     <>
-      <ConversationSidebar />
+      {showSidebar && <ConversationSidebar />}
       <Outlet />
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
@@ -11,7 +11,6 @@ import {
 import { addMessage, deleteMessage } from "../../store/messages/messageSlice";
 import { updateType } from "../../store/slices/selectedSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
-import { Page } from "../../utils/styles";
 import {
   Conversation,
   DeleteMessageResponse,
@@ -19,8 +18,18 @@ import {
 } from "../../utils/types";
 
 const ConversationPage = () => {
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth > 800);
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    const handleResize = () => setShowSidebar(window.innerWidth > 800);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(updateType("private"));
@@ -48,7 +57,7 @@ const ConversationPage = () => {
 
   return (
     <>
-      <ConversationSidebar />
+      {showSidebar && <ConversationSidebar />}
       <Outlet />
     </>
   );

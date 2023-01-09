@@ -43,7 +43,7 @@ const GroupSidebarItem = ({ group, onContextMenu }: Props) => {
     >
       <div className={styles.conversationAvatar}></div>
       <div>
-        <span className={styles.conversationName}>{getTransformedTitle()}</span>
+        <span className="title">{getTransformedTitle()}</span>
         <span className={styles.conversationLastMessage}>
           {displayGroupLastMessageSent}
         </span>

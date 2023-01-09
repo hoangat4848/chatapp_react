@@ -24,6 +24,9 @@ import FriendsPage from "./pages/friends/FriendsPage";
 import FriendRequestPage from "./pages/friends/FriendRequestPage";
 import SettingsProfilePage from "./pages/settings/SettingsProfilePage";
 import SettingsPage from "./pages/settings/SettingsPage";
+import ThemeModeProvider from "./utils/context/ThemeModeProvider";
+import { GlobalStyle } from "./utils/styles";
+import { SettingsAppearancePage } from "./pages/settings/SettingsAppearancePage";
 
 type Props = {
   user?: User;
@@ -43,11 +46,13 @@ function AppWithProvider({
 
   return (
     <ReduxProvider store={store}>
-      <AuthContext.Provider value={authValue}>
-        <SocketContext.Provider value={socketValue}>
-          {children}
-        </SocketContext.Provider>
-      </AuthContext.Provider>
+      <ThemeModeProvider>
+        <AuthContext.Provider value={authValue}>
+          <SocketContext.Provider value={socketValue}>
+            {children}
+          </SocketContext.Provider>
+        </AuthContext.Provider>
+      </ThemeModeProvider>
     </ReduxProvider>
   );
 }
@@ -57,6 +62,7 @@ function App() {
 
   return (
     <AppWithProvider user={user} setUser={setUser} socket={socket}>
+      <GlobalStyle />
       <Routes>
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
@@ -100,6 +106,7 @@ function App() {
 
           <Route path="settings" element={<SettingsPage />}>
             <Route path="profile" element={<SettingsProfilePage />} />
+            <Route path="appearance" element={<SettingsAppearancePage />} />
           </Route>
         </Route>
       </Routes>

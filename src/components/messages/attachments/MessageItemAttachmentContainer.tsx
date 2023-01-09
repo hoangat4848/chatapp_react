@@ -42,7 +42,7 @@ const MessageItemAttachmentContainer = ({ message }: Props) => {
             width={300}
             alt={attachment.key}
             onClick={() => onClick(attachment.key)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", maxHeight: "90%" }}
           />
         ))}
       </div>

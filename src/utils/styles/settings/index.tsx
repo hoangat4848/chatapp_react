@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Theme } from "../../theme";
 import { slideUp } from "../keyframes";
 import { SettingsSidebarItemProps, UserBannerProps } from "../styleTypes";
 
@@ -10,7 +11,8 @@ export const StyledSettingsSidebar = styled.aside`
   height: 100%;
   width: 300px;
 
-  background-color: #111111;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.userSidebar.backgroundColor};
 `;
 
 export const SettingsSidebarHeader = styled.header`
@@ -36,7 +38,8 @@ export const StyledSettingsSidebarItem = styled.div<SettingsSidebarItemProps>`
     user-select: none;
     padding: 14px;
     border-radius: 8px;
-    background-color: ${({ isActive }) => isActive && "#070707"};
+    background-color: ${({ isActive, theme }) =>
+      isActive && theme.settingsSidebar.activeBackgroundColor};
     & span {
       font-weight: 500;
     }

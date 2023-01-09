@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
+import { Theme } from "../../theme";
 import {
   FriendRequestItemIconProps,
   FriendsNavbarItemProps,
 } from "../styleTypes";
 
 export const StyledFriendsPage = styled.div`
-  background-color: #101010;
+  background-color: ${({ theme }: { theme: Theme }) => theme.background.primary}
   height: 100vh;
   width: 100%;
 `;

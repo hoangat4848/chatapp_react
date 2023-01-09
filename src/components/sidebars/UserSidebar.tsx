@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { StyledUserSidebar, UserAvatarContainer } from "../../utils/styles";
 import styles from "./index.module.scss";
 import avatar from "../../__assets__/default-avatar.png";
-import CreateConversationModal from "../modals/CreateConversationModal";
 import { useSidebarItems } from "../../utils/constants";
 import { UserSidebarItem } from "./items/UserSidebarItem";
 import { AuthContext } from "../../utils/context/AuthContext";
@@ -10,7 +9,6 @@ import { getImageUrl } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 
 const UserSidebar = () => {
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const avatarSource = user?.profile?.avatar
@@ -19,7 +17,6 @@ const UserSidebar = () => {
 
   return (
     <>
-      {showModal && <CreateConversationModal setShowModal={setShowModal} />}
       <StyledUserSidebar>
         <UserAvatarContainer
           src={avatarSource}

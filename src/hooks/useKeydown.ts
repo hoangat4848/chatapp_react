@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 
-export default function useKeydown(
-  handler: (e: KeyboardEvent) => void,
-  deps: React.DependencyList = []
-) {
+export default function useKeydown(handler: (e: KeyboardEvent) => void) {
   useEffect(() => {
     window.addEventListener("keydown", handler);
 

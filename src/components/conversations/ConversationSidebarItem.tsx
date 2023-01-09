@@ -3,7 +3,10 @@ import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../utils/context/AuthContext";
 import { getImageUrl, getRecipientFromConversation } from "../../utils/helpers";
-import { StyledConversationSidebarItem } from "../../utils/styles";
+import {
+  ConversationSidebarItemDetails,
+  StyledConversationSidebarItem,
+} from "../../utils/styles";
 import { Conversation } from "../../utils/types";
 import styles from "./index.module.scss";
 import defaultAvatar from "../../__assets__/default-avatar.png";
@@ -34,15 +37,15 @@ const ConversationSidebarItem = ({ conversation }: Props) => {
         }
         alt={`${recipient?.firstName} ${recipient?.lastName} avatar`}
       />
-      <div>
-        <span className={styles.conversationName}>
+      <ConversationSidebarItemDetails>
+        <span className="conversationName">
           {`${recipient?.firstName} ${recipient?.lastName}`}
         </span>
-        <span className={styles.conversationLastMessage}>{displayContent}</span>
+        <span className="conversationLastMessage">{displayContent}</span>
         <span className={styles.conversationLastMessageSentTime}>
           {formatRelative(new Date(conversation.lastMessageSentAt), new Date())}
         </span>
-      </div>
+      </ConversationSidebarItemDetails>
     </StyledConversationSidebarItem>
   );
 };

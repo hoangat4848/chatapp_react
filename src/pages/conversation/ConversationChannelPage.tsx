@@ -56,7 +56,7 @@ const ConversationChannelPage = () => {
       socket.off("onUserStopTyping");
       socket.off("onMessageUpdate");
     };
-  }, [id, socket]);
+  }, [id, socket, dispatch]);
 
   const sendTypingStatus = () => {
     if (!isTyping) {
