@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
+import EditGroupModal from "../../components/modals/EditGroupModal";
 import ConversationSidebar from "../../components/sidebars/ConversationSidebar";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { addGroupMessage } from "../../store/slices/groupMessageSlice";
 import {
   addGroup,
@@ -23,6 +24,9 @@ const GroupPage = () => {
   const socket = useContext(SocketContext);
   const { user } = useContext(AuthContext);
   const [showSidebar, setShowSidebar] = useState(window.innerWidth > 800);
+  const showEditGroupModal = useSelector(
+    (state: RootState) => state.group.showEditGroupModal
+  );
 
   useEffect(() => {
     const handleResize = () => setShowSidebar(window.innerWidth > 800);
@@ -105,6 +109,7 @@ const GroupPage = () => {
   return (
     <>
       {showSidebar && <ConversationSidebar />}
+      {showEditGroupModal && <EditGroupModal />}
       <Outlet />
     </>
   );

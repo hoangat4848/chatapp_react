@@ -10,6 +10,7 @@ import {
   fetchGroups,
   leaveGroup as leaveGroupAPI,
   removeGroupRecipient as removeGroupRecipientAPI,
+  updateGroupDetails as updateGroupDetailsAPI,
   updateGroupOwner as updateGroupOwnerAPI,
 } from "../../utils/api";
 import {
@@ -17,6 +18,7 @@ import {
   Group,
   Point,
   RemoveGroupRecipientParams,
+  UpdateGroupDetailsPayload,
   UpdateGroupOwnerParams,
 } from "../../utils/types";
 
@@ -25,12 +27,14 @@ export interface GroupState {
   showGroupContextMenu: boolean;
   selectedGroupContextMenu?: Group;
   contextMenuLocation: Point;
+  showEditGroupModal: boolean;
 }
 
 const initialState: GroupState = {
   groups: [],
   showGroupContextMenu: false,
   contextMenuLocation: { x: 0, y: 0 },
+  showEditGroupModal: false,
 };
 
 export const fetchGroupsThunk = createAsyncThunk("groups/fetch", () => {
@@ -54,7 +58,26 @@ export const updateGroupOwnerThunk = createAsyncThunk(
 
 export const leaveGroupThunk = createAsyncThunk(
   "groups/leave",
-  (groupId: number) => leaveGroupAPI(groupId)
+  async (groupId: number, { rejectWithValue }) => {
+    try {
+      const response = await leaveGroupAPI(groupId);
+      return response;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const updateGroupDetailsThunk = createAsyncThunk(
+  "group/update/details",
+  async (payload: UpdateGroupDetailsPayload, { rejectWithValue }) => {
+    try {
+      const { data } = await updateGroupDetailsAPI(payload);
+      return data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
 );
 
 export const groupsSlice = createSlice({
@@ -97,6 +120,9 @@ export const groupsSlice = createSlice({
     setGroupContextMenuLocation: (state, action: PayloadAction<Point>) => {
       state.contextMenuLocation = action.payload;
     },
+    setShowEditGroupModal: (state, action: PayloadAction<boolean>) => {
+      state.showEditGroupModal = action.payload;
+    },
   },
 
   extraReducers(builder) {
@@ -122,6 +148,9 @@ export const groupsSlice = createSlice({
       })
       .addCase(leaveGroupThunk.fulfilled, (state, action) => {
         console.log("leave group fulfilled");
+      })
+      .addCase(updateGroupDetailsThunk.fulfilled, (state, action) => {
+        console.log("update group details thunk fulfilled");
       });
   },
 });
@@ -142,6 +171,7 @@ export const {
   setSelectedGroup,
   setShowGroupContextMenu,
   setGroupContextMenuLocation,
+  setShowEditGroupModal,
 } = groupsSlice.actions;
 
 export default groupsSlice.reducer;

@@ -105,6 +105,7 @@ export type Group = {
   messages: Message[];
   lastMessageSent: Message;
   lastMessageSentAt: Date;
+  avatar?: string;
 };
 
 export type GroupMessageType = {
@@ -257,3 +258,8 @@ export type FriendRequestDetail = {
 };
 
 export type SelectableTheme = "dark" | "light";
+
+export type UpdateGroupDetailsPayload = {
+  groupId: number;
+  data: FormData;
+};

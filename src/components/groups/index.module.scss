@@ -5,14 +5,22 @@
   font-size: 16px;
 }
 
-.conversationAvatar {
+.groupAvatar {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-
-  background-color: rgb(255, 140, 0);
 }
 
 .conversationLastMessage {
   color: rgb(168, 168, 168);
+}
+
+.defaultGroupAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  background-color: rgb(36, 36, 36);
 }

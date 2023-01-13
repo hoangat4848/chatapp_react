@@ -62,6 +62,12 @@ export type Theme = {
     backgroundColor: string;
     activeBackgroundColor: string;
   };
+  contextMenu: {
+    backgroundColor: string;
+    item: {
+      hover: string;
+    };
+  };
 };
 
 export const DarkTheme: Theme = {
@@ -128,6 +134,12 @@ export const DarkTheme: Theme = {
     backgroundColor: "#0b0b0b",
     activeBackgroundColor: "#1e1e1e",
   },
+  contextMenu: {
+    backgroundColor: "#1a1a1a",
+    item: {
+      hover: "#1f1f1f",
+    },
+  },
 };
 
 export const LightTheme: Theme = {
@@ -193,5 +205,11 @@ export const LightTheme: Theme = {
   settingsSidebar: {
     backgroundColor: "#fff",
     activeBackgroundColor: "#d8d8d8",
+  },
+  contextMenu: {
+    backgroundColor: "#d8d8d8",
+    item: {
+      hover: "#ececec",
+    },
   },
 };

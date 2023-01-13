@@ -24,6 +24,7 @@ import {
   Friend,
   FriendRequest,
   AcceptFriendRequestResponse,
+  UpdateGroupDetailsPayload,
 } from "./types";
 
 const { REACT_APP_API_URL: API_URL } = process.env;
@@ -189,3 +190,9 @@ export const updateUserProfile = (data: FormData) =>
     ...config,
     headers: { "Content-Type": "multipart/form-data" },
   });
+
+export const updateGroupDetails = ({
+  groupId,
+  data,
+}: UpdateGroupDetailsPayload) =>
+  axiosClient.patch<Group>(`/groups/${groupId}/details`, data, config);

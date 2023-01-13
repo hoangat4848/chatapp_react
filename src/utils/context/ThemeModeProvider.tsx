@@ -15,7 +15,6 @@ const ThemeModeProvider = ({ children }: PropsWithChildren) => {
   const { theme, themeToggler } = useThemeMode();
 
   const themeMode = theme === "dark" ? DarkTheme : LightTheme;
-
   return (
     <ThemeModeContext.Provider value={{ themeToggler }}>
       <ThemeProvider theme={themeMode}>{children}</ThemeProvider>

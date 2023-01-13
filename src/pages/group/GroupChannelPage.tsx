@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MessagePanel from "../../components/messages/MessagePanel";
 import GroupRecipientsSidebar from "../../components/sidebars/GroupRecipientsSidebar";
 import { AppDispatch, RootState } from "../../store";
@@ -10,12 +10,16 @@ import {
 } from "../../store/slices/groupMessageSlice";
 import { SocketContext } from "../../utils/context/SocketContext";
 import { StyledConversationChannelPage } from "../../utils/styles";
-import { Group, GroupMessageType } from "../../utils/types";
+import { GroupMessageType } from "../../utils/types";
 
 const GroupChannelPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const socket = useContext(SocketContext);
+  const showEditGroupModal = useSelector(
+    (state: RootState) => state.group.showEditGroupModal
+  );
+
   const showSidebar = useSelector(
     (state: RootState) => state.groupSidebar.showSidebar
   );
@@ -52,13 +56,16 @@ const GroupChannelPage = () => {
   const sendTypingStatus = () => {};
 
   return (
-    <StyledConversationChannelPage>
-      <MessagePanel
-        sendTypingStatus={sendTypingStatus}
-        isRecipientTyping={isRecipientTyping}
-      />
-      {showSidebar && <GroupRecipientsSidebar />}
-    </StyledConversationChannelPage>
+    <>
+      {/* {showEditGroupModal && <EditGroupModal />} */}
+      <StyledConversationChannelPage>
+        <MessagePanel
+          sendTypingStatus={sendTypingStatus}
+          isRecipientTyping={isRecipientTyping}
+        />
+        {showSidebar && <GroupRecipientsSidebar />}
+      </StyledConversationChannelPage>
+    </>
   );
 };
 
