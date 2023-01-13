@@ -40,7 +40,6 @@ export const userContextMenuItems: ContextMenuItemType[] = [
 export const friendsNavbarItems = [
   { id: "friends", label: "Friends", pathname: "/friends" },
   { id: "requests", label: "Requests", pathname: "/friends/requests" },
-  { id: "blocked", label: "Blocked", pathname: "/friends/blocked" },
 ];
 
 export const useSidebarItems: UserSidebarItemType[] = [
@@ -53,10 +52,6 @@ export const useSidebarItems: UserSidebarItemType[] = [
     pathname: "/friends",
   },
   {
-    id: "connections",
-    pathname: "/connections",
-  },
-  {
     id: "settings",
     pathname: "/settings",
   },
@@ -67,21 +62,6 @@ export const settingsItem: SettingsItem[] = [
     id: "profile",
     label: "Profile",
     pathname: "/settings/profile",
-  },
-  {
-    id: "security",
-    label: "Security",
-    pathname: "/settings/security",
-  },
-  {
-    id: "notifications",
-    label: "Notifications",
-    pathname: "/settings/notifications",
-  },
-  {
-    id: "integrations",
-    label: "Integrations",
-    pathname: "/settings/integrations",
   },
   {
     id: "appearance",

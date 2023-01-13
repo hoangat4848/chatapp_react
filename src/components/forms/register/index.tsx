@@ -40,9 +40,7 @@ const RegisterForm = () => {
       <Button className={styles.button}>Create My Account</Button>
       <div className={styles.footerText}>
         <span>Already have an account? </span>
-        <Link to="/login">
-          <span>Login</span>
-        </Link>
+        <Link to="/login">Login</Link>
       </div>
     </form>
   );

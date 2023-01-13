@@ -30,11 +30,6 @@ const SettingsProfilePage = () => {
   const [avatarSourceCopy, setAvatarSourceCopy] = useState(avatarSource);
   const [avatarFile, setAvatarFile] = useState<File>();
 
-  // useEffect(() => {
-  //   console.log("Updating about");
-  //   setAboutCopy(user?.profile?.about || "");
-  // }, [user?.profile?.about]);
-
   const isChanged = () => aboutCopy !== about || bannerFile || avatarFile;
 
   const reset = () => {

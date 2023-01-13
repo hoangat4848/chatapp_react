@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useToast } from "../../hooks/useToast";
@@ -74,6 +74,12 @@ const MessagePanel = ({ sendTypingStatus, isRecipientTyping }: Props) => {
         error("You are rate limited", { toastId });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeAllAttachments());
+    };
+  }, [routeId, dispatch]);
 
   return (
     <StyledMessagePanel>

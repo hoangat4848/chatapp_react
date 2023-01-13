@@ -378,7 +378,7 @@ export const MessageInput = styled.input`
 
 export const MessageItemContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: top;
   gap: 15px;
 
   width: 100%;
@@ -540,29 +540,39 @@ export const UserAvatarContainer = styled.img`
   background-color: #fff;
 `;
 
-export const UserSidebarTop = styled.div`
+export const UserSidebarHeader = styled.header`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 
-  box-sizing: border-box;
-  margin: 20px 0;
+  width: 100%;
+  height: 90px;
+
+  border-bottom: 1px solid #494949a9;
 `;
 
-export const UserSidebarTopIcons = styled.div`
+export const UserSidebarFooter = styled.footer`
+  padding: 18px 0;
+`;
+
+export const ScrollableContainer = styled.div`
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const UserSidebarScrollableContainer = styled(ScrollableContainer)`
   display: flex;
+  align-items: center;
   flex-direction: column;
-  align-items: center;
-  gap: 40px;
 
-  margin-top: 18px;
-`;
-
-export const UserSidebarBottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const ConversationSearchbar = styled.input`

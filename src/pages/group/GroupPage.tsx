@@ -61,7 +61,6 @@ const GroupPage = () => {
       dispatch(addGroup(payload));
     });
 
-    // Update to all other clients in the room so that they can also see the participants
     socket.on("onGroupReceivedNewUser", (payload: Group) => {
       console.log("received onGroupReceivedNewUser");
       dispatch(updateGroup(payload));
@@ -94,6 +93,10 @@ const GroupPage = () => {
       if (id && parseInt(id!) === payload.group.id) {
         navigate("/groups");
       }
+    });
+
+    socket.on("onGroupDetailsUpdate", (payload: Group) => {
+      dispatch(updateGroup(payload));
     });
 
     return () => {

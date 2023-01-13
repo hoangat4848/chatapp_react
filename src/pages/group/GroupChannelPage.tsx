@@ -57,7 +57,6 @@ const GroupChannelPage = () => {
 
   return (
     <>
-      {/* {showEditGroupModal && <EditGroupModal />} */}
       <StyledConversationChannelPage>
         <MessagePanel
           sendTypingStatus={sendTypingStatus}

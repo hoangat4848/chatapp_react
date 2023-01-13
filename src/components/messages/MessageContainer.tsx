@@ -108,7 +108,7 @@ const MessageContainer = () => {
             key={message.id}
             message={message}
             onEditMessageChange={onEditMessageInputChange}
-            padding="0 0 0 60px"
+            padding="0 0 0 67px"
           />
         )}
       </MessageItemContainer>

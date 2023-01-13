@@ -1,13 +1,19 @@
 import { PropsWithChildren } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
 import { useAuth } from "../hooks/useAuth";
+import { StyledOverlay } from "../utils/styles";
 
 export const ProtectedRoutes = ({ children }: PropsWithChildren) => {
   const location = useLocation();
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div key="loading">loading...</div>;
+    return (
+      <StyledOverlay>
+        <MoonLoader size={40} color="#fff" />
+      </StyledOverlay>
+    );
   }
 
   if (user) return <>{children}</>;
