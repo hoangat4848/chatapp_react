@@ -20,7 +20,14 @@ export const fetchFriendRequestThunk = createAsyncThunk(
 
 export const createFriendRequestThunk = createAsyncThunk(
   "friends/requests/create",
-  (username: string) => createFriendRequestAPI(username)
+  async (username: string, { rejectWithValue }) => {
+    try {
+      const response = await createFriendRequestAPI(username);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
 );
 
 export const cancelFriendRequestThunk = createAsyncThunk(

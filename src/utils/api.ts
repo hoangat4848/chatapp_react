@@ -159,8 +159,14 @@ export const fetchFriends = () => axiosClient.get<Friend[]>(`/friends`, config);
 export const fetchFriendRequests = () =>
   axiosClient.get<FriendRequest[]>(`/friends/requests`, config);
 
-export const createFriendRequest = (username: string) =>
-  axiosClient.post<FriendRequest>(`friends/requests`, { username }, config);
+export const createFriendRequest = (username: string) => {
+  console.log(username);
+  return axiosClient.post<FriendRequest>(
+    `/friends/requests`,
+    { username },
+    config
+  );
+};
 
 export const cancelFriendRequest = (id: number) =>
   axiosClient.delete<FriendRequest>(`/friends/requests/${id}/cancel`, config);
