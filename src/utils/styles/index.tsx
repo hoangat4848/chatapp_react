@@ -74,6 +74,10 @@ export const InputField = styled.input`
 
   font-size: 18px;
   font-family: "Inter";
+
+  &:disabled {
+    color: #3b3b3b;
+  }
 `;
 
 export const InputLabel = styled.label`

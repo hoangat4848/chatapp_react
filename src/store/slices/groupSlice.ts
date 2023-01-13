@@ -28,6 +28,7 @@ export interface GroupState {
   selectedGroupContextMenu?: Group;
   contextMenuLocation: Point;
   showEditGroupModal: boolean;
+  isSavingChanges: boolean;
 }
 
 const initialState: GroupState = {
@@ -35,6 +36,7 @@ const initialState: GroupState = {
   showGroupContextMenu: false,
   contextMenuLocation: { x: 0, y: 0 },
   showEditGroupModal: false,
+  isSavingChanges: false,
 };
 
 export const fetchGroupsThunk = createAsyncThunk("groups/fetch", () => {
@@ -123,6 +125,9 @@ export const groupsSlice = createSlice({
     setShowEditGroupModal: (state, action: PayloadAction<boolean>) => {
       state.showEditGroupModal = action.payload;
     },
+    setIsSavingChanges: (state, action: PayloadAction<boolean>) => {
+      state.isSavingChanges = action.payload;
+    },
   },
 
   extraReducers(builder) {
@@ -172,6 +177,7 @@ export const {
   setShowGroupContextMenu,
   setGroupContextMenuLocation,
   setShowEditGroupModal,
+  setIsSavingChanges,
 } = groupsSlice.actions;
 
 export default groupsSlice.reducer;
