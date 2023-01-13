@@ -1,5 +1,5 @@
 import { Edit } from "akar-icons";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { MoonLoader } from "react-spinners";
 import UserAvatar from "../../components/settings/profile/UserAvatar";
 import UserBanner from "../../components/settings/profile/UserBanner";
@@ -29,6 +29,7 @@ const SettingsProfilePage = () => {
   const avatarSource = getImageUrl(user?.profile?.avatar ?? "");
   const [avatarSourceCopy, setAvatarSourceCopy] = useState(avatarSource);
   const [avatarFile, setAvatarFile] = useState<File>();
+  const inputDescriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const isChanged = () => aboutCopy !== about || bannerFile || avatarFile;
 
@@ -103,15 +104,19 @@ const SettingsProfilePage = () => {
                 size={28}
                 strokeWidth={2}
                 onClick={() => {
-                  setIsEditing(!isEditing);
+                  // const newIsEditing = !isEditing;
+                  // setIsEditing(newIsEditing);
+                  // if (newIsEditing)
+                  inputDescriptionRef.current?.focus();
                 }}
               />
             </ProfileAboutSectionHeader>
             <ProfileDescriptionField
               maxLength={200}
-              disabled={isEditing}
+              // disabled={isEditing}
               value={aboutCopy}
               onChange={(e) => setAboutCopy(e.target.value)}
+              ref={inputDescriptionRef}
             />
           </ProfileAboutSection>
           {isChanged() && (

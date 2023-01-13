@@ -54,7 +54,6 @@ const GroupSidebarItem = ({ group, onContextMenu }: Props) => {
           <PeopleGroup size={28} />
         </div>
       )}
-      {/* <div className={styles.conversationAvatar}>{group.avatar}</div> */}
       <div>
         <span className="title">{getTransformedTitle()}</span>
         <span className={styles.conversationLastMessage}>

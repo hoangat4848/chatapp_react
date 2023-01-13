@@ -54,7 +54,6 @@ export const getButtonVariantStyle = (variant?: ButtonVariant) => {
   const secondary = css`
     background-color: inherit;
     border: 1px solid #2b09ff;
-    color: #fff;
   `;
 
   switch (variant) {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { SelectableTheme } from "../utils/types";
 
 export const useThemeMode = () => {
-  const [theme, setTheme] = useState("dark");
-  const setMode = (mode: string) => {
+  const [theme, setTheme] = useState<SelectableTheme>("dark");
+  const setMode = (mode: SelectableTheme) => {
     window.localStorage.setItem("theme", mode);
     setTheme(mode);
   };
@@ -12,7 +13,7 @@ export const useThemeMode = () => {
 
   useEffect(() => {
     const localTheme = window.localStorage.getItem("theme");
-    localTheme && setTheme(localTheme);
+    localTheme && setTheme(localTheme as SelectableTheme);
   }, []);
 
   return { theme, themeToggler };

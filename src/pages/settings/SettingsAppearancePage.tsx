@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { useDispatch } from "react-redux";
-import { ThemeContext } from "styled-components";
+import { ThemeContext, useTheme } from "styled-components";
 import { ThemeModeContext } from "../../utils/context/ThemeModeProvider";
 import { Page } from "../../utils/styles";
-import { SelectableTheme } from "../../utils/types";
 
 export const SettingsAppearancePage = () => {
   const { themeToggler } = useContext(ThemeModeContext);
+  const { themeMode } = useContext(ThemeModeContext);
+  console.log(themeMode);
 
   return (
     <Page>
@@ -17,6 +17,7 @@ export const SettingsAppearancePage = () => {
             type="radio"
             id="dark"
             name="theme"
+            checked={themeMode === "dark"}
             onChange={() => themeToggler()}
           />
           <label htmlFor="dark">Dark</label>
@@ -24,6 +25,7 @@ export const SettingsAppearancePage = () => {
             type="radio"
             id="light"
             name="theme"
+            checked={themeMode === "light"}
             onChange={() => themeToggler()}
           />
           <label htmlFor="light">Light</label>

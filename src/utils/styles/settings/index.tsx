@@ -102,7 +102,9 @@ export const ProfileSection = styled.div`
 `;
 
 export const ProfileAboutSection = styled.div`
-  background: #111111;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.secondary};
+  color: ${({ theme }: { theme: Theme }) => theme.text.primary};
 
   width: 500px;
   padding: 32px;
@@ -131,7 +133,6 @@ export const ProfileDescriptionField = styled.textarea`
   border: none;
 
   background-color: inherit;
-  color: #ffffff;
 
   font-family: "Inter";
   font-size: 15px;
@@ -164,8 +165,9 @@ export const ProfileEditActionBar = styled.div`
 
   border-radius: 8px;
 
-  color: #fff;
-  background-color: #0e0e0e;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.secondary};
+  /* background-color: #0e0e0e; */
 
   transform: translate(-50%, 100%);
   animation: 500ms ${slideUp} ease;
