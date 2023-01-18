@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import useKeydown from "../../../hooks/useKeydown";
-import { getImageUrl } from "../../../utils/helpers";
 import { StyledOverlay } from "../../../utils/styles";
 import { GroupMessageType, Message } from "../../../utils/types";
 import styles from "./index.module.scss";
@@ -15,7 +14,7 @@ const MessageItemAttachmentContainer = ({ message }: Props) => {
 
   const onClick = (key: string) => {
     setShowOverlay(true);
-    setImageUrl(getImageUrl(key));
+    setImageUrl(key);
   };
 
   const handleKeydown = (e: KeyboardEvent) => {
@@ -34,12 +33,17 @@ const MessageItemAttachmentContainer = ({ message }: Props) => {
           <img src={imageUrl} alt="overlay" />
         </StyledOverlay>
       )}
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {message.attachments?.map((attachment) => (
           <img
             key={attachment.key}
-            src={getImageUrl(attachment.key)}
-            width={300}
+            src={attachment.key}
+            width={200}
             alt={attachment.key}
             onClick={() => onClick(attachment.key)}
             style={{ cursor: "pointer", maxHeight: "90%" }}

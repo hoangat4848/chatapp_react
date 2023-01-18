@@ -6,11 +6,10 @@ import {
   UserSidebarHeader,
   UserSidebarScrollableContainer,
 } from "../../utils/styles";
-import avatar from "../../__assets__/default-avatar.png";
+import defaultAvatar from "../../__assets__/default-avatar.png";
 import { useSidebarItems } from "../../utils/constants";
 import { UserSidebarItem } from "./items/UserSidebarItem";
 import { AuthContext } from "../../utils/context/AuthContext";
-import { getImageUrl } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { logoutUser as logoutUserAPI } from "../../utils/api";
@@ -20,9 +19,7 @@ const UserSidebar = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const socket = useContext(SocketContext);
-  const avatarSource = user?.profile?.avatar
-    ? getImageUrl(user.profile.avatar)
-    : avatar;
+  const avatarSource = user?.profile?.avatar ?? defaultAvatar;
 
   const logoutUser = () => {
     logoutUserAPI().finally(() => navigate("/login", { replace: true }));

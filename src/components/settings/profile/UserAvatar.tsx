@@ -16,8 +16,6 @@ const UserAvatar = ({
   setAvatarSourceCopy,
   setAvatarFile,
 }: Props) => {
-  const { user } = useContext(AuthContext);
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleAvatarClick = () => fileInputRef.current?.click();
   const handleFileChange = (e: InputChangeEvent) => {

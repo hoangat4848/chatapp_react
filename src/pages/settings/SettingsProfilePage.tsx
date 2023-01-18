@@ -23,10 +23,11 @@ const SettingsProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const about = user?.profile?.about ?? "";
   const [aboutCopy, setAboutCopy] = useState(about);
-  const bannerSource = getImageUrl(user?.profile?.banner ?? "");
+  // const bannerSource = getImageUrl(user?.profile?.banner ?? "");
+  const bannerSource = user?.profile?.banner ?? "";
   const [bannerSourceCopy, setBannerSourceCopy] = useState(bannerSource);
   const [bannerFile, setBannerFile] = useState<File>();
-  const avatarSource = getImageUrl(user?.profile?.avatar ?? "");
+  const avatarSource = user?.profile?.avatar ?? "";
   const [avatarSourceCopy, setAvatarSourceCopy] = useState(avatarSource);
   const [avatarFile, setAvatarFile] = useState<File>();
   const inputDescriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -47,19 +48,13 @@ const SettingsProfilePage = () => {
     bannerFile && formData.append("banner", bannerFile);
     avatarFile && formData.append("avatar", avatarFile);
 
-    console.log("hello world");
-
     try {
       setLoading(true);
       const { data: updatedUser } = await updateUserProfile(formData);
       updateAuthUser(updatedUser);
       setAboutCopy(updatedUser.profile?.about ?? about);
-      setBannerSourceCopy(
-        getImageUrl(updatedUser.profile?.banner ?? avatarSource)
-      );
-      setAvatarSourceCopy(
-        getImageUrl(updatedUser.profile?.avatar ?? avatarSource)
-      );
+      setBannerSourceCopy(updatedUser.profile?.banner ?? bannerSource);
+      setAvatarSourceCopy(updatedUser.profile?.avatar ?? avatarSource);
       URL.revokeObjectURL(bannerSourceCopy);
       URL.revokeObjectURL(avatarSourceCopy);
       setBannerFile(undefined);

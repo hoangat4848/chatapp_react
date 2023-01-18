@@ -29,7 +29,7 @@ const UserBanner = ({
   return (
     <>
       <SettingsProfileBanner
-        backgroundUrl={bannerSourceCopy}
+        backgroundUrl={bannerSourceCopy ?? bannerSource}
         ref={bannerRef}
         onClick={handleBannerClick}
       />

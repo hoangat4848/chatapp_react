@@ -910,20 +910,22 @@ export const FileInput = styled.input`
 
 export const StyledMessageAttachmentContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 
   margin: 10px 0;
 
-  overflow-x: scroll;
+  overflow-y: auto;
+  max-height: 200px;
 
-  &::-webkit-scrollbar {
-    background-color: #101010;
+  /* &::-webkit-scrollbar {
+    background-color: #ff0;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #1c1c1c;
-    border-radius: 5px;
-  }
+    background-color: red;
+    border-radius: 1px;
+  } */
 `;
 
 export const StyledMessageAttachment = styled.div`
@@ -934,15 +936,17 @@ export const StyledMessageAttachment = styled.div`
   gap: 20px;
 
   margin: 10px 0;
-  padding: 50px 0 0 0;
+  padding: 40px 0 0 0;
+  min-width: 0;
   max-height: 300px;
-  height: 300px;
+  height: 200px;
 
   border-radius: 10px;
 
   text-align: center;
 
-  background-color: #161616;
+  background-color: ${({ theme }: { theme: Theme }) =>
+    theme.background.primary};
 `;
 
 export const AvatarUploadContainer = styled.div<{ url?: string }>`
